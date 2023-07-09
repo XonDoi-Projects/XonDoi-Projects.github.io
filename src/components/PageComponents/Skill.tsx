@@ -45,8 +45,8 @@ export const Skill: FunctionComponent<SkillProps> = (props) => {
                 props.alt === 'Next' && !light ? (
                     <Container
                         sx={{
-                            width: '180px',
-                            height: '180px',
+                            width: '170px',
+                            height: '170px',
                             borderRadius: '50%',
                             backgroundColor: colors.light.background
                         }}
@@ -56,10 +56,10 @@ export const Skill: FunctionComponent<SkillProps> = (props) => {
                             alt={props.alt}
                             width={
                                 mobile.mobile && mobile.size?.width
-                                    ? mobile.size?.width - 60
+                                    ? mobile.size?.width - 70
                                     : props.parentWidth
                             }
-                            height={180}
+                            height={170}
                             style={{
                                 position: 'relative',
                                 objectFit: 'scale-down'
@@ -85,8 +85,8 @@ export const Skill: FunctionComponent<SkillProps> = (props) => {
             ) : props.alt === 'Next' && !light ? (
                 <Container
                     sx={{
-                        height: '180px',
-                        width: '180px',
+                        height: '170px',
+                        width: '170px',
                         borderRadius: '50%',
                         backgroundColor: colors.light.background
                     }}

@@ -70,7 +70,7 @@ export const ContactPage: FunctionComponent<ContactPageProps> = (props) => {
                             marginLeft: mobile.mobile ? '0px' : '50px'
                         }}
                     >
-                        Linked In
+                        LinkedIn
                     </Typography>
                     <Link
                         href="https://www.linkedin.com/in/nathanmagro/"
