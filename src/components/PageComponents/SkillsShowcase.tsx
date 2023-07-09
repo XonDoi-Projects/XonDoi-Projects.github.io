@@ -4,15 +4,18 @@ import { Typography } from '../LayoutComponents/Typography'
 import { Skill } from './Skill'
 import { BiChevronLeft, BiChevronRight } from 'react-icons/bi'
 import { Button } from '../InputComponents'
-import { useSize } from '../Providers'
+import { useDarkTheme, useSize } from '../Providers'
+import { colors } from '../Colors'
+import { ISkill } from './MainPage'
 
 export interface SkillsShowcaseProps {
-    skills: { src: string; alt: string }[]
+    skills: ISkill[]
 }
 
 export const SkillsShowcase: FunctionComponent<SkillsShowcaseProps> = (props) => {
     const [scrollIntoView, setScrollIntoView] = useState<number>()
     const mobile = useSize()
+    const { light } = useDarkTheme()
     const skillsShowcaseRef = createRef<HTMLDivElement>()
 
     const [skillsShowcaseWidth, setSkillsShowcaseWidth] = useState(0)
@@ -33,7 +36,12 @@ export const SkillsShowcase: FunctionComponent<SkillsShowcaseProps> = (props) =>
                 alignItems: 'center'
             }}
         >
-            <Typography variant="title">Technology Stack</Typography>
+            <Typography
+                variant="subtitle"
+                sx={{ fontSize: '32px', color: light ? colors.light.accent : colors.dark.accent }}
+            >
+                Technology Stack
+            </Typography>
             <Container sx={{ width: '100%', justifyContent: 'center', alignItems: 'center' }}>
                 <Container
                     sx={{
@@ -64,7 +72,7 @@ export const SkillsShowcase: FunctionComponent<SkillsShowcaseProps> = (props) =>
                         }
                         disabled={scrollIntoView === 0}
                     >
-                        <BiChevronLeft style={{ fontSize: '30px' }} />
+                        <BiChevronLeft style={{ fontSize: '60px' }} />
                     </Button>
                     <Button
                         sx={{
@@ -80,7 +88,7 @@ export const SkillsShowcase: FunctionComponent<SkillsShowcaseProps> = (props) =>
                         disabled={scrollIntoView === props.skills.length - 1}
                     >
                         <BiChevronRight
-                            style={{ fontSize: '30px', backgroundColor: 'transparent' }}
+                            style={{ fontSize: '60px', backgroundColor: 'transparent' }}
                         />
                     </Button>
                 </Container>

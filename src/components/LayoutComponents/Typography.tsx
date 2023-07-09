@@ -83,8 +83,7 @@ export const Typography: FunctionComponent<TypographyProps> = (props) => {
     return (
         <StyledTypography
             sx={{
-                fontFamily:
-                    props.variant === 'body' ? 'IBM Plex Sans' : '"Roboto Flex", sans-serif',
+                fontFamily: props.variant === 'body' ? 'Inter' : '"Roboto Flex", sans-serif',
                 color:
                     props.variant === 'supertitle' ||
                     props.variant === 'title' ||

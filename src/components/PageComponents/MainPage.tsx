@@ -1,4 +1,12 @@
-import { FunctionComponent, ReactNode, createRef, useEffect, useRef, useState } from 'react'
+import {
+    FunctionComponent,
+    ReactNode,
+    createRef,
+    useEffect,
+    useMemo,
+    useRef,
+    useState
+} from 'react'
 import { Container } from '../LayoutComponents'
 import { Typography } from '../LayoutComponents/Typography'
 import { SkillsShowcase } from './SkillsShowcase'
@@ -6,7 +14,12 @@ import { useDarkTheme, useSize } from '../Providers'
 import Image from 'next/image'
 import { colors } from '../Colors'
 
-const skills = [
+export interface ISkill {
+    src: string
+    alt: string
+}
+
+const skills: ISkill[] = [
     { src: '/React.svg', alt: 'React' },
     { src: '/JS.svg', alt: 'JS' },
     { src: '/TS.svg', alt: 'TS' },
@@ -119,12 +132,14 @@ export const MainPage: FunctionComponent<MainPageProps> = (props) => {
                 >
                     <Container
                         sx={{
-                            width: mobile.mobile ? '100%' : '80%',
+                            width: 'fit-content',
                             justifyContent: 'center',
-                            alignItems: 'center'
+                            alignItems: 'center',
+                            marginLeft: mobile.mobile ? '0px' : '100px',
+                            marginBottom: mobile.mobile ? '0px' : '0px'
                         }}
                     >
-                        <Typography variant="body" sx={{ fontSize: '22px' }}>
+                        <Typography variant="body" sx={{ fontSize: '24px' }}>
                             I am a skilled Front-end Web Developer, focused on library management
                             and version control. I also have experience in Back-end Development
                             routing and services. I am passionate about crafting smooth and
