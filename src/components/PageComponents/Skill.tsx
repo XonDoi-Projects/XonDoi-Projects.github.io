@@ -36,24 +36,70 @@ export const Skill: FunctionComponent<SkillProps> = (props) => {
                     mobile.mobile && mobile.size?.width
                         ? mobile.size?.width - 40 + 'px'
                         : props.parentWidth,
-                height: '200px'
+                height: '200px',
+                justifyContent: 'center',
+                alignItems: 'center'
             }}
         >
             {mobile.mobile ? (
-                <Image
-                    src={props.src}
-                    alt={props.alt}
-                    width={
-                        mobile.mobile && mobile.size?.width
-                            ? mobile.size?.width - 40
-                            : props.parentWidth
-                    }
-                    height={200}
-                    style={{
-                        position: 'relative',
-                        objectFit: 'scale-down'
+                props.alt === 'Next' && !light ? (
+                    <Container
+                        sx={{
+                            width: '180px',
+                            height: '180px',
+                            borderRadius: '50%',
+                            backgroundColor: colors.light.background
+                        }}
+                    >
+                        <Image
+                            src={props.src}
+                            alt={props.alt}
+                            width={
+                                mobile.mobile && mobile.size?.width
+                                    ? mobile.size?.width - 60
+                                    : props.parentWidth
+                            }
+                            height={180}
+                            style={{
+                                position: 'relative',
+                                objectFit: 'scale-down'
+                            }}
+                        />
+                    </Container>
+                ) : (
+                    <Image
+                        src={props.src}
+                        alt={props.alt}
+                        width={
+                            mobile.mobile && mobile.size?.width
+                                ? mobile.size?.width - 40
+                                : props.parentWidth
+                        }
+                        height={200}
+                        style={{
+                            position: 'relative',
+                            objectFit: 'scale-down'
+                        }}
+                    />
+                )
+            ) : props.alt === 'Next' && !light ? (
+                <Container
+                    sx={{
+                        height: '180px',
+                        width: '180px',
+                        borderRadius: '50%',
+                        backgroundColor: colors.light.background
                     }}
-                />
+                >
+                    <Image
+                        src={props.src}
+                        alt={props.alt}
+                        fill
+                        style={{
+                            objectFit: 'scale-down'
+                        }}
+                    />
+                </Container>
             ) : (
                 <Image
                     src={props.src}

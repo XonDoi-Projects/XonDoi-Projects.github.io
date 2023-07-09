@@ -23,7 +23,8 @@ export const ContactPage: FunctionComponent<ContactPageProps> = (props) => {
                 width: '100%',
                 height: '100%',
                 overflowY: 'auto',
-                overflowX: 'hidden'
+                overflowX: 'hidden',
+                paddingLeft: mobile.mobile ? undefined : '110px'
             }}
             hidescrollBar
         >
@@ -144,9 +145,9 @@ export const ContactPage: FunctionComponent<ContactPageProps> = (props) => {
 
                 <Container
                     sx={{
-                        width: mobile.mobile ? '100%' : '65%',
+                        width: mobile.mobile ? '100%' : '55%',
                         height: mobile.mobile ? 'fit-content' : '100%',
-                        padding: '30px',
+                        padding: '20px',
                         flexDirection: 'column',
                         justifyContent: 'center',
                         alignItems: 'center'

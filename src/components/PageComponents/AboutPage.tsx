@@ -83,7 +83,8 @@ export const AboutPage: FunctionComponent<AboutPageProps> = (props) => {
                 width: '100%',
                 height: '100%',
                 overflowY: 'auto',
-                overflowX: 'hidden'
+                overflowX: 'hidden',
+                paddingLeft: mobile.mobile ? undefined : '110px'
             }}
             hidescrollBar
         >
@@ -98,6 +99,7 @@ export const AboutPage: FunctionComponent<AboutPageProps> = (props) => {
                 <Container
                     sx={{
                         width: mobile.mobile ? '100%' : '35%',
+                        minWidth: '360px',
                         height: '100%',
                         padding: '30px',
                         flexDirection: 'column',
@@ -112,7 +114,7 @@ export const AboutPage: FunctionComponent<AboutPageProps> = (props) => {
                             color: light
                                 ? colors.light.accentForeground
                                 : colors.dark.accentForeground,
-                            marginLeft: mobile.mobile ? '0px' : '50px'
+                            marginLeft: mobile.mobile ? '0px' : '35px'
                         }}
                     >
                         About Me
@@ -124,7 +126,7 @@ export const AboutPage: FunctionComponent<AboutPageProps> = (props) => {
                             sx={{
                                 flexDirection: 'row',
                                 display: 'flex',
-                                justifyContent: 'center',
+                                justifyContent: mobile.mobile ? 'center' : 'flex-start',
                                 alignItems: 'center',
                                 marginBottom: '10px',
                                 marginLeft: mobile.mobile ? '0px' : '50px'
@@ -140,7 +142,7 @@ export const AboutPage: FunctionComponent<AboutPageProps> = (props) => {
                                     color: light
                                         ? colors.light.accentForeground
                                         : colors.dark.accentForeground,
-                                    margin: '0px 20px',
+                                    margin: '0px 20px 0px 0px',
                                     textTransform: 'uppercase'
                                 }}
                             >
@@ -162,9 +164,9 @@ export const AboutPage: FunctionComponent<AboutPageProps> = (props) => {
 
                 <Container
                     sx={{
-                        width: mobile.mobile ? '100%' : '65%',
+                        width: mobile.mobile ? '100%' : '55%',
                         height: mobile.mobile ? 'fit-content' : '100%',
-                        padding: '30px',
+                        padding: '20px',
                         flexDirection: 'column',
                         justifyContent: 'center',
                         alignItems: 'center'
@@ -194,41 +196,30 @@ export const AboutPage: FunctionComponent<AboutPageProps> = (props) => {
                                 Experience
                             </Typography>
                             <Typography>
-                                Before my first job, although I had been coding in other languages
-                                for a while, I did not have much experience with web development
-                                frameworks such as NextJS and libraries like React. In over a year
-                                of work experience I learned to write such code in a way that is
-                                abstracted, readable, and optimized.
+                                I am flexible and can adapt to newer technologies because I am a
+                                fast-learner. Despite my background not initially being in Front-end
+                                Web Development, I was able to learn technologies such as React,
+                                Typescript, Javascript, HTML, CSS and others. Moreover, in over a
+                                year of work experience in this field, I learned to write such code
+                                in a way that is abstracted, readble and optimized. This site was
+                                built using custom-built, reusable components on NextJs framework,
+                                with React, Typescript, and Styled Components.
                             </Typography>
                             <Typography>
-                                This site is built on NextJs framework, using React library,
-                                Typescript and Styled Components. The components are custom built
-                                and reused throughout the entire site.
+                                At Sector Eleven Ltd. I worked on the Front-End aspect of multiple
+                                B2C and B2B projects with a team of 3 (1 Back-End 1 Full-Stack and 1
+                                Front-End). This would typically involve the creation of the site
+                                components, feature integration, api calls to the backend-end
+                                server, data visualization (tables, autocompletes) with querying and
+                                pagination, and feature testing.
                             </Typography>
-                            <ul
-                                style={{
-                                    fontFamily: 'IBM Plex Sans',
-                                    fontSize: '20px',
-                                    fontWeight: 500,
-                                    letterSpacing: '1px',
-                                    color: light ? colors.light.primary : colors.dark.primary
-                                }}
-                            >
-                                <li>
-                                    Abstraction is very important when writing code for two reasons:
-                                    it shortens the lines of code, and if you need to make changes
-                                    you only do it once.
-                                </li>
-                                <li>
-                                    For code to be readable it must have the proper indentation,
-                                    camelCase naming and short functions.
-                                </li>
-                                <li>
-                                    Optimization on the other hand, for cases such as React,
-                                    re-rendering must be carefully implemented, taking extra care
-                                    when using hooks such as useEffect and useCallback.
-                                </li>
-                            </ul>
+                            <Typography>
+                                Moreover, we created our own component library, with the main
+                                purpose being to have reusable components while making sure that
+                                they can be modified from project side as required. Using this
+                                custom library resulted in an immediate increase in project
+                                development efficiency by 65%.
+                            </Typography>
                         </Container>
                         <Container
                             ref={educationRef}
