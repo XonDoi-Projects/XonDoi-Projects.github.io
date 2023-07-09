@@ -38,12 +38,13 @@ export const MainPage: FunctionComponent<MainPageProps> = (props) => {
                 flex: 1,
                 justifyContent: 'center',
                 alignItems: 'center',
-                width: '100%'
+                width: '100%',
+                paddingLeft: mobile.mobile ? undefined : '110px'
             }}
         >
             <Container
                 sx={{
-                    width: mobile.mobile ? mobile.size?.width : '80%',
+                    width: mobile.mobile ? mobile.size?.width : '100%',
                     height: mobile.mobile ? undefined : '100%',
                     flexDirection: mobile.mobile ? 'column' : 'row'
                 }}
@@ -52,7 +53,7 @@ export const MainPage: FunctionComponent<MainPageProps> = (props) => {
                     ref={bannerRef}
                     sx={{
                         flexDirection: 'column',
-                        width: mobile.mobile ? '100%' : '45%',
+                        width: mobile.mobile ? '100%' : '35%',
                         height: mobile.mobile ? 'fit-content' : '100%',
                         justifyContent: 'center',
                         backgroundColor: light ? colors.light.accent : colors.dark.accent
@@ -124,9 +125,10 @@ export const MainPage: FunctionComponent<MainPageProps> = (props) => {
                         }}
                     >
                         <Typography variant="body" sx={{ fontSize: '22px' }}>
-                            I am a skilled Front-end Web Developer, experienced in library
-                            management, version control, and some experience Back-end Development.
-                            Below are technologies that I have worked with to develop projects.
+                            I am a skilled Front-end Web Developer, focused on library management
+                            and version control. I also have experience in Back-end Development
+                            routing and services. I am passionate about crafting smooth and
+                            intuitive UIs to deliver the best possible experience for our clients.
                         </Typography>
                     </Container>
                     <Container

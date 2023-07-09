@@ -49,8 +49,8 @@ export const Button: FunctionComponent<StyledButtonProps> = (props) => {
     return (
         <Container
             sx={{
-                justifyContent: 'center',
-                alignItems: 'center',
+                justifyContent: props.sx?.justifyContent || 'center',
+                alignItems: props.sx?.alignItems || 'center',
                 width: props.sx?.width,
                 height: props.sx?.height,
                 backgroundColor: props.sx?.backgroundColor,
@@ -62,7 +62,7 @@ export const Button: FunctionComponent<StyledButtonProps> = (props) => {
                 onClick={!props.disabled ? props.onClick : undefined}
                 light={light}
                 swapHover={props.swapHover}
-                sx={{ ...props.sx, justifyContent: 'center', alignItems: 'center' }}
+                sx={{ justifyContent: 'center', alignItems: 'center', ...props.sx }}
             >
                 {typeof props.children === 'string' ? (
                     <Typography

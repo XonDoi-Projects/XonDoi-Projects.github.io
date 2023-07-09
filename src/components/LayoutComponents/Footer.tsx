@@ -27,7 +27,7 @@ export const Footer: FunctionComponent<FooterProps> = (props) => {
                 bottom: 0,
                 left: 0,
                 zIndex: 2,
-                padding: '0px 10px',
+                padding: '0px 5px',
                 borderBottomRightRadius: '0px',
                 borderBottomLeftRadius: '0px',
                 justifyContent: 'space-between',
@@ -57,12 +57,11 @@ export const Footer: FunctionComponent<FooterProps> = (props) => {
                             height: '50px',
                             borderRadius: '50%',
                             backgroundColor: 'transparent',
-                            marginRight: '10px',
                             padding: '0px'
                         }}
                     >
                         <Image
-                            src={'/GitLogo.svg'}
+                            src={light ? '/GitLogo.svg' : '/GitLogoDark.png'}
                             alt="Git Logo"
                             width={40}
                             height={40}
@@ -70,7 +69,6 @@ export const Footer: FunctionComponent<FooterProps> = (props) => {
                         />
                     </Button>
                 </Link>
-
                 <Link href="https://www.linkedin.com/in/nathanmagro/" target="_blank">
                     <Button
                         sx={{
@@ -78,7 +76,6 @@ export const Footer: FunctionComponent<FooterProps> = (props) => {
                             height: '50px',
                             borderRadius: '50%',
                             backgroundColor: 'transparent',
-                            marginRight: '10px',
                             padding: '0px'
                         }}
                     >

@@ -1,20 +1,10 @@
-import {
-    CSSProperties,
-    FunctionComponent,
-    ReactNode,
-    createRef,
-    useEffect,
-    useMemo,
-    useRef,
-    useState
-} from 'react'
-import { Card, Container } from '../LayoutComponents'
+import { FunctionComponent, createRef, useEffect, useState } from 'react'
+import { Container } from '../LayoutComponents'
 import { Typography } from '../LayoutComponents/Typography'
 import { Skill } from './Skill'
 import { BiChevronLeft, BiChevronRight } from 'react-icons/bi'
 import { Button } from '../InputComponents'
-import { useDarkTheme, useSize } from '../Providers'
-import { colors } from '../Colors'
+import { useSize } from '../Providers'
 
 export interface SkillsShowcaseProps {
     skills: { src: string; alt: string }[]
@@ -22,7 +12,6 @@ export interface SkillsShowcaseProps {
 
 export const SkillsShowcase: FunctionComponent<SkillsShowcaseProps> = (props) => {
     const [scrollIntoView, setScrollIntoView] = useState<number>()
-    const { light } = useDarkTheme()
     const mobile = useSize()
     const skillsShowcaseRef = createRef<HTMLDivElement>()
 
@@ -44,12 +33,7 @@ export const SkillsShowcase: FunctionComponent<SkillsShowcaseProps> = (props) =>
                 alignItems: 'center'
             }}
         >
-            <Typography
-                variant="title"
-                // sx={{ color: light ? colors.light.foreground : colors.dark.foreground }}
-            >
-                Skills
-            </Typography>
+            <Typography variant="title">Technology Stack</Typography>
             <Container sx={{ width: '100%', justifyContent: 'center', alignItems: 'center' }}>
                 <Container
                     sx={{
@@ -69,7 +53,6 @@ export const SkillsShowcase: FunctionComponent<SkillsShowcaseProps> = (props) =>
                             height: '50px',
                             borderRadius: '50%',
                             opacity: !scrollIntoView ? 0.5 : 1,
-                            marginRight: '10px',
                             padding: '0px',
                             zIndex: 1,
                             background: 'transparent'
@@ -89,7 +72,6 @@ export const SkillsShowcase: FunctionComponent<SkillsShowcaseProps> = (props) =>
                             height: '50px',
                             borderRadius: '50%',
                             opacity: scrollIntoView === props.skills.length - 1 ? 0.5 : 1,
-                            marginRight: '10px',
                             padding: '0px',
                             zIndex: 1,
                             background: 'transparent'
