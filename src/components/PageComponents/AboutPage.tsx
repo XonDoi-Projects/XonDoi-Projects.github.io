@@ -81,18 +81,15 @@ export const AboutPage: FunctionComponent<AboutPageProps> = (props) => {
                 justifyContent: 'center',
                 alignItems: 'center',
                 width: '100%',
-                height: '100%',
-                overflowY: 'auto',
-                overflowX: 'hidden',
                 paddingLeft: mobile.mobile ? undefined : '110px'
             }}
             hidescrollBar
         >
             <Container
                 sx={{
-                    flex: 1,
+                    // flex: 1,
                     flexDirection: mobile.mobile ? 'column' : 'row',
-                    justifyContent: 'flex-start',
+                    // justifyContent: 'flex-start',
                     width: mobile.mobile ? mobile.size?.width : '100%',
                     height: mobile.mobile ? '100%' : '100%'
                 }}
@@ -101,7 +98,7 @@ export const AboutPage: FunctionComponent<AboutPageProps> = (props) => {
                     sx={{
                         width: mobile.mobile ? '100%' : '35%',
                         minWidth: '360px',
-                        height: '100%',
+                        height: mobile.mobile ? 'fit-content' : '100vh',
                         padding: '30px',
                         flexDirection: 'column',
                         justifyContent: 'center',
@@ -167,7 +164,7 @@ export const AboutPage: FunctionComponent<AboutPageProps> = (props) => {
                 <Container
                     sx={{
                         width: mobile.mobile ? '100%' : '55%',
-                        height: mobile.mobile ? 'fit-content' : '100%',
+                        height: mobile.mobile ? 'fit-content' : '100vh',
                         padding: '20px',
                         flexDirection: 'column',
                         justifyContent: 'center',
