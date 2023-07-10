@@ -21,9 +21,6 @@ export const ContactPage: FunctionComponent<ContactPageProps> = (props) => {
                 justifyContent: 'center',
                 alignItems: 'center',
                 width: '100%',
-                height: '100%',
-                overflowY: 'auto',
-                overflowX: 'hidden',
                 paddingLeft: mobile.mobile ? undefined : '110px'
             }}
             hidescrollBar
@@ -31,7 +28,6 @@ export const ContactPage: FunctionComponent<ContactPageProps> = (props) => {
             <Container
                 sx={{
                     flexDirection: mobile.mobile ? 'column' : 'row',
-                    justifyContent: 'flex-start',
                     width: mobile.mobile ? mobile.size?.width : '100%',
                     height: mobile.mobile ? '100%' : '100%'
                 }}
@@ -86,7 +82,8 @@ export const ContactPage: FunctionComponent<ContactPageProps> = (props) => {
                                 color: light ? colors.light.background : colors.dark.background,
                                 margin: '0px',
                                 marginBottom: '20px',
-                                marginLeft: mobile.mobile ? '0px' : '50px'
+                                marginLeft: mobile.mobile ? '0px' : '50px',
+                                wordBreak: 'break-all'
                             }}
                         >
                             linkedin.com/in/nathanmagro/
@@ -136,7 +133,8 @@ export const ContactPage: FunctionComponent<ContactPageProps> = (props) => {
                             color: light ? colors.light.background : colors.dark.background,
                             margin: '0px',
                             marginBottom: '20px',
-                            marginLeft: mobile.mobile ? '0px' : '50px'
+                            marginLeft: mobile.mobile ? '0px' : '50px',
+                            wordBreak: 'break-all'
                         }}
                     >
                         nathanmagro1993@gmail.com
@@ -150,14 +148,17 @@ export const ContactPage: FunctionComponent<ContactPageProps> = (props) => {
                         padding: '20px',
                         flexDirection: 'column',
                         justifyContent: 'center',
-                        alignItems: 'center'
+                        alignItems: 'center',
+                        flex: 1
                     }}
                 >
                     <Container
                         sx={{
                             flexDirection: 'column',
                             width: mobile.mobile ? '100%' : '70%',
-                            height: mobile.mobile ? '100%' : '70%'
+                            height: mobile.mobile ? '100%' : '70%',
+                            overflowY: mobile.mobile ? 'hidden' : 'auto',
+                            overflowX: 'hidden'
                         }}
                         hidescrollBar
                     >
