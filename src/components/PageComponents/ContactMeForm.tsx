@@ -160,7 +160,13 @@ export const ContactMeForm: FunctionComponent<ContactMeFormProps> = (props) => {
                         borderRadius: '5px'
                     }}
                 >
-                    <Typography sx={{ color: colors.light.background }}>
+                    <Typography
+                        sx={{
+                            color: colors.light.background,
+                            fontSize: '16px',
+                            textAlign: 'center'
+                        }}
+                    >
                         {showSnackbar?.message}
                     </Typography>
                 </FixedDiv>

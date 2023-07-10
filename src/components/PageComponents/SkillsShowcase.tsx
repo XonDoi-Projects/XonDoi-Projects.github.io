@@ -38,7 +38,11 @@ export const SkillsShowcase: FunctionComponent<SkillsShowcaseProps> = (props) =>
         >
             <Typography
                 variant="subtitle"
-                sx={{ fontSize: '32px', color: light ? colors.light.accent : colors.dark.accent }}
+                sx={{
+                    fontSize: '32px',
+                    color: light ? colors.light.accent : colors.dark.accent,
+                    textAlign: 'center'
+                }}
             >
                 Technology Stack
             </Typography>
