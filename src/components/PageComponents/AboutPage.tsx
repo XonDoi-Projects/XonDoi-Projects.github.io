@@ -1,5 +1,5 @@
 import { FunctionComponent, createRef, useCallback, useEffect, useRef, useState } from 'react'
-import { Container } from '../LayoutComponents'
+import { Accordian, Container } from '../LayoutComponents'
 import { useDarkTheme, useSize } from '../Providers'
 import { Typography } from '../LayoutComponents/Typography'
 import Link from 'next/link'
@@ -90,6 +90,7 @@ export const AboutPage: FunctionComponent<AboutPageProps> = (props) => {
         >
             <Container
                 sx={{
+                    flex: 1,
                     flexDirection: mobile.mobile ? 'column' : 'row',
                     justifyContent: 'flex-start',
                     width: mobile.mobile ? mobile.size?.width : '100%',
@@ -137,6 +138,7 @@ export const AboutPage: FunctionComponent<AboutPageProps> = (props) => {
                             <Typography
                                 variant="linker"
                                 sx={{
+                                    fontFamily: '"Montserrat", sans-serif',
                                     fontSize:
                                         scrollTo === index && !mobile.mobile ? '28px' : '22px',
                                     color: light
@@ -169,7 +171,8 @@ export const AboutPage: FunctionComponent<AboutPageProps> = (props) => {
                         padding: '20px',
                         flexDirection: 'column',
                         justifyContent: 'center',
-                        alignItems: 'center'
+                        alignItems: 'center',
+                        flex: 1
                     }}
                 >
                     <Container
@@ -192,8 +195,8 @@ export const AboutPage: FunctionComponent<AboutPageProps> = (props) => {
                                 marginBottom: '30px'
                             }}
                         >
-                            <Typography variant="subtitle" sx={{ marginBottom: '20px' }}>
-                                Experience
+                            <Typography variant="subtitle" sx={{ marginBottom: '15px' }}>
+                                <big>E</big>xperience
                             </Typography>
                             <Typography>
                                 I am flexible and can adapt to newer technologies because I am a
@@ -229,30 +232,35 @@ export const AboutPage: FunctionComponent<AboutPageProps> = (props) => {
                                 marginBottom: '30px'
                             }}
                         >
-                            <Typography variant="subtitle" sx={{ marginBottom: '20px' }}>
-                                Education
+                            <Typography variant="subtitle" sx={{ marginBottom: '15px' }}>
+                                <big>E</big>ducation
                             </Typography>
                             <Typography>
-                                I have a Masters Degree in Electrical Engineering, specializing in
-                                Image/Signal Processing. During the duration of this course I
-                                learned about pre-processing algorithms, image segmentation
-                                algorithms, and image/signal classification methods. I also briefly
-                                learned about AI, Machine Learning, and Python. During the course I
-                                published a paper at ICIP 2021.
-                            </Typography>
-                            <Link
-                                href="https://ieeexplore.ieee.org/document/9506558"
-                                target="_blank"
-                            >
-                                <Typography sx={{ fontStyle: 'italic' }}>
-                                    Hyperspectral Image Segmentation For Paint Analysis
-                                </Typography>
-                            </Link>
-                            <Typography>
-                                My Bachelors degree is in Biomedical Engineering (Electronics), in
-                                which I learned about Biomedical electronics, Systems & Control
-                                engineering, Digital/Analogue electronics, and Microcontroller
-                                programming.
+                                I earned a Master’s Degree in Electrical Engineering, specializing
+                                in Image and Signal Processing. My thesis focused on using
+                                Hyperspectral image segmentation and signal classification to
+                                analyze paintings to identify the exact pigment mixtures used to
+                                create them. My algorithm for pigment identification allowed for the
+                                effective restoration of artwork without using destructive
+                                analytical methods. This led to a{' '}
+                                <Link
+                                    href="https://ieeexplore.ieee.org/document/9506558"
+                                    target="_blank"
+                                    style={{
+                                        display: 'inline-flex',
+                                        textDecorationColor: light
+                                            ? colors.light.primary
+                                            : colors.dark.primary,
+                                        textUnderlineOffset: '3px',
+                                        fontWeight: 'bold',
+                                        color: light ? colors.light.primary : colors.dark.primary
+                                    }}
+                                >
+                                    publication
+                                </Link>{' '}
+                                that I successfully presented at the 2021 International Conference
+                                on Image Processing (ICIP). Outside of my thesis, I also studied AI,
+                                Machine Learning, Python, C, and C++.
                             </Typography>
                         </Container>
                         <Container
@@ -262,17 +270,43 @@ export const AboutPage: FunctionComponent<AboutPageProps> = (props) => {
                                 width: '100%'
                             }}
                         >
-                            <Typography variant="subtitle" sx={{ marginBottom: '20px' }}>
-                                Hobbies
+                            <Typography variant="subtitle" sx={{ marginBottom: '15px' }}>
+                                <big>H</big>obbies
                             </Typography>
                             <Typography>
-                                I am an avid anime watcher. My favourite all time anime is Naruto,
-                                still following One Piece and also enjoy recently created animes.
+                                I was born and raised on the warm Mediterranean island of Malta, so
+                                I am still learning how to cope with the snow in the states. I have
+                                always loved football - or rather soccer - and I am a big Juventus
+                                fan. Currently, I am (unsuccessfully) trying to teach myself how to
+                                play tennis.
                             </Typography>
                             <Typography>
-                                I also enjoy AAA video game titles, competitive online games such as
-                                PUBG (although getting older does not help with reaction speed).
+                                In my free time I like to watch anime (my current watchlist is
+                                below), TV shows, and play PC games, although recently I have been
+                                exploring PS5 gameplay. You can come to me for corny jokes, and a
+                                nice cup of lemon tea.
                             </Typography>
+                            <Accordian
+                                title="Favorite Anime"
+                                data={[
+                                    '1. Naruto',
+                                    '2. One Piece',
+                                    '3. My Hero Academia',
+                                    '4. Attack on Titan',
+                                    '5. Demon Slayer'
+                                ]}
+                            />
+                            <Container sx={{ height: '20px' }} />
+                            <Accordian
+                                title="Favorite TV Shows"
+                                data={[
+                                    '1. Band of Brothers',
+                                    '2. Black Sails',
+                                    '3. Vikings',
+                                    '4. The Boys',
+                                    '5. Peaky Blinders'
+                                ]}
+                            />
                         </Container>
                     </Container>
                 </Container>
