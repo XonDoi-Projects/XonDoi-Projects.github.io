@@ -64,6 +64,7 @@ export const ContactMeForm: FunctionComponent<ContactMeFormProps> = (props) => {
                 } else {
                     url = 'https://xondoi-projects.github.io'
                 }
+                console.log(process.env.NODE_ENV, url)
                 //api call
                 const result = await fetch(`${url}/api/contact`, {
                     method: 'POST',
