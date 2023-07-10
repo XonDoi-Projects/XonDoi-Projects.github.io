@@ -58,8 +58,14 @@ export const ContactMeForm: FunctionComponent<ContactMeFormProps> = (props) => {
     const sendData = async () => {
         if (!checkFields()) {
             try {
+                let url = ''
+                if (process.env.NODE_ENV === 'development') {
+                    url = ''
+                } else {
+                    url = 'https://xondoi-projects.github.io'
+                }
                 //api call
-                const result = await fetch('/api/contact', {
+                const result = await fetch(`${url}/api/contact`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -164,7 +170,9 @@ export const ContactMeForm: FunctionComponent<ContactMeFormProps> = (props) => {
                         sx={{
                             color: colors.light.background,
                             fontSize: '16px',
-                            textAlign: 'center'
+                            textAlign: 'center',
+                            justifyContent: 'center',
+                            alignItems: 'center'
                         }}
                     >
                         {showSnackbar?.message}
