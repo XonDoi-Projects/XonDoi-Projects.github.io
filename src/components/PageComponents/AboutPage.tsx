@@ -87,9 +87,7 @@ export const AboutPage: FunctionComponent<AboutPageProps> = (props) => {
         >
             <Container
                 sx={{
-                    // flex: 1,
                     flexDirection: mobile.mobile ? 'column' : 'row',
-                    // justifyContent: 'flex-start',
                     width: mobile.mobile ? mobile.size?.width : '100%',
                     height: mobile.mobile ? '100%' : '100%'
                 }}
