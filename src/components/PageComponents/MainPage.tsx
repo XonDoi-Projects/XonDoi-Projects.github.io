@@ -132,14 +132,22 @@ export const MainPage: FunctionComponent<MainPageProps> = (props) => {
                 >
                     <Container
                         sx={{
+                            height: '360px',
                             width: 'fit-content',
                             justifyContent: 'center',
                             alignItems: 'center',
                             marginLeft: mobile.mobile ? '0px' : '100px',
-                            marginBottom: mobile.mobile ? '0px' : '0px'
+                            marginBottom: mobile.mobile ? '0px' : '30px',
+                            marginTop: mobile.mobile ? '0px' : '30px'
                         }}
                     >
-                        <Typography variant="body" sx={{ fontSize: '24px' }}>
+                        <Typography
+                            variant="body"
+                            sx={{
+                                fontSize: '24px',
+                                lineHeight: mobile.mobile ? undefined : '40px'
+                            }}
+                        >
                             I am a skilled Front-end Web Developer, focused on library management
                             and version control. I also have experience in Back-end Development
                             routing and services. I am passionate about crafting smooth and
