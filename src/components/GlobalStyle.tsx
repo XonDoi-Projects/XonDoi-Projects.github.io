@@ -5,7 +5,8 @@ export const GlobalStyle = () => (
         dangerouslySetInnerHTML={{
             __html: `
             body {
-                overflow:hidden;
+                overflow: hidden;
+                overscroll-behavior: none;
                 margin: 0px;
                 padding: 0px;
             }
