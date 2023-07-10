@@ -39,7 +39,7 @@ export const ContactPage: FunctionComponent<ContactPageProps> = (props) => {
                 <Container
                     sx={{
                         width: mobile.mobile ? '100%' : '35%',
-                        height: '100%',
+                        height: mobile.mobile ? 'fit-content' : '100vh',
                         padding: '30px',
                         flexDirection: 'column',
                         justifyContent: 'center',
@@ -146,7 +146,7 @@ export const ContactPage: FunctionComponent<ContactPageProps> = (props) => {
                 <Container
                     sx={{
                         width: mobile.mobile ? '100%' : '55%',
-                        height: mobile.mobile ? 'fit-content' : '100%',
+                        height: mobile.mobile ? 'fit-content' : '100vh',
                         padding: '20px',
                         flexDirection: 'column',
                         justifyContent: 'center',
