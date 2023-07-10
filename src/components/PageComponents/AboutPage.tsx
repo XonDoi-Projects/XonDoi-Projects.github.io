@@ -15,7 +15,7 @@ export const AboutPage: FunctionComponent<AboutPageProps> = (props) => {
     const mobile = useSize()
     const { light } = useDarkTheme()
 
-    const [scrollTo, setScrollTo] = useState<number>(0)
+    const [scrollTo, setScrollTo] = useState<number | undefined>(mobile.mobile ? undefined : 0)
 
     const parentRef = useRef<HTMLDivElement | null>(null)
     const aboutRef = createRef<HTMLDivElement>()
@@ -30,7 +30,7 @@ export const AboutPage: FunctionComponent<AboutPageProps> = (props) => {
         } else if (scrollTo === 2) {
             hobbyRef.current?.scrollIntoView({ behavior: 'smooth' })
         }
-    }, [aboutRef, educationRef, hobbyRef, scrollTo])
+    }, [aboutRef, educationRef, hobbyRef, mobile.mobile, scrollTo])
 
     const updateScrollPosition = useCallback(() => {
         if (

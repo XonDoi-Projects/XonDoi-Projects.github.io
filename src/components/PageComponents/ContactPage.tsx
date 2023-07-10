@@ -66,7 +66,7 @@ export const ContactPage: FunctionComponent<ContactPageProps> = (props) => {
                                 ? colors.light.accentForeground
                                 : colors.dark.accentForeground,
                             margin: '0px',
-                            marginBottom: '20px',
+                            marginBottom: '10px',
                             marginLeft: mobile.mobile ? '0px' : '50px'
                         }}
                     >
