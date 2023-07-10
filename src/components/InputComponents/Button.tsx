@@ -30,7 +30,7 @@ export const StyledButton = styled.button<StyledButtonProps>(
         alignItems: 'center',
         ...sx,
 
-        '@media (hover:hover)': {
+        '@media (hover:hover), @media (pointer: fine)': {
             '&:hover': {
                 backgroundColor: disabled
                     ? undefined
