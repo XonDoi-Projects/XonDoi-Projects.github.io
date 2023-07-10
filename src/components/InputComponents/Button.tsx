@@ -30,16 +30,18 @@ export const StyledButton = styled.button<StyledButtonProps>(
         alignItems: 'center',
         ...sx,
 
-        '&:hover': {
-            backgroundColor: disabled
-                ? undefined
-                : light
-                ? swapHover
-                    ? 'rgba(255,255,255,0.1)'
-                    : 'rgba(0,0,0,0.1)'
-                : swapHover
-                ? 'rgba(0,0,0,0.1)'
-                : 'rgba(255,255,255,0.1)'
+        '@media (hover:hover)': {
+            '&:hover': {
+                backgroundColor: disabled
+                    ? undefined
+                    : light
+                    ? swapHover
+                        ? 'rgba(255,255,255,0.1)'
+                        : 'rgba(0,0,0,0.1)'
+                    : swapHover
+                    ? 'rgba(0,0,0,0.1)'
+                    : 'rgba(255,255,255,0.1)'
+            }
         }
     })
 )
