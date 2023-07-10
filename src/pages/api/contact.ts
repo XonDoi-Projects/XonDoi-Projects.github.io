@@ -1,10 +1,13 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import sgMail from '@sendgrid/mail'
 import { EMAIL, SENDGRID_API_KEY } from '@/components/Server'
+import { runCors } from './cors'
 
 const sendMessage = async (req: NextApiRequest, res: NextApiResponse) => {
     // Handle your API logic here
     try {
+        await runCors(req, res)
+
         const { name, email, message } = req.body
 
         sgMail.setApiKey(SENDGRID_API_KEY)
@@ -28,6 +31,7 @@ const sendMessage = async (req: NextApiRequest, res: NextApiResponse) => {
                 res.status(500).json({ message: 'Failed to send email' })
             })
     } catch (e: any) {
+        console.log(e)
         res.status(400).json(e.response.data)
     }
 }
