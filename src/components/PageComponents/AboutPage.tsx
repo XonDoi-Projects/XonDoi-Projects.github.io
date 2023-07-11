@@ -18,19 +18,19 @@ export const AboutPage: FunctionComponent<AboutPageProps> = (props) => {
     const [scrollTo, setScrollTo] = useState<number | undefined>(mobile.mobile ? undefined : 0)
 
     const parentRef = useRef<HTMLDivElement | null>(null)
-    const aboutRef = createRef<HTMLDivElement>()
-    const educationRef = createRef<HTMLDivElement>()
-    const hobbyRef = createRef<HTMLDivElement>()
+    const aboutRef = useRef<HTMLDivElement | null>(null)
+    const educationRef = useRef<HTMLDivElement | null>(null)
+    const hobbyRef = useRef<HTMLDivElement | null>(null)
 
-    useEffect(() => {
-        if (scrollTo === 0) {
-            aboutRef.current?.scrollIntoView({ behavior: 'smooth' })
-        } else if (scrollTo === 1) {
-            educationRef.current?.scrollIntoView({ behavior: 'smooth' })
-        } else if (scrollTo === 2) {
-            hobbyRef.current?.scrollIntoView({ behavior: 'smooth' })
-        }
-    }, [aboutRef, educationRef, hobbyRef, mobile.mobile, scrollTo])
+    // useEffect(() => {
+    //     if (scrollTo === 0) {
+    //         aboutRef.current?.scrollIntoView({ behavior: 'smooth' })
+    //     } else if (scrollTo === 1) {
+    //         educationRef.current?.scrollIntoView({ behavior: 'smooth' })
+    //     } else if (scrollTo === 2) {
+    //         hobbyRef.current?.scrollIntoView({ behavior: 'smooth' })
+    //     }
+    // }, [mobile.mobile, scrollTo])
 
     const updateScrollPosition = useCallback(() => {
         if (
@@ -47,6 +47,7 @@ export const AboutPage: FunctionComponent<AboutPageProps> = (props) => {
                     parentRef.current?.getBoundingClientRect().top
             ) {
                 setScrollTo(2)
+                hobbyRef.current?.scrollIntoView({ behavior: 'smooth' })
             } else if (
                 educationRef.current?.getBoundingClientRect().top <=
                     parentRef.current?.getBoundingClientRect().bottom - 200 &&
@@ -54,6 +55,7 @@ export const AboutPage: FunctionComponent<AboutPageProps> = (props) => {
                     parentRef.current?.getBoundingClientRect().top
             ) {
                 setScrollTo(1)
+                educationRef.current?.scrollIntoView({ behavior: 'smooth' })
             } else if (
                 aboutRef.current?.getBoundingClientRect().top <=
                     parentRef.current?.getBoundingClientRect().bottom - 150 &&
@@ -61,11 +63,12 @@ export const AboutPage: FunctionComponent<AboutPageProps> = (props) => {
                     parentRef.current?.getBoundingClientRect().top
             ) {
                 setScrollTo(0)
+                aboutRef.current?.scrollIntoView({ behavior: 'smooth' })
             }
         } else if (mobile.mobile) {
             setScrollTo(undefined)
         }
-    }, [aboutRef, educationRef, hobbyRef, mobile.mobile])
+    }, [mobile.mobile])
 
     useEffect(() => {
         const element = document.getElementById('parentDetailsScroll')
@@ -129,7 +132,18 @@ export const AboutPage: FunctionComponent<AboutPageProps> = (props) => {
                                 marginBottom: '10px',
                                 marginLeft: mobile.mobile ? '0px' : '50px'
                             }}
-                            onClick={() => setScrollTo(index)}
+                            onClick={() => {
+                                if (index === 2) {
+                                    setScrollTo(2)
+                                    hobbyRef.current?.scrollIntoView({ behavior: 'smooth' })
+                                } else if (index === 1) {
+                                    setScrollTo(1)
+                                    educationRef.current?.scrollIntoView({ behavior: 'smooth' })
+                                } else {
+                                    setScrollTo(0)
+                                    aboutRef.current?.scrollIntoView({ behavior: 'smooth' })
+                                }
+                            }}
                             swapHover
                         >
                             <Typography

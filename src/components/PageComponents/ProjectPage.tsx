@@ -22,15 +22,15 @@ export const ProjectPage: FunctionComponent<ProjectPageProps> = (props) => {
     const educationRef = createRef<HTMLDivElement>()
     const hobbyRef = createRef<HTMLDivElement>()
 
-    useEffect(() => {
-        if (scrollTo === 0) {
-            projectRef.current?.scrollIntoView({ behavior: 'smooth' })
-        } else if (scrollTo === 1) {
-            educationRef.current?.scrollIntoView({ behavior: 'smooth' })
-        } else if (scrollTo === 2) {
-            hobbyRef.current?.scrollIntoView({ behavior: 'smooth' })
-        }
-    }, [projectRef, educationRef, hobbyRef, mobile.mobile, scrollTo])
+    // useEffect(() => {
+    //     if (scrollTo === 0) {
+    //         projectRef.current?.scrollIntoView({ behavior: 'smooth' })
+    //     } else if (scrollTo === 1) {
+    //         educationRef.current?.scrollIntoView({ behavior: 'smooth' })
+    //     } else if (scrollTo === 2) {
+    //         hobbyRef.current?.scrollIntoView({ behavior: 'smooth' })
+    //     }
+    // }, [projectRef, educationRef, hobbyRef, mobile.mobile, scrollTo])
 
     const updateScrollPosition = useCallback(() => {
         if (
@@ -47,6 +47,7 @@ export const ProjectPage: FunctionComponent<ProjectPageProps> = (props) => {
                     parentRef.current?.getBoundingClientRect().top
             ) {
                 setScrollTo(2)
+                hobbyRef.current?.scrollIntoView({ behavior: 'smooth' })
             } else if (
                 educationRef.current?.getBoundingClientRect().top <=
                     parentRef.current?.getBoundingClientRect().bottom - 200 &&
@@ -54,6 +55,7 @@ export const ProjectPage: FunctionComponent<ProjectPageProps> = (props) => {
                     parentRef.current?.getBoundingClientRect().top
             ) {
                 setScrollTo(1)
+                educationRef.current?.scrollIntoView({ behavior: 'smooth' })
             } else if (
                 projectRef.current?.getBoundingClientRect().top <=
                     parentRef.current?.getBoundingClientRect().bottom - 150 &&
@@ -61,6 +63,7 @@ export const ProjectPage: FunctionComponent<ProjectPageProps> = (props) => {
                     parentRef.current?.getBoundingClientRect().top
             ) {
                 setScrollTo(0)
+                projectRef.current?.scrollIntoView({ behavior: 'smooth' })
             }
         } else if (mobile.mobile) {
             setScrollTo(undefined)
