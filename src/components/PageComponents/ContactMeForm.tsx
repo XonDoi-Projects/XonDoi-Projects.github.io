@@ -168,7 +168,9 @@ export const ContactMeForm: FunctionComponent<ContactMeFormProps> = (props) => {
                         padding: '0px 20px',
                         overflow: 'hidden',
                         backgroundColor: showSnackbar?.color,
-                        borderRadius: '5px'
+                        borderRadius: '5px',
+                        justifyContent: 'center',
+                        alignItems: 'center'
                     }}
                 >
                     <Typography

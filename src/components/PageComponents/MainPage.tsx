@@ -138,8 +138,10 @@ export const MainPage: FunctionComponent<MainPageProps> = (props) => {
                             alignItems: 'center',
                             marginLeft: mobile.mobile ? '0px' : '100px',
                             marginBottom: mobile.mobile ? '0px' : '30px',
-                            marginTop: mobile.mobile ? '0px' : '30px'
+                            marginTop: mobile.mobile ? '0px' : '30px',
+                            overflowY: 'auto'
                         }}
+                        hidescrollBar
                     >
                         <Typography
                             variant="body"
