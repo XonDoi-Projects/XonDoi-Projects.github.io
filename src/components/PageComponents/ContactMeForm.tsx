@@ -77,6 +77,7 @@ export const ContactMeForm: FunctionComponent<ContactMeFormProps> = (props) => {
                         message: message
                     })
                 })
+                console.log(result)
                 console.log('step2')
                 const data = await result.json()
                 console.log('step3')

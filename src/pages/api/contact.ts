@@ -6,7 +6,7 @@ import { runCors } from './cors'
 export const sendMessage = async (req: NextApiRequest, res: NextApiResponse) => {
     // Handle your API logic here
     try {
-        await runCors(req, res)
+        // await runCors(req, res)
 
         const { name, email, message } = req.body
 
