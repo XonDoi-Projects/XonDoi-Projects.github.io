@@ -62,6 +62,8 @@ export const ProjectPage: FunctionComponent<ProjectPageProps> = (props) => {
             ) {
                 setScrollTo(0)
             }
+        } else if (mobile.mobile) {
+            setScrollTo(undefined)
         }
     }, [projectRef, educationRef, hobbyRef, mobile.mobile])
 

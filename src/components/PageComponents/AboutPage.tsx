@@ -62,6 +62,8 @@ export const AboutPage: FunctionComponent<AboutPageProps> = (props) => {
             ) {
                 setScrollTo(0)
             }
+        } else if (mobile.mobile) {
+            setScrollTo(undefined)
         }
     }, [aboutRef, educationRef, hobbyRef, mobile.mobile])
 
