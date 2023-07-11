@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import sgMail from '@sendgrid/mail'
+import sgMail, { MailDataRequired } from '@sendgrid/mail'
 import { EMAIL, SENDGRID_API_KEY } from '@/components/Server'
 
 const sendMessage = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -10,7 +10,7 @@ const sendMessage = async (req: NextApiRequest, res: NextApiResponse) => {
         sgMail.setApiKey(SENDGRID_API_KEY)
 
         // Define the email options
-        const msg = {
+        const msg: MailDataRequired = {
             from: EMAIL, // Sender's email address
             to: EMAIL, // Recipient's email address
             subject: `${name} is trying to reach you!`,
@@ -19,14 +19,9 @@ const sendMessage = async (req: NextApiRequest, res: NextApiResponse) => {
 
         // Send the email
 
-        await sgMail
-            .send(msg)
-            .then(() => {
-                return res.status(200).json({ message: 'Email sent successfully' })
-            })
-            .catch(() => {
-                return res.status(500).json({ message: 'Failed to send email' })
-            })
+        await sgMail.send(msg).then(() => {
+            return res.status(200).json({ message: 'Message sent successfully' })
+        })
     } catch (e: any) {
         return res.status(400).json(e.response.data)
     }

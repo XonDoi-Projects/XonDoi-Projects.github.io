@@ -18,25 +18,25 @@ export const ProjectPage: FunctionComponent<ProjectPageProps> = (props) => {
     const [scrollTo, setScrollTo] = useState<number | undefined>(mobile.mobile ? undefined : 0)
 
     const parentRef = useRef<HTMLDivElement | null>(null)
-    const ProjectRef = createRef<HTMLDivElement>()
+    const projectRef = createRef<HTMLDivElement>()
     const educationRef = createRef<HTMLDivElement>()
     const hobbyRef = createRef<HTMLDivElement>()
 
     useEffect(() => {
         if (scrollTo === 0) {
-            ProjectRef.current?.scrollIntoView({ behavior: 'smooth' })
+            projectRef.current?.scrollIntoView({ behavior: 'smooth' })
         } else if (scrollTo === 1) {
             educationRef.current?.scrollIntoView({ behavior: 'smooth' })
         } else if (scrollTo === 2) {
             hobbyRef.current?.scrollIntoView({ behavior: 'smooth' })
         }
-    }, [ProjectRef, educationRef, hobbyRef, mobile.mobile, scrollTo])
+    }, [projectRef, educationRef, hobbyRef, mobile.mobile, scrollTo])
 
     const updateScrollPosition = useCallback(() => {
         if (
             parentRef.current &&
             hobbyRef.current &&
-            ProjectRef.current &&
+            projectRef.current &&
             educationRef.current &&
             !mobile.mobile
         ) {
@@ -55,15 +55,15 @@ export const ProjectPage: FunctionComponent<ProjectPageProps> = (props) => {
             ) {
                 setScrollTo(1)
             } else if (
-                ProjectRef.current?.getBoundingClientRect().top <=
+                projectRef.current?.getBoundingClientRect().top <=
                     parentRef.current?.getBoundingClientRect().bottom - 150 &&
-                ProjectRef.current?.getBoundingClientRect().top + 100 >=
+                projectRef.current?.getBoundingClientRect().top + 100 >=
                     parentRef.current?.getBoundingClientRect().top
             ) {
                 setScrollTo(0)
             }
         }
-    }, [ProjectRef, educationRef, hobbyRef, mobile.mobile])
+    }, [projectRef, educationRef, hobbyRef, mobile.mobile])
 
     useEffect(() => {
         const element = document.getElementById('parentDetailsScroll')
@@ -72,7 +72,7 @@ export const ProjectPage: FunctionComponent<ProjectPageProps> = (props) => {
         element?.addEventListener('wheel', updateScrollPosition)
 
         return () => element?.removeEventListener('wheel', updateScrollPosition)
-    }, [ProjectRef, educationRef, hobbyRef, updateScrollPosition])
+    }, [updateScrollPosition])
 
     return (
         <Container
