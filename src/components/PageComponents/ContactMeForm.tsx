@@ -80,10 +80,10 @@ export const ContactMeForm: FunctionComponent<ContactMeFormProps> = (props) => {
                 console.log(result)
                 console.log('step2')
                 const data = await result.json()
-                console.log('step3')
+                console.log('step3', data)
 
                 setShowSnackbar({
-                    message: data.body.message,
+                    message: data.message,
                     color: colors.light.success
                 })
             } catch (e) {
