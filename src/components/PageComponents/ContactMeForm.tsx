@@ -64,7 +64,6 @@ export const ContactMeForm: FunctionComponent<ContactMeFormProps> = (props) => {
                 } else {
                     url = 'https://xondoi-projects.github.io'
                 }
-                console.log(process.env.NODE_ENV, url)
                 //api call
                 const result = await fetch(`${url}/api/contact`, {
                     method: 'POST',
@@ -80,10 +79,11 @@ export const ContactMeForm: FunctionComponent<ContactMeFormProps> = (props) => {
                 const data = await result.json()
 
                 setShowSnackbar({
-                    message: 'Message sent successfully!',
+                    message: data.body.message,
                     color: colors.light.success
                 })
             } catch (e) {
+                console.log(e)
                 setShowSnackbar({
                     message: 'Failed to send message!',
                     color: colors.light.error
