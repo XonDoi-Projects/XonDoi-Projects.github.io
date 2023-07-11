@@ -22,7 +22,7 @@ const sendMessage = async (req: NextApiRequest, res: NextApiResponse) => {
 
         // Send the email
 
-        sgMail
+        return sgMail
             .send(msg)
             .then(() => {
                 res.status(200).json({ message: 'Email sent successfully' })
@@ -32,7 +32,7 @@ const sendMessage = async (req: NextApiRequest, res: NextApiResponse) => {
             })
     } catch (e: any) {
         console.log(e)
-        res.status(400).json(e.response.data)
+        return res.status(400).json(e.response.data)
     }
 }
 
