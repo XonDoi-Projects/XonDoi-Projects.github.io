@@ -10,8 +10,11 @@ const sendMessage = async (req: NextApiRequest, res: NextApiResponse) => {
 
         const { name, email, message } = req.body
 
+        console.log('in api', req.method)
+
         sgMail.setApiKey(SENDGRID_API_KEY)
 
+        console.log('sendgrid api set')
         // Define the email options
         const msg = {
             from: EMAIL, // Sender's email address
@@ -20,18 +23,21 @@ const sendMessage = async (req: NextApiRequest, res: NextApiResponse) => {
             html: `<p>${message}</p><p>Their contact is <strong>${email}</strong></p>`
         }
 
+        console.log('message prepared')
         // Send the email
 
-        return sgMail
+        await sgMail
             .send(msg)
             .then(() => {
-                res.status(200).json({ message: 'Email sent successfully' })
+                console.log('message sent')
+                return res.status(200).json({ message: 'Email sent successfully' })
             })
             .catch(() => {
-                res.status(500).json({ message: 'Failed to send email' })
+                console.log('message failed')
+                return res.status(500).json({ message: 'Failed to send email' })
             })
     } catch (e: any) {
-        console.log(e)
+        console.log('api call failed')
         return res.status(400).json(e.response.data)
     }
 }
