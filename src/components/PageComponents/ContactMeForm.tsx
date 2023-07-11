@@ -65,7 +65,6 @@ export const ContactMeForm: FunctionComponent<ContactMeFormProps> = (props) => {
                     url = 'https://xondoi-projects.github.io'
                 }
                 //api call
-                console.log('step1')
                 const result = await fetch(`${url}/api/contact`, {
                     method: 'POST',
                     headers: {
@@ -77,10 +76,7 @@ export const ContactMeForm: FunctionComponent<ContactMeFormProps> = (props) => {
                         message: message
                     })
                 })
-                console.log(result)
-                console.log('step2')
                 const data = await result.json()
-                console.log('step3', data)
 
                 setShowSnackbar({
                     message: data.message,

@@ -74,6 +74,21 @@ export const AboutPage: FunctionComponent<AboutPageProps> = (props) => {
         return () => element?.removeEventListener('wheel', updateScrollPosition)
     }, [aboutRef, educationRef, hobbyRef, updateScrollPosition])
 
+    useEffect(() => {
+        const element = document.getElementById('parentDetailsScroll')
+
+        element?.removeEventListener('touchmove', (e) => {
+            e.preventDefault()
+        })
+        element?.addEventListener('touchmove', (e) => {
+            e.preventDefault()
+        })
+        return () =>
+            element?.removeEventListener('wheel', (e) => {
+                e.preventDefault()
+            })
+    }, [])
+
     return (
         <Container
             sx={{
@@ -186,11 +201,13 @@ export const AboutPage: FunctionComponent<AboutPageProps> = (props) => {
                             ref={aboutRef}
                             sx={{
                                 flexDirection: 'column',
-                                width: '100%',
-                                marginBottom: '30px'
+                                width: '100%'
                             }}
                         >
-                            <Typography variant="subtitle" sx={{ marginBottom: '15px' }}>
+                            <Typography
+                                variant="subtitle"
+                                sx={{ marginTop: '62px', marginBottom: '15px' }}
+                            >
                                 <big>E</big>xperience
                             </Typography>
                             <Typography>
@@ -223,11 +240,13 @@ export const AboutPage: FunctionComponent<AboutPageProps> = (props) => {
                             ref={educationRef}
                             sx={{
                                 flexDirection: 'column',
-                                width: '100%',
-                                marginBottom: '30px'
+                                width: '100%'
                             }}
                         >
-                            <Typography variant="subtitle" sx={{ marginBottom: '15px' }}>
+                            <Typography
+                                variant="subtitle"
+                                sx={{ marginTop: '62px', marginBottom: '15px' }}
+                            >
                                 <big>E</big>ducation
                             </Typography>
                             <Typography>
@@ -265,7 +284,10 @@ export const AboutPage: FunctionComponent<AboutPageProps> = (props) => {
                                 width: '100%'
                             }}
                         >
-                            <Typography variant="subtitle" sx={{ marginBottom: '15px' }}>
+                            <Typography
+                                variant="subtitle"
+                                sx={{ marginTop: '62px', marginBottom: '15px' }}
+                            >
                                 <big>H</big>obbies
                             </Typography>
                             <Typography>
