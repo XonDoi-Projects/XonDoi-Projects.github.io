@@ -7,6 +7,7 @@ const sendMessage = async (req: NextApiRequest, res: NextApiResponse) => {
     // Handle your API logic here
     try {
         // await runCors(req, res)
+        console.log(req.body)
 
         const { name, email, message } = req.body
 
