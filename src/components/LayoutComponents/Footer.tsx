@@ -20,13 +20,13 @@ export const Footer: FunctionComponent<FooterProps> = (props) => {
         <Container
             sx={{
                 flexDirection: 'row',
-                flex: 1,
+                // flex: 1,
                 width: '100%',
-                maxHeight: '70px',
+                height: '50px',
                 position: mobile ? 'relative' : 'absolute',
                 bottom: 0,
                 left: 0,
-                zIndex: 2,
+                zIndex: 1,
                 padding: '0px 5px',
                 borderBottomRightRadius: '0px',
                 borderBottomLeftRadius: '0px',

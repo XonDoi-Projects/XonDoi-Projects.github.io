@@ -26,7 +26,7 @@ export const ChatButton: FunctionComponent<ChatButtonProps> = (props) => {
                 justifyContent: 'center',
                 alignItems: 'center',
                 borderRadius: '50%',
-                zIndex: 2
+                zIndex: 1
             }}
         >
             <Button
@@ -47,7 +47,7 @@ export const ChatButton: FunctionComponent<ChatButtonProps> = (props) => {
                     position: 'absolute',
                     bottom: '50px',
                     right: 0,
-                    height: show ? '550px' : '0px',
+                    height: show ? '510px' : '0px',
                     opacity: show ? 1 : 0,
                     width: '300px',
                     transition: 'height 0.1s, opacity 0.3s',

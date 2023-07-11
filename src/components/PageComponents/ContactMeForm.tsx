@@ -1,6 +1,6 @@
 import { FunctionComponent, useEffect, useRef, useState } from 'react'
 import { Button, TextAreaField, TextField } from '../InputComponents'
-import { useContactForm, useDarkTheme } from '../Providers'
+import { mobileWidth, useContactForm, useDarkTheme, useSize } from '../Providers'
 import { colors } from '../Colors'
 import { Typography } from '../LayoutComponents/Typography'
 import { Container, FadeInOut, FixedDiv } from '../LayoutComponents'
@@ -27,6 +27,7 @@ export const ContactMeForm: FunctionComponent<ContactMeFormProps> = (props) => {
         setMessage
     } = useContactForm()
 
+    const mobile = useSize()
     const { light } = useDarkTheme()
 
     const checkFields = () => {
@@ -58,13 +59,6 @@ export const ContactMeForm: FunctionComponent<ContactMeFormProps> = (props) => {
     const sendData = async () => {
         if (!checkFields()) {
             try {
-                // let url = ''
-                // if (process.env.NODE_ENV === 'development') {
-                //     url = ''
-                // } else {
-                //     url = 'https://xondoi-projects.github.io'
-                // }
-                //api call
                 const result = await fetch(`/api/contact`, {
                     method: 'POST',
                     headers: {
@@ -82,6 +76,12 @@ export const ContactMeForm: FunctionComponent<ContactMeFormProps> = (props) => {
                     message: data.message,
                     color: colors.light.success
                 })
+                setDisplayName('')
+                setErrorName('')
+                setEmail('')
+                setErrorEmail('')
+                setMessage('')
+                setErrorMessage('')
             } catch (e) {
                 console.log(e)
                 setShowSnackbar({
@@ -107,7 +107,7 @@ export const ContactMeForm: FunctionComponent<ContactMeFormProps> = (props) => {
     return (
         <>
             <Typography variant="subtitle" sx={{ margin: '0px', textTransform: 'uppercase' }}>
-                Send Me A Message
+                Get In Touch!
             </Typography>
             <TextField
                 value={displayName}
@@ -160,11 +160,11 @@ export const ContactMeForm: FunctionComponent<ContactMeFormProps> = (props) => {
                         left: '50%',
                         transform: 'translate(-50%,0)',
                         height: '70px',
-                        maxWidth: '400px',
+                        maxWidth: mobile.mobile ? mobile.size?.width + 'px' : '400px',
                         padding: '0px 20px',
                         overflow: 'hidden',
                         backgroundColor: showSnackbar?.color,
-                        borderRadius: '5px',
+                        borderRadius: '35px',
                         justifyContent: 'center',
                         alignItems: 'center'
                     }}
@@ -174,8 +174,7 @@ export const ContactMeForm: FunctionComponent<ContactMeFormProps> = (props) => {
                             color: colors.light.background,
                             fontSize: '16px',
                             textAlign: 'center',
-                            justifyContent: 'center',
-                            alignItems: 'center'
+                            margin: 0
                         }}
                     >
                         {showSnackbar?.message}

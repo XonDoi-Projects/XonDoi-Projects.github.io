@@ -1,18 +1,13 @@
-import {
-    FunctionComponent,
-    ReactNode,
-    createRef,
-    useEffect,
-    useMemo,
-    useRef,
-    useState
-} from 'react'
+import { FunctionComponent, createRef, useEffect, useState } from 'react'
 import { Container } from '../LayoutComponents'
 import { Typography } from '../LayoutComponents/Typography'
 import { SkillsShowcase } from './SkillsShowcase'
 import { useDarkTheme, useSize } from '../Providers'
 import Image from 'next/image'
 import { colors } from '../Colors'
+import Link from 'next/link'
+import { Button } from '../InputComponents'
+import { BiSolidDownload } from 'react-icons/bi'
 
 export interface ISkill {
     src: string
@@ -118,6 +113,32 @@ export const MainPage: FunctionComponent<MainPageProps> = (props) => {
                         >
                             Web Developer
                         </Typography>
+                        <Link
+                            href="/Nathan_Magro_Resume.pdf"
+                            download="NathanMagro_Resume.pdf"
+                            target="_blank"
+                            style={{
+                                textDecoration: 'none',
+                                width: 'fit-content',
+                                marginLeft: '30px'
+                            }}
+                        >
+                            <Button
+                                sx={{
+                                    width: '150px',
+                                    height: '38px',
+                                    borderRadius: '19px',
+                                    backgroundColor: light
+                                        ? colors.light.accentForeground
+                                        : colors.dark.accentForeground,
+                                    justifyContent: 'space-between',
+                                    padding: '0px 20px'
+                                }}
+                            >
+                                <Typography variant="button"> Resume </Typography>
+                                <BiSolidDownload style={{ fontSize: '20px' }} />
+                            </Button>
+                        </Link>
                     </Container>
                 </Container>
                 <Container
@@ -132,7 +153,7 @@ export const MainPage: FunctionComponent<MainPageProps> = (props) => {
                 >
                     <Container
                         sx={{
-                            height: '360px',
+                            height: mobile.mobile ? 'fit-content' : '360px',
                             width: 'fit-content',
                             justifyContent: 'center',
                             alignItems: 'flex-start',
@@ -147,13 +168,15 @@ export const MainPage: FunctionComponent<MainPageProps> = (props) => {
                             variant="body"
                             sx={{
                                 fontSize: '24px',
-                                lineHeight: mobile.mobile ? undefined : '40px'
+                                lineHeight: mobile.mobile ? undefined : '30px'
                             }}
                         >
-                            I am a skilled Front-end Web Developer, focused on library management
-                            and version control. I also have experience in Back-end Development
-                            routing and services. I am passionate about crafting smooth and
-                            intuitive UIs to deliver the best possible experience for our clients.
+                            I am a Front-end Web Developer, focused on building reusable components,
+                            user interfaces, data display and forms. I also have experience in
+                            library management and version control. Back-end Development is not my
+                            strong suit but I have experience in routing and services. I am
+                            passionate about crafting smooth and intuitive UIs to deliver the best
+                            possible experience for our clients.
                         </Typography>
                     </Container>
                     <Container

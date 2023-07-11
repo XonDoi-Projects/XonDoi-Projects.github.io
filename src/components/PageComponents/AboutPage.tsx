@@ -72,7 +72,7 @@ export const AboutPage: FunctionComponent<AboutPageProps> = (props) => {
         element?.addEventListener('wheel', updateScrollPosition)
 
         return () => element?.removeEventListener('wheel', updateScrollPosition)
-    }, [aboutRef, educationRef, hobbyRef, updateScrollPosition])
+    }, [updateScrollPosition])
 
     return (
         <Container
