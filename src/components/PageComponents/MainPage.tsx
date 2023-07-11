@@ -135,7 +135,7 @@ export const MainPage: FunctionComponent<MainPageProps> = (props) => {
                             height: '360px',
                             width: 'fit-content',
                             justifyContent: 'center',
-                            alignItems: 'center',
+                            alignItems: 'flex-start',
                             marginLeft: mobile.mobile ? '0px' : '100px',
                             marginBottom: mobile.mobile ? '0px' : '30px',
                             marginTop: mobile.mobile ? '0px' : '30px',
