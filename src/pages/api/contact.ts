@@ -3,7 +3,7 @@ import sgMail from '@sendgrid/mail'
 import { EMAIL, SENDGRID_API_KEY } from '@/components/Server'
 import { runCors } from './cors'
 
-export const sendMessage = async (req: NextApiRequest, res: NextApiResponse) => {
+const sendMessage = async (req: NextApiRequest, res: NextApiResponse) => {
     // Handle your API logic here
     try {
         // await runCors(req, res)
@@ -22,7 +22,7 @@ export const sendMessage = async (req: NextApiRequest, res: NextApiResponse) => 
 
         // Send the email
 
-        sgMail
+        return sgMail
             .send(msg)
             .then(() => {
                 res.status(200).json({ message: 'Email sent successfully' })
@@ -32,6 +32,8 @@ export const sendMessage = async (req: NextApiRequest, res: NextApiResponse) => 
             })
     } catch (e: any) {
         console.log(e)
-        res.status(400).json(e.response.data)
+        return res.status(400).json(e.response.data)
     }
 }
+
+export default sendMessage
