@@ -74,21 +74,6 @@ export const AboutPage: FunctionComponent<AboutPageProps> = (props) => {
         return () => element?.removeEventListener('wheel', updateScrollPosition)
     }, [aboutRef, educationRef, hobbyRef, updateScrollPosition])
 
-    useEffect(() => {
-        const element = document.getElementById('parentDetailsScroll')
-
-        element?.removeEventListener('touchmove', (e) => {
-            e.preventDefault()
-        })
-        element?.addEventListener('touchmove', (e) => {
-            e.preventDefault()
-        })
-        return () =>
-            element?.removeEventListener('wheel', (e) => {
-                e.preventDefault()
-            })
-    }, [])
-
     return (
         <Container
             sx={{
