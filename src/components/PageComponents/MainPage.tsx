@@ -172,11 +172,11 @@ export const MainPage: FunctionComponent<MainPageProps> = (props) => {
                             }}
                         >
                             I am a Front-end Web Developer, focused on building reusable components,
-                            user interfaces, data display and forms. I also have experience in
-                            library management and version control. Back-end Development is not my
-                            strong suit but I have experience in routing and services. I am
-                            passionate about crafting smooth and intuitive UIs to deliver the best
-                            possible experience for our clients.
+                            user interfaces, data display, and forms. I also have experience in
+                            library management and version control.I also worked in Back-end
+                            Development, specifically connecting routes with Front-End endpoints,
+                            and services. I am passionate about crafting smooth and intuitive UIs to
+                            deliver the best possible experience for our clients.
                         </Typography>
                     </Container>
                     <Container
