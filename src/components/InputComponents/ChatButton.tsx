@@ -1,18 +1,22 @@
-import { FunctionComponent, createRef, useState } from 'react'
-import { Card, Container, FadeInOut, FixedDiv } from '../LayoutComponents'
-import { ContactFormProvider, mobileWidth, useDarkTheme, useSize } from '../Providers'
+import { FunctionComponent, useRef, useState } from 'react'
+import { Card, Container, FixedDiv } from '../LayoutComponents'
+import { useDarkTheme } from '../Providers'
 import { colors } from '../Colors'
 import { Button } from './Button'
 import { BiChat } from 'react-icons/bi'
 import { ContactMeForm } from '../PageComponents'
+import { useClickOutside } from '../hooks'
 
 export interface ChatButtonProps {}
 
 export const ChatButton: FunctionComponent<ChatButtonProps> = (props) => {
     const { light } = useDarkTheme()
-    const mobile = useSize()
 
     const [show, setShow] = useState(false)
+
+    const popupRef = useRef<HTMLDivElement | null>(null)
+
+    useClickOutside(popupRef, () => setShow(false))
 
     return (
         <FixedDiv
@@ -43,6 +47,7 @@ export const ChatButton: FunctionComponent<ChatButtonProps> = (props) => {
             </Button>
 
             <Container
+                ref={popupRef}
                 sx={{
                     position: 'absolute',
                     bottom: '50px',
@@ -50,7 +55,7 @@ export const ChatButton: FunctionComponent<ChatButtonProps> = (props) => {
                     height: show ? '510px' : '0px',
                     opacity: show ? 1 : 0,
                     width: '300px',
-                    transition: 'height 0.1s, opacity 0.3s',
+                    transition: 'height 0.1s, opacity 0.5s',
                     transitionTimingFunction: 'ease-in',
                     zIndex: 2,
                     borderRadius: '50px',

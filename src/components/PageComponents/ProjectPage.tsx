@@ -203,7 +203,9 @@ export const ProjectPage: FunctionComponent<ProjectPageProps> = (props) => {
                             overflowX: 'hidden'
                         }}
                         hidescrollBar
-                    ></Container>
+                    >
+                        <Container />
+                    </Container>
                 </Container>
             </Container>
         </Container>

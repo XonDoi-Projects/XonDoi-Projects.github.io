@@ -10,6 +10,7 @@ import { keyframes } from '@emotion/react'
 import { colors } from '../Colors'
 import { FadeInOut } from './FadeInOut'
 import { SkillsShowcase } from '../PageComponents'
+import { useClickOutside } from '../hooks'
 
 export interface HeaderProps {
     sx?: CSSProperties
@@ -29,6 +30,7 @@ export const Header: FunctionComponent<HeaderProps> = (props) => {
     const [show, setShow] = useState(false)
 
     const ref = useRef<HTMLDivElement | null>(null)
+    const popupRef = useRef<HTMLDivElement | null>(null)
 
     const [navDOMRect, setNavDOMRect] = useState<DOMRect>()
 
@@ -37,6 +39,8 @@ export const Header: FunctionComponent<HeaderProps> = (props) => {
             setNavDOMRect(ref.current.getBoundingClientRect())
         }
     }, [mobile])
+
+    useClickOutside(popupRef, () => setShow(false))
 
     return (
         <Container
@@ -122,6 +126,7 @@ export const Header: FunctionComponent<HeaderProps> = (props) => {
                                 <BiMenu style={{ fontSize: '30px' }} />
                             </Button>
                             <Container
+                                ref={popupRef}
                                 sx={{
                                     position: 'absolute',
                                     top: navDOMRect?.height,
