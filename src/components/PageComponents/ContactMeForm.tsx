@@ -107,7 +107,7 @@ export const ContactMeForm: FunctionComponent<ContactMeFormProps> = (props) => {
     return (
         <>
             <Typography variant="subtitle" sx={{ margin: '0px', textTransform: 'uppercase' }}>
-                Get In Touch!
+                Get In Touch
             </Typography>
             <TextField
                 value={displayName}

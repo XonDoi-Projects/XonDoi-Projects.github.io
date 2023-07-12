@@ -1,8 +1,6 @@
-import Image from 'next/image'
 import styled from '@emotion/styled'
 import { CSSProperties, FunctionComponent, HTMLProps } from 'react'
 import { useDarkTheme } from '../Providers'
-import { keyframes } from '@emotion/react'
 import { colors } from '../Colors'
 
 export interface StyledCardProps extends HTMLProps<HTMLDivElement> {
