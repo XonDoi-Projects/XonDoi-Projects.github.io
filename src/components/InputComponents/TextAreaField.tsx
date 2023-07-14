@@ -66,7 +66,7 @@ export const TextAreaField: FunctionComponent<TextAreaFieldProps> = ({
                 value={value}
                 onChange={onValueChange}
                 sx={{ ...sx }}
-                rows={6}
+                rows={4}
                 style={{ height: undefined }}
                 onFocus={() => setIsFocus(true)}
                 onBlur={() => setIsFocus(false)}
