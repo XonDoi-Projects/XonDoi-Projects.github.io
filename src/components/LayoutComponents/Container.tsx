@@ -51,6 +51,7 @@ export const Container: FunctionComponent<StyledContainerProps> = forwardRef((pr
             hidescrollBar={props.hidescrollBar}
             onClick={props.onClick}
             onWheel={props.onWheel}
+            onTouchMove={props.onTouchMove}
         >
             {props.children}
         </StyledContainer>
