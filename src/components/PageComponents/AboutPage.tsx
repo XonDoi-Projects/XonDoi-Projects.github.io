@@ -1,4 +1,12 @@
-import { FunctionComponent, createRef, useCallback, useEffect, useRef, useState } from 'react'
+import {
+    FunctionComponent,
+    TouchEventHandler,
+    createRef,
+    useCallback,
+    useEffect,
+    useRef,
+    useState
+} from 'react'
 import { Accordian, Container } from '../LayoutComponents'
 import { useDarkTheme, useSize } from '../Providers'
 import { Typography } from '../LayoutComponents/Typography'
@@ -25,6 +33,12 @@ export const AboutPage: FunctionComponent<AboutPageProps> = (props) => {
     const hobbyRef = useRef<HTMLDivElement | null>(null)
 
     const [showMobile, setShowMobile] = useState(false)
+
+    const [scrollPosition, setScrollPosition] = useState(0)
+    const [touchStart, setTouchStart] = useState(0)
+    const [touchEnd, setTouchEnd] = useState(0)
+    const [touchVelocity, setTouchVelocity] = useState(0)
+    const requestRef = useRef<number>()
 
     useEffect(() => {
         // if (!mobile) {
@@ -109,6 +123,48 @@ export const AboutPage: FunctionComponent<AboutPageProps> = (props) => {
         }
     }, [mobile, size])
 
+    //----------------- Mobile Momentum Scrolling Logic ------------------------
+
+    const animateScroll = () => {
+        updateScrollPosition()
+        setScrollPosition((prevPosition) => {
+            const currentPosition = touchEnd
+            const delta = touchStart - currentPosition
+            setTouchVelocity(delta)
+            setTouchStart(currentPosition)
+
+            return prevPosition + delta
+        })
+
+        if (Math.abs(touchVelocity) > 0.1) {
+            requestRef.current = requestAnimationFrame(animateScroll)
+        }
+    }
+
+    const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
+        setTouchStart(e.touches[0].clientY)
+        cancelAnimationFrame(requestRef.current as number)
+    }
+
+    const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
+        updateScrollPosition()
+        setScrollPosition((prevPosition) => {
+            const currentPosition = e.touches[0].clientY
+            const delta = touchStart - currentPosition
+            setTouchVelocity(delta)
+            setTouchStart(currentPosition)
+
+            return prevPosition + delta
+        })
+    }
+
+    const handleTouchEnd = (e: React.TouchEvent<HTMLDivElement>) => {
+        setTouchEnd(e.changedTouches[0].clientY)
+        requestRef.current = requestAnimationFrame(animateScroll)
+    }
+
+    //---------------------------- End ---------------------------------
+
     return (
         <Container
             sx={{
@@ -120,7 +176,9 @@ export const AboutPage: FunctionComponent<AboutPageProps> = (props) => {
             }}
             hidescrollBar
             onWheel={updateScrollPosition}
-            onTouchMove={updateScrollPosition}
+            onTouchMove={handleTouchMove}
+            onTouchStart={handleTouchStart}
+            onTouchEnd={(e) => handleTouchEnd(e)}
         >
             <Container
                 sx={{
