@@ -6,6 +6,7 @@ import { ChatButton } from '../InputComponents'
 import { colors } from '../Colors'
 import { useDarkTheme, useSize } from '../Providers'
 import { useRouter } from 'next/router'
+import { Spinner } from './Spinner'
 
 export interface PageProps {
     sx?: CSSProperties
@@ -17,7 +18,8 @@ export const Page: FunctionComponent<PageProps> = (props) => {
     const mobile = useSize()
 
     const router = useRouter()
-    return (
+
+    return mobile.size && light !== undefined ? (
         <Container
             sx={{
                 flex: 1,
@@ -37,6 +39,10 @@ export const Page: FunctionComponent<PageProps> = (props) => {
             {props.children}
             {mobile.mobile ? <Footer /> : <></>}
             {router.pathname !== '/contact' ? <ChatButton /> : <></>}
+        </Container>
+    ) : (
+        <Container sx={{ width: '100vw', height: '100vh' }}>
+            <Spinner />
         </Container>
     )
 }
