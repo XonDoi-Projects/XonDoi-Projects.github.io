@@ -4,7 +4,7 @@ import { Header } from './Header'
 import { Footer } from './Footer'
 import { ChatButton } from '../InputComponents'
 import { colors } from '../Colors'
-import { useDarkTheme } from '../Providers'
+import { useDarkTheme, useSize } from '../Providers'
 import { useRouter } from 'next/router'
 
 export interface PageProps {
@@ -14,6 +14,7 @@ export interface PageProps {
 
 export const Page: FunctionComponent<PageProps> = (props) => {
     const { light } = useDarkTheme()
+    const mobile = useSize()
 
     const router = useRouter()
     return (
@@ -34,7 +35,7 @@ export const Page: FunctionComponent<PageProps> = (props) => {
         >
             <Header />
             {props.children}
-            <Footer />
+            {mobile.mobile ? <Footer /> : <></>}
             {router.pathname !== '/contact' ? <ChatButton /> : <></>}
         </Container>
     )

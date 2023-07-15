@@ -171,8 +171,7 @@ export const AboutPage: FunctionComponent<AboutPageProps> = (props) => {
                 flex: 1,
                 justifyContent: 'center',
                 alignItems: 'center',
-                width: '100%',
-                paddingLeft: mobile ? undefined : '110px'
+                width: '100%'
             }}
             hidescrollBar
             onWheel={updateScrollPosition}
@@ -191,7 +190,7 @@ export const AboutPage: FunctionComponent<AboutPageProps> = (props) => {
                     ref={bannerRef}
                     sx={{
                         width: mobile ? '100%' : '35%',
-                        minWidth: '360px',
+                        // minWidth: '360px',
                         height: mobile ? 'fit-content' : '100vh',
                         padding: '30px',
                         flexDirection: 'column',
@@ -206,7 +205,7 @@ export const AboutPage: FunctionComponent<AboutPageProps> = (props) => {
                             color: light
                                 ? colors.light.accentForeground
                                 : colors.dark.accentForeground,
-                            marginLeft: mobile ? '0px' : '35px'
+                            marginLeft: mobile ? '0px' : '20px'
                         }}
                     >
                         About Me
@@ -221,7 +220,7 @@ export const AboutPage: FunctionComponent<AboutPageProps> = (props) => {
                                 justifyContent: mobile ? 'center' : 'flex-start',
                                 alignItems: 'center',
                                 marginBottom: '10px',
-                                marginLeft: mobile ? '0px' : '50px'
+                                marginLeft: mobile ? '0px' : '15px'
                             }}
                             onClick={() => {
                                 if (index === 2) {
