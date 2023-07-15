@@ -20,8 +20,7 @@ export const ContactPage: FunctionComponent<ContactPageProps> = (props) => {
                 flex: 1,
                 justifyContent: 'center',
                 alignItems: 'center',
-                width: '100%',
-                paddingLeft: mobile.mobile ? undefined : '110px'
+                width: '100%'
             }}
             hidescrollBar
         >
@@ -49,7 +48,7 @@ export const ContactPage: FunctionComponent<ContactPageProps> = (props) => {
                             color: light
                                 ? colors.light.accentForeground
                                 : colors.dark.accentForeground,
-                            marginLeft: mobile.mobile ? '0px' : '50px'
+                            marginLeft: mobile.mobile ? '0px' : '20px'
                         }}
                     >
                         Contact Me
@@ -63,7 +62,7 @@ export const ContactPage: FunctionComponent<ContactPageProps> = (props) => {
                                 : colors.dark.accentForeground,
                             margin: '0px',
                             marginBottom: '10px',
-                            marginLeft: mobile.mobile ? '0px' : '50px'
+                            marginLeft: mobile.mobile ? '0px' : '20px'
                         }}
                     >
                         LinkedIn
@@ -82,7 +81,7 @@ export const ContactPage: FunctionComponent<ContactPageProps> = (props) => {
                                 color: light ? colors.light.background : colors.dark.background,
                                 margin: '0px',
                                 marginBottom: '20px',
-                                marginLeft: mobile.mobile ? '0px' : '50px',
+                                marginLeft: mobile.mobile ? '0px' : '20px',
                                 wordBreak: 'break-all'
                             }}
                         >
@@ -97,7 +96,7 @@ export const ContactPage: FunctionComponent<ContactPageProps> = (props) => {
                                 : colors.dark.accentForeground,
                             margin: '0px',
                             marginBottom: '10px',
-                            marginLeft: mobile.mobile ? '0px' : '50px'
+                            marginLeft: mobile.mobile ? '0px' : '20px'
                         }}
                     >
                         Discord
@@ -108,7 +107,7 @@ export const ContactPage: FunctionComponent<ContactPageProps> = (props) => {
                             color: light ? colors.light.background : colors.dark.background,
                             margin: '0px',
                             marginBottom: '20px',
-                            marginLeft: mobile.mobile ? '0px' : '50px'
+                            marginLeft: mobile.mobile ? '0px' : '20px'
                         }}
                     >
                         xondoi
@@ -122,7 +121,7 @@ export const ContactPage: FunctionComponent<ContactPageProps> = (props) => {
                                 : colors.dark.accentForeground,
                             margin: '0px',
                             marginBottom: '10px',
-                            marginLeft: mobile.mobile ? '0px' : '50px'
+                            marginLeft: mobile.mobile ? '0px' : '20px'
                         }}
                     >
                         Email
@@ -133,7 +132,7 @@ export const ContactPage: FunctionComponent<ContactPageProps> = (props) => {
                             color: light ? colors.light.background : colors.dark.background,
                             margin: '0px',
                             marginBottom: '20px',
-                            marginLeft: mobile.mobile ? '0px' : '50px',
+                            marginLeft: mobile.mobile ? '0px' : '20px',
                             wordBreak: 'break-all'
                         }}
                     >

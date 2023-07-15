@@ -41,7 +41,8 @@ export const SkillsShowcase: FunctionComponent<SkillsShowcaseProps> = (props) =>
                 sx={{
                     fontSize: '32px',
                     color: light ? colors.light.accent : colors.dark.accent,
-                    textAlign: 'center'
+                    textAlign: 'center',
+                    margin: '0px'
                 }}
             >
                 Technology Stack

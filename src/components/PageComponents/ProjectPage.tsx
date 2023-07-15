@@ -132,7 +132,7 @@ export const ProjectPage: FunctionComponent<ProjectPageProps> = (props) => {
                             justifyContent: mobile.mobile ? 'center' : 'flex-start',
                             alignItems: 'center',
                             marginBottom: '10px',
-                            marginLeft: mobile.mobile ? '0px' : '50px'
+                            marginLeft: mobile.mobile ? '0px' : '30px'
                         }}
                     >
                         Coming Soon...
@@ -147,7 +147,7 @@ export const ProjectPage: FunctionComponent<ProjectPageProps> = (props) => {
                                 justifyContent: mobile.mobile ? 'center' : 'flex-start',
                                 alignItems: 'center',
                                 marginBottom: '10px',
-                                marginLeft: mobile.mobile ? '0px' : '50px'
+                                marginLeft: mobile.mobile ? '0px' : '30px'
                             }}
                             onClick={() => setScrollTo(index)}
                             swapHover

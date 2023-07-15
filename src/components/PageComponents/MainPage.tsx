@@ -53,7 +53,7 @@ export const MainPage: FunctionComponent<MainPageProps> = (props) => {
             <Container
                 sx={{
                     width: mobile.mobile ? mobile.size?.width : '100%',
-                    height: mobile.mobile ? undefined : '100%',
+                    height: mobile.mobile ? undefined : '100dvh',
                     flexDirection: mobile.mobile ? 'column' : 'row'
                 }}
             >
@@ -71,7 +71,7 @@ export const MainPage: FunctionComponent<MainPageProps> = (props) => {
                         sx={{
                             width: bannerWidth,
                             height: `calc(1451/2736 * ${bannerWidth}px)`,
-                            margin: '30px 0px'
+                            marginTop: mobile.mobile ? '30px' : '50px'
                         }}
                     >
                         <Image
@@ -83,6 +83,7 @@ export const MainPage: FunctionComponent<MainPageProps> = (props) => {
                     </Container>
                     <Container
                         sx={{
+                            // flex: 1,
                             padding: '20px',
                             flexDirection: 'column',
                             width: '100%',
@@ -92,6 +93,7 @@ export const MainPage: FunctionComponent<MainPageProps> = (props) => {
                         <Typography
                             variant="supertitle"
                             sx={{
+                                marginTop: '30px',
                                 marginLeft: '30px',
                                 marginBottom: '0px',
                                 color: light
@@ -153,13 +155,13 @@ export const MainPage: FunctionComponent<MainPageProps> = (props) => {
                 >
                     <Container
                         sx={{
-                            height: mobile.mobile ? 'fit-content' : '360px',
+                            height: mobile.mobile ? 'fit-content' : '35%',
                             width: 'fit-content',
                             justifyContent: 'center',
                             alignItems: 'flex-start',
-                            marginLeft: mobile.mobile ? '0px' : '100px',
-                            marginBottom: mobile.mobile ? '0px' : '30px',
-                            marginTop: mobile.mobile ? '0px' : '30px',
+                            marginLeft: mobile.mobile ? '0px' : '70px',
+                            marginBottom: mobile.mobile ? '0px' : '20px',
+                            marginTop: mobile.mobile ? '0px' : '20px',
                             overflowY: 'auto'
                         }}
                         hidescrollBar
@@ -168,7 +170,8 @@ export const MainPage: FunctionComponent<MainPageProps> = (props) => {
                             variant="body"
                             sx={{
                                 fontSize: '24px',
-                                lineHeight: mobile.mobile ? undefined : '30px'
+                                lineHeight: mobile.mobile ? undefined : '30px',
+                                margin: '0px'
                             }}
                         >
                             I am a Front-end Web Developer, focused on building reusable components,
@@ -181,9 +184,10 @@ export const MainPage: FunctionComponent<MainPageProps> = (props) => {
                     </Container>
                     <Container
                         sx={{
+                            height: 'fit-content',
                             width: mobile.mobile ? '100%' : '70%',
                             justifyContent: 'center',
-                            alignItems: 'center'
+                            alignItems: 'space-evenly'
                         }}
                     >
                         <SkillsShowcase skills={skills} />
