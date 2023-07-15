@@ -6,8 +6,26 @@ import Link from 'next/link'
 import { colors } from '../Colors'
 import { BiRightArrowAlt } from 'react-icons/bi'
 import { Button } from '../InputComponents'
+import { Projects } from './Projects'
+import { Project } from './ProjectCard'
 
-// const navigation = [{ text: 'Experience' }, { text: 'Education' }, { text: 'Hobbies' }]
+const projectList: Project[] = [
+    {
+        title: 'test1',
+        description:
+            "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+    },
+    {
+        title: 'test2',
+        description:
+            "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+    },
+    {
+        title: 'test3',
+        description:
+            "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+    }
+]
 
 export interface ProjectPageProps {}
 
@@ -15,78 +33,13 @@ export const ProjectPage: FunctionComponent<ProjectPageProps> = (props) => {
     const mobile = useSize()
     const { light } = useDarkTheme()
 
-    const [scrollTo, setScrollTo] = useState<number | undefined>(mobile.mobile ? undefined : 0)
-
-    const parentRef = useRef<HTMLDivElement | null>(null)
-    const projectRef = createRef<HTMLDivElement>()
-    const educationRef = createRef<HTMLDivElement>()
-    const hobbyRef = createRef<HTMLDivElement>()
-
-    // useEffect(() => {
-    //     if (scrollTo === 0) {
-    //         projectRef.current?.scrollIntoView({ behavior: 'smooth' })
-    //     } else if (scrollTo === 1) {
-    //         educationRef.current?.scrollIntoView({ behavior: 'smooth' })
-    //     } else if (scrollTo === 2) {
-    //         hobbyRef.current?.scrollIntoView({ behavior: 'smooth' })
-    //     }
-    // }, [projectRef, educationRef, hobbyRef, mobile.mobile, scrollTo])
-
-    const updateScrollPosition = useCallback(() => {
-        if (
-            parentRef.current &&
-            hobbyRef.current &&
-            projectRef.current &&
-            educationRef.current &&
-            !mobile.mobile
-        ) {
-            if (
-                hobbyRef.current?.getBoundingClientRect().top <=
-                    parentRef.current?.getBoundingClientRect().bottom - 100 &&
-                hobbyRef.current?.getBoundingClientRect().top >=
-                    parentRef.current?.getBoundingClientRect().top
-            ) {
-                setScrollTo(2)
-                hobbyRef.current?.scrollIntoView({ behavior: 'smooth' })
-            } else if (
-                educationRef.current?.getBoundingClientRect().top <=
-                    parentRef.current?.getBoundingClientRect().bottom - 200 &&
-                educationRef.current?.getBoundingClientRect().top >=
-                    parentRef.current?.getBoundingClientRect().top
-            ) {
-                setScrollTo(1)
-                educationRef.current?.scrollIntoView({ behavior: 'smooth' })
-            } else if (
-                projectRef.current?.getBoundingClientRect().top <=
-                    parentRef.current?.getBoundingClientRect().bottom - 150 &&
-                projectRef.current?.getBoundingClientRect().top + 100 >=
-                    parentRef.current?.getBoundingClientRect().top
-            ) {
-                setScrollTo(0)
-                projectRef.current?.scrollIntoView({ behavior: 'smooth' })
-            }
-        } else if (mobile.mobile) {
-            setScrollTo(undefined)
-        }
-    }, [projectRef, educationRef, hobbyRef, mobile.mobile])
-
-    useEffect(() => {
-        const element = document.getElementById('parentDetailsScroll')
-
-        element?.removeEventListener('wheel', updateScrollPosition)
-        element?.addEventListener('wheel', updateScrollPosition)
-
-        return () => element?.removeEventListener('wheel', updateScrollPosition)
-    }, [updateScrollPosition])
-
     return (
         <Container
             sx={{
                 flex: 1,
                 justifyContent: 'center',
                 alignItems: 'center',
-                width: '100%',
-                paddingLeft: mobile.mobile ? undefined : '110px'
+                width: '100%'
             }}
             hidescrollBar
         >
@@ -120,65 +73,6 @@ export const ProjectPage: FunctionComponent<ProjectPageProps> = (props) => {
                     >
                         Projects
                     </Typography>
-                    <Typography
-                        sx={{
-                            fontFamily: '"Montserrat", sans-serif',
-                            fontSize: '28px',
-                            color: light
-                                ? colors.light.accentForeground
-                                : colors.dark.accentForeground,
-                            margin: '0px',
-                            textTransform: 'uppercase',
-                            justifyContent: mobile.mobile ? 'center' : 'flex-start',
-                            alignItems: 'center',
-                            marginBottom: '10px',
-                            marginLeft: mobile.mobile ? '0px' : '30px'
-                        }}
-                    >
-                        Coming Soon...
-                    </Typography>
-                    {/* {navigation.map((nav, index) => (
-                        <Button
-                            key={index}
-                            href={nav.text}
-                            sx={{
-                                flexDirection: 'row',
-                                display: 'flex',
-                                justifyContent: mobile.mobile ? 'center' : 'flex-start',
-                                alignItems: 'center',
-                                marginBottom: '10px',
-                                marginLeft: mobile.mobile ? '0px' : '30px'
-                            }}
-                            onClick={() => setScrollTo(index)}
-                            swapHover
-                        >
-                            <Typography
-                                variant="linker"
-                                sx={{
-                                    fontFamily: '"Montserrat", sans-serif',
-                                    fontSize:
-                                        scrollTo === index && !mobile.mobile ? '28px' : '22px',
-                                    color: light
-                                        ? colors.light.accentForeground
-                                        : colors.dark.accentForeground,
-                                    margin: '0px 20px 0px 0px',
-                                    textTransform: 'uppercase'
-                                }}
-                            >
-                                {nav.text}
-                            </Typography>
-                            <BiRightArrowAlt
-                                style={{
-                                    fontSize: scrollTo === index && !mobile.mobile ? '28px' : '22px'
-                                }}
-                                color={
-                                    light
-                                        ? colors.light.accentForeground
-                                        : colors.dark.accentForeground
-                                }
-                            />
-                        </Button>
-                    ))} */}
                 </Container>
 
                 <Container
@@ -193,8 +87,6 @@ export const ProjectPage: FunctionComponent<ProjectPageProps> = (props) => {
                     }}
                 >
                     <Container
-                        id="parentDetailsScroll"
-                        ref={parentRef}
                         sx={{
                             flexDirection: 'column',
                             width: mobile.mobile ? '100%' : '70%',
@@ -204,7 +96,7 @@ export const ProjectPage: FunctionComponent<ProjectPageProps> = (props) => {
                         }}
                         hidescrollBar
                     >
-                        <Container />
+                        <Projects projects={projectList} />
                     </Container>
                 </Container>
             </Container>
