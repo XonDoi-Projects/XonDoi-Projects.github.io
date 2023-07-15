@@ -85,7 +85,6 @@ export const ContactMeForm: FunctionComponent<ContactMeFormProps> = (props) => {
                 setMessage('')
                 setErrorMessage('')
             } catch (e) {
-                console.log(e)
                 setShowSnackbar({
                     message: 'Failed to send message!',
                     color: colors.light.error

@@ -1,4 +1,4 @@
-import { FunctionComponent, useState } from 'react'
+import { CSSProperties, FunctionComponent, useState } from 'react'
 import { Container } from './Container'
 import { Typography } from './Typography'
 import { useDarkTheme } from '../Providers'
@@ -9,6 +9,7 @@ import { Button } from '../InputComponents'
 export interface AccordianProps {
     title: string
     data?: string[]
+    sx?: CSSProperties
 }
 
 export const Accordian: FunctionComponent<AccordianProps> = (props) => {
@@ -28,7 +29,8 @@ export const Accordian: FunctionComponent<AccordianProps> = (props) => {
                 border: '1px solid',
                 borderColor: light ? colors.light.accent : colors.dark.accent,
                 borderRadius: '10px',
-                overflow: 'hidden'
+                overflow: 'hidden',
+                ...props.sx
             }}
         >
             <Container
