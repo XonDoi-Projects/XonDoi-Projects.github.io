@@ -177,8 +177,8 @@ export const MainPage: FunctionComponent<MainPageProps> = (props) => {
                             I am a versatile Front-end Web Developer skilled in building reusable
                             components, intuitive UIs, data display, and forms. With experience in
                             library management, version control, and back-end integration, I am
-                            committed to creating seamless and user-friendly interfaces for optimal
-                            client satisfaction.
+                            committed to crafting smooth and seamless interfaces to create an
+                            exceptional user experience.
                         </Typography>
                     </Container>
                     <Container
