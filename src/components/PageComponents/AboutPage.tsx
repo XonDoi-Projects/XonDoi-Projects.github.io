@@ -120,6 +120,7 @@ export const AboutPage: FunctionComponent<AboutPageProps> = (props) => {
             }}
             hidescrollBar
             onWheel={updateScrollPosition}
+            onTouchMove={updateScrollPosition}
         >
             <Container
                 sx={{
