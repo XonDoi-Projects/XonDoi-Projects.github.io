@@ -54,7 +54,7 @@ export const FieldContainer: FunctionComponent<FieldContainerProps> = (props) =>
             >
                 {props.children}
             </Container>
-            <Container>
+            <Container sx={{ height: '12px' }}>
                 <Typography
                     variant="small"
                     sx={{
@@ -65,12 +65,12 @@ export const FieldContainer: FunctionComponent<FieldContainerProps> = (props) =>
                     {props.errorText}
                 </Typography>
             </Container>
-            <Container>
+            <Container sx={{ height: '12px' }}>
                 <Typography
                     variant="small"
                     sx={{
                         color: light ? colors.dark.background : colors.light.background,
-                        marginTop: '0px'
+                        margin: '0px'
                     }}
                 >
                     {props.helperText}

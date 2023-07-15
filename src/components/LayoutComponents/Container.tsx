@@ -9,6 +9,7 @@ export interface StyledContainerProps extends HTMLProps<HTMLDivElement> {
     hidescrollBar?: boolean
     ref?: Ref<HTMLDivElement>
     light?: boolean
+    // onWheel?: () => void
 }
 
 export const StyledContainer = styled.div<StyledContainerProps>(({ sx, hidescrollBar, light }) => ({
@@ -48,6 +49,8 @@ export const Container: FunctionComponent<StyledContainerProps> = forwardRef((pr
             }}
             light={light}
             hidescrollBar={props.hidescrollBar}
+            onClick={props.onClick}
+            onWheel={props.onWheel}
         >
             {props.children}
         </StyledContainer>

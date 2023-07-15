@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import { CSSProperties, FunctionComponent, HTMLProps, ReactNode } from 'react'
-import { Container } from '../LayoutComponents'
+import { Container, Spinner } from '../LayoutComponents'
 import { Typography } from '../LayoutComponents/Typography'
 import { useDarkTheme } from '../Providers'
 import { colors } from '../Colors'
@@ -10,6 +10,7 @@ export interface ButtonProps extends HTMLProps<HTMLButtonElement> {
     contentSx?: CSSProperties
     children?: ReactNode
     swapHover?: boolean
+    loading?: boolean
 }
 
 interface StyledButtonProps extends ButtonProps {
@@ -46,8 +47,9 @@ export const StyledButton = styled.button<StyledButtonProps>(
     })
 )
 
-export const Button: FunctionComponent<StyledButtonProps> = (props) => {
+export const Button: FunctionComponent<ButtonProps> = (props) => {
     const { light } = useDarkTheme()
+
     return (
         <Container
             sx={{
@@ -61,12 +63,21 @@ export const Button: FunctionComponent<StyledButtonProps> = (props) => {
         >
             <StyledButton
                 disabled={props.disabled}
-                onClick={!props.disabled ? props.onClick : undefined}
+                onClick={!props.disabled && !props.loading ? props.onClick : undefined}
                 light={light}
                 swapHover={props.swapHover}
                 sx={{ justifyContent: 'center', alignItems: 'center', ...props.sx }}
             >
-                {typeof props.children === 'string' ? (
+                {props.loading ? (
+                    <Spinner
+                        sx={{
+                            backgroundColor:
+                                props.sx?.backgroundColor || light
+                                    ? colors.light.accent
+                                    : colors.dark.accent
+                        }}
+                    />
+                ) : typeof props.children === 'string' ? (
                     <Typography
                         variant="button"
                         sx={{ margin: '0px 10px', color: props.contentSx?.color }}

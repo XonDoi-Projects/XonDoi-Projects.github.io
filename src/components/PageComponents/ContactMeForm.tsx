@@ -10,6 +10,7 @@ export interface ContactMeFormProps {}
 export const ContactMeForm: FunctionComponent<ContactMeFormProps> = (props) => {
     const [showSnackbar, setShowSnackbar] = useState<{ message: string; color: string }>()
 
+    const [loading, setLoading] = useState(false)
     const timeoutRef = useRef<NodeJS.Timeout>()
 
     const {
@@ -58,6 +59,7 @@ export const ContactMeForm: FunctionComponent<ContactMeFormProps> = (props) => {
 
     const sendData = async () => {
         if (!checkFields()) {
+            setLoading(true)
             try {
                 const result = await fetch(`/api/contact`, {
                     method: 'POST',
@@ -83,12 +85,12 @@ export const ContactMeForm: FunctionComponent<ContactMeFormProps> = (props) => {
                 setMessage('')
                 setErrorMessage('')
             } catch (e) {
-                console.log(e)
                 setShowSnackbar({
                     message: 'Failed to send message!',
                     color: colors.light.error
                 })
             }
+            setLoading(false)
         }
     }
 
@@ -142,12 +144,13 @@ export const ContactMeForm: FunctionComponent<ContactMeFormProps> = (props) => {
                 <Button
                     onClick={sendData}
                     sx={{
+                        width: '80px',
                         borderRadius: '19px',
                         color: light ? colors.light.accentForeground : colors.dark.accentForeground,
-                        // border: '1px solid',
                         backgroundColor: light ? colors.light.accent : colors.dark.accent
                     }}
                     swapHover
+                    loading={loading}
                 >
                     Send
                 </Button>

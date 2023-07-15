@@ -6,78 +6,108 @@ import Link from 'next/link'
 import { colors } from '../Colors'
 import { BiRightArrowAlt } from 'react-icons/bi'
 import { Button } from '../InputComponents'
+import { AboutMobileOverlay } from '../LayoutComponents/AboutMobileOverlay'
 
 const navigation = [{ text: 'Experience' }, { text: 'Education' }, { text: 'Hobbies' }]
 
 export interface AboutPageProps {}
 
 export const AboutPage: FunctionComponent<AboutPageProps> = (props) => {
-    const mobile = useSize()
+    const { mobile, size } = useSize()
     const { light } = useDarkTheme()
 
-    const [scrollTo, setScrollTo] = useState<number | undefined>(mobile.mobile ? undefined : 0)
+    const [scrollTo, setScrollTo] = useState<number>()
 
+    const bannerRef = useRef<HTMLDivElement | null>(null)
     const parentRef = useRef<HTMLDivElement | null>(null)
     const aboutRef = useRef<HTMLDivElement | null>(null)
     const educationRef = useRef<HTMLDivElement | null>(null)
     const hobbyRef = useRef<HTMLDivElement | null>(null)
 
-    // useEffect(() => {
-    //     if (scrollTo === 0) {
-    //         aboutRef.current?.scrollIntoView({ behavior: 'smooth' })
-    //     } else if (scrollTo === 1) {
-    //         educationRef.current?.scrollIntoView({ behavior: 'smooth' })
-    //     } else if (scrollTo === 2) {
-    //         hobbyRef.current?.scrollIntoView({ behavior: 'smooth' })
-    //     }
-    // }, [mobile.mobile, scrollTo])
-
-    const updateScrollPosition = useCallback(() => {
-        if (
-            parentRef.current &&
-            hobbyRef.current &&
-            aboutRef.current &&
-            educationRef.current &&
-            !mobile.mobile
-        ) {
-            if (
-                hobbyRef.current?.getBoundingClientRect().top <=
-                    parentRef.current?.getBoundingClientRect().bottom - 100 &&
-                hobbyRef.current?.getBoundingClientRect().top >=
-                    parentRef.current?.getBoundingClientRect().top
-            ) {
-                setScrollTo(2)
-                hobbyRef.current?.scrollIntoView({ behavior: 'smooth' })
-            } else if (
-                educationRef.current?.getBoundingClientRect().top <=
-                    parentRef.current?.getBoundingClientRect().bottom - 200 &&
-                educationRef.current?.getBoundingClientRect().top >=
-                    parentRef.current?.getBoundingClientRect().top
-            ) {
-                setScrollTo(1)
-                educationRef.current?.scrollIntoView({ behavior: 'smooth' })
-            } else if (
-                aboutRef.current?.getBoundingClientRect().top <=
-                    parentRef.current?.getBoundingClientRect().bottom - 150 &&
-                aboutRef.current?.getBoundingClientRect().top + 100 >=
-                    parentRef.current?.getBoundingClientRect().top
-            ) {
-                setScrollTo(0)
-                aboutRef.current?.scrollIntoView({ behavior: 'smooth' })
-            }
-        } else if (mobile.mobile) {
-            setScrollTo(undefined)
-        }
-    }, [mobile.mobile])
+    const [showMobile, setShowMobile] = useState(false)
 
     useEffect(() => {
-        const element = document.getElementById('parentDetailsScroll')
+        // if (!mobile) {
+        if (scrollTo === 0) {
+            aboutRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        } else if (scrollTo === 1) {
+            educationRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        } else if (scrollTo === 2) {
+            hobbyRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        }
+        // }
+    }, [mobile, scrollTo])
 
-        element?.removeEventListener('wheel', updateScrollPosition)
-        element?.addEventListener('wheel', updateScrollPosition)
+    const updateScrollPosition = useCallback(() => {
+        const bannerBottom = bannerRef.current?.getBoundingClientRect().bottom
+        const parentBottom = parentRef.current?.getBoundingClientRect().bottom
+        const parentTop = parentRef.current?.getBoundingClientRect().top
+        const aboutTop = aboutRef.current?.getBoundingClientRect().top
+        const aboutBottom = aboutRef.current?.getBoundingClientRect().bottom
+        const educationTop = educationRef.current?.getBoundingClientRect().top
+        const educationBottom = aboutRef.current?.getBoundingClientRect().bottom
+        const hobbyTop = hobbyRef.current?.getBoundingClientRect().top
+        const hobbyBottom = aboutRef.current?.getBoundingClientRect().bottom
 
-        return () => element?.removeEventListener('wheel', updateScrollPosition)
-    }, [updateScrollPosition])
+        if (!mobile && size) {
+            if (
+                aboutTop &&
+                parentBottom &&
+                parentTop &&
+                aboutTop <= parentBottom - 150 &&
+                aboutTop + 100 >= parentTop
+            ) {
+                setScrollTo(0)
+            } else if (
+                educationTop &&
+                parentTop &&
+                parentBottom &&
+                educationTop <= parentBottom - 200 &&
+                educationTop >= parentTop
+            ) {
+                setScrollTo(1)
+            } else if (
+                hobbyTop &&
+                parentBottom &&
+                parentTop &&
+                hobbyTop <= parentBottom - 100 &&
+                hobbyTop >= parentTop
+            ) {
+                setScrollTo(2)
+            }
+        } else if (mobile && size && bannerBottom !== undefined) {
+            const { innerHeight } = window
+
+            if (
+                aboutTop &&
+                aboutBottom &&
+                ((aboutTop < innerHeight / 2 && aboutTop >= 0) ||
+                    (aboutBottom > innerHeight / 2 && aboutBottom <= innerHeight))
+            ) {
+                setShowMobile(true)
+                setScrollTo(0)
+            } else if (
+                educationTop &&
+                educationBottom &&
+                ((educationTop < innerHeight / 2 && educationTop >= 0) ||
+                    (educationBottom > innerHeight / 2 && educationBottom <= innerHeight))
+            ) {
+                setShowMobile(true)
+                setScrollTo(1)
+            } else if (
+                hobbyTop &&
+                hobbyBottom &&
+                ((hobbyTop < innerHeight / 2 && hobbyTop >= 0) ||
+                    (hobbyBottom > innerHeight / 2 && hobbyBottom <= innerHeight))
+            ) {
+                setShowMobile(true)
+                setScrollTo(2)
+            } else if (bannerBottom && bannerBottom > innerHeight / 4) {
+                setScrollTo(undefined)
+                setShowMobile(false)
+            }
+        }
+    }, [mobile, size])
 
     return (
         <Container
@@ -86,26 +116,28 @@ export const AboutPage: FunctionComponent<AboutPageProps> = (props) => {
                 justifyContent: 'center',
                 alignItems: 'center',
                 width: '100%',
-                paddingLeft: mobile.mobile ? undefined : '110px'
+                paddingLeft: mobile ? undefined : '110px'
             }}
             hidescrollBar
+            onWheel={updateScrollPosition}
         >
             <Container
                 sx={{
-                    flexDirection: mobile.mobile ? 'column' : 'row',
-                    width: mobile.mobile ? mobile.size?.width : '100%',
-                    height: mobile.mobile ? '100%' : '100%'
+                    flexDirection: mobile ? 'column' : 'row',
+                    width: mobile ? size?.width : '100%',
+                    height: mobile ? '100%' : '100%'
                 }}
             >
                 <Container
+                    ref={bannerRef}
                     sx={{
-                        width: mobile.mobile ? '100%' : '35%',
+                        width: mobile ? '100%' : '35%',
                         minWidth: '360px',
-                        height: mobile.mobile ? 'fit-content' : '100vh',
+                        height: mobile ? 'fit-content' : '100vh',
                         padding: '30px',
                         flexDirection: 'column',
                         justifyContent: 'center',
-                        alignItems: mobile.mobile ? 'center' : 'flex-start',
+                        alignItems: mobile ? 'center' : 'flex-start',
                         backgroundColor: light ? colors.light.accent : colors.dark.accent
                     }}
                 >
@@ -115,7 +147,7 @@ export const AboutPage: FunctionComponent<AboutPageProps> = (props) => {
                             color: light
                                 ? colors.light.accentForeground
                                 : colors.dark.accentForeground,
-                            marginLeft: mobile.mobile ? '0px' : '35px'
+                            marginLeft: mobile ? '0px' : '35px'
                         }}
                     >
                         About Me
@@ -127,10 +159,10 @@ export const AboutPage: FunctionComponent<AboutPageProps> = (props) => {
                             sx={{
                                 flexDirection: 'row',
                                 display: 'flex',
-                                justifyContent: mobile.mobile ? 'center' : 'flex-start',
+                                justifyContent: mobile ? 'center' : 'flex-start',
                                 alignItems: 'center',
                                 marginBottom: '10px',
-                                marginLeft: mobile.mobile ? '0px' : '50px'
+                                marginLeft: mobile ? '0px' : '50px'
                             }}
                             onClick={() => {
                                 if (index === 2) {
@@ -150,8 +182,7 @@ export const AboutPage: FunctionComponent<AboutPageProps> = (props) => {
                                 variant="linker"
                                 sx={{
                                     fontFamily: '"Montserrat", sans-serif',
-                                    fontSize:
-                                        scrollTo === index && !mobile.mobile ? '28px' : '22px',
+                                    fontSize: scrollTo === index && !mobile ? '28px' : '22px',
                                     color: light
                                         ? colors.light.accentForeground
                                         : colors.dark.accentForeground,
@@ -163,7 +194,7 @@ export const AboutPage: FunctionComponent<AboutPageProps> = (props) => {
                             </Typography>
                             <BiRightArrowAlt
                                 style={{
-                                    fontSize: scrollTo === index && !mobile.mobile ? '28px' : '22px'
+                                    fontSize: scrollTo === index && !mobile ? '28px' : '22px'
                                 }}
                                 color={
                                     light
@@ -177,8 +208,8 @@ export const AboutPage: FunctionComponent<AboutPageProps> = (props) => {
 
                 <Container
                     sx={{
-                        width: mobile.mobile ? '100%' : '55%',
-                        height: mobile.mobile ? 'fit-content' : '100vh',
+                        width: mobile ? '100%' : '55%',
+                        height: mobile ? 'fit-content' : '100vh',
                         padding: '20px',
                         flexDirection: 'column',
                         justifyContent: 'center',
@@ -191,9 +222,9 @@ export const AboutPage: FunctionComponent<AboutPageProps> = (props) => {
                         ref={parentRef}
                         sx={{
                             flexDirection: 'column',
-                            width: mobile.mobile ? '100%' : '70%',
-                            height: mobile.mobile ? '100%' : '70%',
-                            overflowY: mobile.mobile ? 'hidden' : 'auto',
+                            width: mobile ? '100%' : '70%',
+                            height: mobile ? '100%' : '70%',
+                            overflowY: mobile ? 'hidden' : 'auto',
                             overflowX: 'hidden'
                         }}
                         hidescrollBar
@@ -211,7 +242,11 @@ export const AboutPage: FunctionComponent<AboutPageProps> = (props) => {
                             >
                                 <big>E</big>xperience
                             </Typography>
-                            <Typography>
+                            <Typography
+                                sx={{
+                                    marginRight: mobile ? '30px' : '0px'
+                                }}
+                            >
                                 I am flexible and can adapt to newer technologies because I am a
                                 fast-learner. Despite my background not initially being in Front-end
                                 Web Development, I was able to learn technologies such as React,
@@ -221,7 +256,11 @@ export const AboutPage: FunctionComponent<AboutPageProps> = (props) => {
                                 built using custom-built, reusable components on NextJs framework,
                                 with React, Typescript, and Styled Components.
                             </Typography>
-                            <Typography>
+                            <Typography
+                                sx={{
+                                    marginRight: mobile ? '30px' : '0px'
+                                }}
+                            >
                                 At Sector Eleven Ltd. I worked on the Front-End aspect of multiple
                                 B2C and B2B projects with a team of 3 (1 Back-End 1 Full-Stack and 1
                                 Front-End). This would typically involve the creation of the site
@@ -229,7 +268,11 @@ export const AboutPage: FunctionComponent<AboutPageProps> = (props) => {
                                 server, data visualization (tables, autocompletes) with querying and
                                 pagination, and feature testing.
                             </Typography>
-                            <Typography>
+                            <Typography
+                                sx={{
+                                    marginRight: mobile ? '30px' : '0px'
+                                }}
+                            >
                                 Moreover, we created our own component library, with the main
                                 purpose being to have reusable components while making sure that
                                 they can be modified from project side as required. Using this
@@ -250,7 +293,11 @@ export const AboutPage: FunctionComponent<AboutPageProps> = (props) => {
                             >
                                 <big>E</big>ducation
                             </Typography>
-                            <Typography>
+                            <Typography
+                                sx={{
+                                    marginRight: mobile ? '30px' : '0px'
+                                }}
+                            >
                                 I earned a Master’s Degree in Electrical Engineering, specializing
                                 in Image and Signal Processing. My thesis focused on using
                                 Hyperspectral image segmentation and signal classification to
@@ -291,14 +338,22 @@ export const AboutPage: FunctionComponent<AboutPageProps> = (props) => {
                             >
                                 <big>H</big>obbies
                             </Typography>
-                            <Typography>
+                            <Typography
+                                sx={{
+                                    marginRight: mobile ? '30px' : '0px'
+                                }}
+                            >
                                 I was born and raised on the warm Mediterranean island of Malta, so
                                 I am still learning how to cope with the snow in the states. I have
                                 always loved football - or rather soccer - and I am a big Juventus
                                 fan. Currently, I am (unsuccessfully) trying to teach myself how to
                                 play tennis.
                             </Typography>
-                            <Typography>
+                            <Typography
+                                sx={{
+                                    marginRight: mobile ? '30px' : '0px'
+                                }}
+                            >
                                 In my free time I like to watch anime (my current watchlist is
                                 below), TV shows, and play PC games, although recently I have been
                                 exploring PS5 gameplay. You can come to me for corny jokes, and a
@@ -313,6 +368,7 @@ export const AboutPage: FunctionComponent<AboutPageProps> = (props) => {
                                     '4. Attack on Titan',
                                     '5. Demon Slayer'
                                 ]}
+                                sx={{ marginRight: mobile ? '30px' : '0px' }}
                             />
                             <Container sx={{ height: '20px' }} />
                             <Accordian
@@ -324,11 +380,17 @@ export const AboutPage: FunctionComponent<AboutPageProps> = (props) => {
                                     '4. The Boys',
                                     '5. Peaky Blinders'
                                 ]}
+                                sx={{ marginRight: mobile ? '30px' : '0px' }}
                             />
                         </Container>
                     </Container>
                 </Container>
             </Container>
+            <AboutMobileOverlay
+                show={mobile && showMobile && scrollTo !== undefined ? true : false}
+                showIndex={scrollTo}
+                setShowIndex={setScrollTo}
+            />
         </Container>
     )
 }
