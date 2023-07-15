@@ -24,7 +24,7 @@ export const AboutPage: FunctionComponent<AboutPageProps> = (props) => {
     const { mobile, size } = useSize()
     const { light } = useDarkTheme()
 
-    const [scrollTo, setScrollTo] = useState<number>()
+    const [scrollTo, setScrollTo] = useState<number | undefined>(mobile ? undefined : 0)
 
     const bannerRef = useRef<HTMLDivElement | null>(null)
     const parentRef = useRef<HTMLDivElement | null>(null)
@@ -34,7 +34,7 @@ export const AboutPage: FunctionComponent<AboutPageProps> = (props) => {
 
     const [showMobile, setShowMobile] = useState(false)
 
-    const [scrollPosition, setScrollPosition] = useState(0)
+    const [_, setScrollPosition] = useState(0)
     const [touchStart, setTouchStart] = useState(0)
     const [touchEnd, setTouchEnd] = useState(0)
     const [touchVelocity, setTouchVelocity] = useState(0)
@@ -190,7 +190,6 @@ export const AboutPage: FunctionComponent<AboutPageProps> = (props) => {
                     ref={bannerRef}
                     sx={{
                         width: mobile ? '100%' : '35%',
-                        // minWidth: '360px',
                         height: mobile ? 'fit-content' : '100vh',
                         padding: '30px',
                         flexDirection: 'column',
