@@ -175,9 +175,9 @@ export const AboutPage: FunctionComponent<AboutPageProps> = (props) => {
             }}
             hidescrollBar
             onWheel={updateScrollPosition}
-            onTouchMove={handleTouchMove}
-            onTouchStart={handleTouchStart}
-            onTouchEnd={(e) => handleTouchEnd(e)}
+            onTouchMove={(e) => setTimeout(() => handleTouchMove(e), 100)}
+            onTouchStart={(e) => setTimeout(() => handleTouchStart(e), 100)}
+            onTouchEnd={(e) => setTimeout(() => handleTouchEnd(e), 100)}
         >
             <Container
                 sx={{
@@ -378,8 +378,8 @@ export const AboutPage: FunctionComponent<AboutPageProps> = (props) => {
                                     publication
                                 </Link>{' '}
                                 that I successfully presented at the 2021 International Conference
-                                on Image Processing (ICIP). Outside of my thesis, I also studied AI,
-                                Machine Learning, Python, C, and C++.
+                                on Image Processing (ICIP) in Alaska. Outside of my thesis, I also
+                                studied AI, Machine Learning, Python, C, and C++.
                             </Typography>
                         </Container>
                         <Container

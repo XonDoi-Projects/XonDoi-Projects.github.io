@@ -174,12 +174,11 @@ export const MainPage: FunctionComponent<MainPageProps> = (props) => {
                                 margin: '0px'
                             }}
                         >
-                            I am a Front-end Web Developer, focused on building reusable components,
-                            user interfaces, data display, and forms. I also have experience in
-                            library management and version control.I also worked in Back-end
-                            Development, specifically connecting routes with Front-End endpoints,
-                            and services. I am passionate about crafting smooth and intuitive UIs to
-                            deliver the best possible experience for our clients.
+                            I am a versatile Front-end Web Developer skilled in building reusable
+                            components, intuitive UIs, data display, and forms. With experience in
+                            library management, version control, and back-end integration, I am
+                            committed to creating seamless and user-friendly interfaces for optimal
+                            client satisfaction.
                         </Typography>
                     </Container>
                     <Container
