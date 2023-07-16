@@ -6,6 +6,9 @@ import React, {
     useEffect,
     useState
 } from 'react'
+import { useFirebase } from './FirebaseProvider'
+import { Container, Spinner } from '../LayoutComponents'
+import { Typography } from '../LayoutComponents/Typography'
 
 export interface IDarkThemeContext {
     light: boolean | undefined
@@ -22,8 +25,8 @@ export const DarkThemeProvider: FunctionComponent<IDarkThemeProviderProps> = (pr
     const [light, setLight] = useState<boolean>()
 
     useEffect(() => {
-        const darkThemeMq = window.matchMedia('(prefers-color-scheme: dark)')
-        if (darkThemeMq.matches) {
+        const darkTheme = window.matchMedia('(prefers-color-scheme: dark)')
+        if (darkTheme.matches) {
             setLight(false)
         } else {
             setLight(true)

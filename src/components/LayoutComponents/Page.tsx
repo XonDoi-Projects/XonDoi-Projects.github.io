@@ -4,9 +4,10 @@ import { Header } from './Header'
 import { Footer } from './Footer'
 import { ChatButton } from '../InputComponents'
 import { colors } from '../Colors'
-import { useDarkTheme, useSize } from '../Providers'
+import { useDarkTheme, useFirebase, useSize } from '../Providers'
 import { useRouter } from 'next/router'
 import { Spinner } from './Spinner'
+import { Typography } from './Typography'
 
 export interface PageProps {
     sx?: CSSProperties
@@ -15,11 +16,40 @@ export interface PageProps {
 
 export const Page: FunctionComponent<PageProps> = (props) => {
     const { light } = useDarkTheme()
+    const { loaded } = useFirebase()
     const mobile = useSize()
 
     const router = useRouter()
 
-    return mobile.size && light !== undefined ? (
+    return !loaded ? (
+        <div
+            style={{
+                display: 'flex',
+                flexDirection: 'column',
+                height: '100vh',
+                width: '100vw',
+                justifyContent: 'center',
+                alignItems: 'center'
+            }}
+        >
+            <Spinner />
+            <Typography sx={{ color: '#252525' }}>Getting assets from Firebase</Typography>
+        </div>
+    ) : light === undefined && !mobile.size ? (
+        <div
+            style={{
+                display: 'flex',
+                flexDirection: 'column',
+                height: '100vh',
+                width: '100vw',
+                justifyContent: 'center',
+                alignItems: 'center'
+            }}
+        >
+            <Spinner />
+            <Typography sx={{ color: '#252525' }}>Setting up your Theme</Typography>
+        </div>
+    ) : (
         <Container
             sx={{
                 flex: 1,
@@ -39,10 +69,6 @@ export const Page: FunctionComponent<PageProps> = (props) => {
             {props.children}
             {mobile.mobile ? <Footer /> : <></>}
             {router.pathname !== '/contact' ? <ChatButton /> : <></>}
-        </Container>
-    ) : (
-        <Container sx={{ width: '100vw', height: '100vh' }}>
-            <Spinner />
         </Container>
     )
 }

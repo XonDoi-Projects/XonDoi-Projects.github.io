@@ -1,3 +1,3 @@
-if (!process.env.EMAIL) throw new Error('EMAIL variable is missing!')
+if (!process.env.NEXT_PUBLIC_EMAIL) throw new Error('NEXT_PUBLIC_EMAIL variable is missing!')
 
-export const EMAIL = process.env.EMAIL
+export const EMAIL = process.env.NEXT_PUBLIC_EMAIL

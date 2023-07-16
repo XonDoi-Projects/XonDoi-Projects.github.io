@@ -61,7 +61,11 @@ export const Footer: FunctionComponent<FooterProps> = (props) => {
                         }}
                     >
                         <Image
-                            src={light ? '/GitLogo.svg' : '/GitLogoDark.png'}
+                            src={
+                                light
+                                    ? 'https://firebasestorage.googleapis.com/v0/b/portfolio-3b624.appspot.com/o/GitLogo.svg?alt=media&token=ad62ea12-9e45-4d88-b113-d572a871e7b7'
+                                    : 'https://firebasestorage.googleapis.com/v0/b/portfolio-3b624.appspot.com/o/GitLogoDark.png?alt=media&token=0a9c4264-9db5-42cb-bd53-8cb23e50bfdc'
+                            }
                             alt="Git Logo"
                             width={40}
                             height={40}
@@ -80,7 +84,9 @@ export const Footer: FunctionComponent<FooterProps> = (props) => {
                         }}
                     >
                         <Image
-                            src={'/InLogo.svg'}
+                            src={
+                                'https://firebasestorage.googleapis.com/v0/b/portfolio-3b624.appspot.com/o/InLogo.svg?alt=media&token=2635f823-a98b-4193-ab6f-2395d4d40e8f'
+                            }
                             alt="LinkedIn Logo"
                             width={35}
                             height={35}

@@ -15,14 +15,38 @@ export interface ISkill {
 }
 
 const skills: ISkill[] = [
-    { src: '/React.svg', alt: 'React' },
-    { src: '/JS.svg', alt: 'JS' },
-    { src: '/TS.svg', alt: 'TS' },
-    { src: '/Jest.svg', alt: 'Jest' },
-    { src: '/Node.svg', alt: 'NodeJS' },
-    { src: '/Mongo.svg', alt: 'MongoDB' },
-    { src: '/Firebase.svg', alt: 'Firebase' },
-    { src: '/Next.svg', alt: 'Next' }
+    {
+        src: 'https://firebasestorage.googleapis.com/v0/b/portfolio-3b624.appspot.com/o/React.svg?alt=media&token=e304398c-c39c-4a72-ada2-3deda2efc9c6',
+        alt: 'React'
+    },
+    {
+        src: 'https://firebasestorage.googleapis.com/v0/b/portfolio-3b624.appspot.com/o/JS.svg?alt=media&token=a8837565-7313-4d0c-8f40-55c9f21bca1e',
+        alt: 'JS'
+    },
+    {
+        src: 'https://firebasestorage.googleapis.com/v0/b/portfolio-3b624.appspot.com/o/TS.svg?alt=media&token=0d2352da-ae22-4a6d-ac81-8e0cbafd50bd',
+        alt: 'TS'
+    },
+    {
+        src: 'https://firebasestorage.googleapis.com/v0/b/portfolio-3b624.appspot.com/o/Jest.svg?alt=media&token=050b9a70-b08b-43bc-b879-1a4169999416',
+        alt: 'Jest'
+    },
+    {
+        src: 'https://firebasestorage.googleapis.com/v0/b/portfolio-3b624.appspot.com/o/Node.svg?alt=media&token=dcc30c9a-de76-4632-9a0d-1413a9eed92d',
+        alt: 'NodeJS'
+    },
+    {
+        src: 'https://firebasestorage.googleapis.com/v0/b/portfolio-3b624.appspot.com/o/Mongo.svg?alt=media&token=f9b42dbc-f985-47c5-b87a-47e372719b3e',
+        alt: 'MongoDB'
+    },
+    {
+        src: 'https://firebasestorage.googleapis.com/v0/b/portfolio-3b624.appspot.com/o/Firebase.svg?alt=media&token=7452c6ec-cb2c-4725-8e7a-32449d6514d8',
+        alt: 'Firebase'
+    },
+    {
+        src: 'https://firebasestorage.googleapis.com/v0/b/portfolio-3b624.appspot.com/o/Next.svg?alt=media&token=bd049721-b37d-442a-98b2-ee1b8ce88da5',
+        alt: 'Next'
+    }
 ]
 
 export interface MainPageProps {}
@@ -76,7 +100,9 @@ export const MainPage: FunctionComponent<MainPageProps> = (props) => {
                         }}
                     >
                         <Image
-                            src={'/Nathan_Picture_2_cropped.jpg'}
+                            src={
+                                'https://firebasestorage.googleapis.com/v0/b/portfolio-3b624.appspot.com/o/Nathan_Picture_2_cropped.jpg?alt=media&token=87dcdc07-ec97-42f1-af1e-49cafb099717'
+                            }
                             alt="Profile Picutre"
                             fill
                             style={{ objectFit: 'scale-down' }}
