@@ -26,8 +26,7 @@ export const Spinner: FunctionComponent<SpinnerProps> = (props) => {
         <Container
             sx={{
                 width: '30px',
-                height: '30px',
-                margin: 'auto'
+                height: '30px'
             }}
         >
             <Container

@@ -1,7 +1,17 @@
-import React, { createContext, FunctionComponent, ReactNode, useContext, useState } from 'react'
+import React, {
+    createContext,
+    FunctionComponent,
+    ReactNode,
+    useContext,
+    useEffect,
+    useState
+} from 'react'
+import { useFirebase } from './FirebaseProvider'
+import { Container, Spinner } from '../LayoutComponents'
+import { Typography } from '../LayoutComponents/Typography'
 
 export interface IDarkThemeContext {
-    light: boolean
+    light: boolean | undefined
     setLight: (value: boolean) => void
 }
 
@@ -12,7 +22,16 @@ export interface IDarkThemeProviderProps {
 }
 
 export const DarkThemeProvider: FunctionComponent<IDarkThemeProviderProps> = (props) => {
-    const [light, setLight] = useState(true)
+    const [light, setLight] = useState<boolean>()
+
+    useEffect(() => {
+        const darkTheme = window.matchMedia('(prefers-color-scheme: dark)')
+        if (darkTheme.matches) {
+            setLight(false)
+        } else {
+            setLight(true)
+        }
+    }, [])
 
     return (
         <DarkThemeContext.Provider value={{ light, setLight }}>
