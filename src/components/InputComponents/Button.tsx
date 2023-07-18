@@ -58,7 +58,8 @@ export const Button: FunctionComponent<ButtonProps> = (props) => {
                 width: props.sx?.width,
                 height: props.sx?.height,
                 backgroundColor: props.sx?.backgroundColor,
-                borderRadius: props.sx?.borderRadius
+                borderRadius: props.sx?.borderRadius,
+                ...props.contentSx
             }}
         >
             <StyledButton

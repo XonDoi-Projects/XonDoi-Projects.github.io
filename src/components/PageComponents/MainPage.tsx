@@ -1,13 +1,13 @@
 import { FunctionComponent, createRef, useEffect, useState } from 'react'
 import { Container } from '../LayoutComponents'
 import { Typography } from '../LayoutComponents/Typography'
-import { SkillsShowcase } from './SkillsShowcase'
 import { useDarkTheme, useSize } from '../Providers'
 import Image from 'next/image'
 import { colors } from '../Colors'
 import Link from 'next/link'
 import { Button } from '../InputComponents'
 import { BiSolidDownload } from 'react-icons/bi'
+import { SkillsShowcase } from './Skills'
 
 export interface ISkill {
     src: string

@@ -1,12 +1,12 @@
+import { colors } from '@/components/Colors'
+import { Button } from '@/components/InputComponents'
+import { Container } from '@/components/LayoutComponents'
+import { Typography } from '@/components/LayoutComponents/Typography'
+import { useSize, useDarkTheme } from '@/components/Providers'
 import { FunctionComponent, createRef, useEffect, useState } from 'react'
-import { Container } from '../LayoutComponents'
-import { Typography } from '../LayoutComponents/Typography'
-import { Skill } from './Skill'
 import { BiChevronLeft, BiChevronRight } from 'react-icons/bi'
-import { Button } from '../InputComponents'
-import { useDarkTheme, useSize } from '../Providers'
-import { colors } from '../Colors'
-import { ISkill } from './MainPage'
+import { ISkill } from '../MainPage'
+import { Skill } from './Skill'
 
 export interface SkillsShowcaseProps {
     skills: ISkill[]
