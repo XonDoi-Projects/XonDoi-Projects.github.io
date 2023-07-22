@@ -87,7 +87,7 @@ export const Header: FunctionComponent<HeaderProps> = (props) => {
                             height: '50px',
                             borderRadius: '50%',
                             padding: '0px',
-                            background: 'transparent'
+                            backgroundColor: 'transparent'
                         }}
                         onClick={() => setLight(!light)}
                     >
@@ -119,7 +119,7 @@ export const Header: FunctionComponent<HeaderProps> = (props) => {
                                     height: '50px',
                                     borderRadius: '50%',
                                     padding: '0px',
-                                    background: 'transparent'
+                                    backgroundColor: 'transparent'
                                 }}
                                 onClick={() => setShow(!show)}
                             >

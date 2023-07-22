@@ -68,7 +68,7 @@ export const SkillsShowcase: FunctionComponent<SkillsShowcaseProps> = (props) =>
                             opacity: !scrollIntoView ? 0.5 : 1,
                             padding: '0px',
                             zIndex: 1,
-                            background: 'transparent'
+                            backgroundColor: 'transparent'
                         }}
                         onClick={() =>
                             setScrollIntoView(
@@ -87,7 +87,7 @@ export const SkillsShowcase: FunctionComponent<SkillsShowcaseProps> = (props) =>
                             opacity: scrollIntoView === props.skills.length - 1 ? 0.5 : 1,
                             padding: '0px',
                             zIndex: 1,
-                            background: 'transparent'
+                            backgroundColor: 'transparent'
                         }}
                         onClick={() => setScrollIntoView(scrollIntoView ? scrollIntoView + 1 : 1)}
                         disabled={scrollIntoView === props.skills.length - 1}
