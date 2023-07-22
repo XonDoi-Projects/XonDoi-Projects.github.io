@@ -47,10 +47,10 @@ export const TicTacToeGame: FunctionComponent<TicTacToeGameProps> = (props) => {
                         width: '100%',
                         flexDirection: 'row',
                         justifyContent: 'space-between',
-                        alignItems: 'flex-start'
+                        alignItems: 'center'
                     }}
                 >
-                    <Typography sx={{ marginLeft: '20px' }}>
+                    <Typography sx={{ margin: '0px 0px 0px 20px' }}>
                         {user?.username || 'Anonymous'}
                     </Typography>
                     <Button

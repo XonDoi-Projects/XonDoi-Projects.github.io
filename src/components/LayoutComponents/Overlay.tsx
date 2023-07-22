@@ -49,6 +49,7 @@ export const Overlay: FunctionComponent<OverlayProps> = (props) => {
                     transition: 'all 0.3s ease',
                     backgroundColor: light ? colors.light.accent : colors.dark.accent,
                     zIndex: 2,
+                    overflow: 'hidden',
                     ...props.sx
                 }}
             >
