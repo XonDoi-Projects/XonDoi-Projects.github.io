@@ -6,12 +6,18 @@ const login = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
         const client = await clientPromise
         const db = client.db('users')
-        const { username, password } = req.body
+        let { username, password } = req.body
+
+        username = username.trim()
+        password = password.trim()
 
         let user = await db.collection('users').findOne({
-            username,
-            password
+            username
         })
+
+        if (user?.password !== password) {
+            return res.status(404).json({ message: 'Incorrect Password' })
+        }
 
         let newUser: InsertOneResult<Document>
         if (!user) {
@@ -20,16 +26,15 @@ const login = async (req: NextApiRequest, res: NextApiResponse) => {
             if (newUser.acknowledged) {
                 let foundUser = await db.collection('users').findOne({ _id: newUser.insertedId })
 
-                return res.json({ user: foundUser, message: 'User created!' })
+                return res.status(200).json({ user: foundUser, message: 'User created!' })
             }
 
-            throw new Error('User not created')
+            return res.status(404).json({ message: 'User not created' })
         }
 
-        return res.json({ user, message: 'User found in database!' })
+        return res.status(200).json({ user, message: 'User found in database!' })
     } catch (e: any) {
-        console.error(e)
-        throw new Error(e.response)
+        return res.status(404).json({ message: 'Failed to login' })
     }
 }
 

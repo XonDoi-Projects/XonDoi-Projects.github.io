@@ -58,19 +58,30 @@ export const TicTacToeLoginForm: FunctionComponent<TicTacToeLoginFormProps> = (p
                         password
                     })
                 })
-                const data = await result.json()
-                setUser(data.user)
+                if (result.status === 200) {
+                    const data = await result.json()
+
+                    setUser(data.user)
+                    setShowSnackbar({
+                        message: data.message,
+                        color: colors.light.success
+                    })
+                    setUsername('')
+                    setErrorUsername('')
+                    setPassword('')
+                    setErrorPassword('')
+                } else {
+                    const data = await result.json()
+
+                    setShowSnackbar({
+                        message: data.message,
+                        color: colors.light.error
+                    })
+                }
+            } catch (e: any) {
+                console.log(e)
                 setShowSnackbar({
-                    message: data.message,
-                    color: colors.light.success
-                })
-                setUsername('')
-                setErrorUsername('')
-                setPassword('')
-                setErrorPassword('')
-            } catch (e) {
-                setShowSnackbar({
-                    message: 'Failed to send message!',
+                    message: e.message,
                     color: colors.light.error
                 })
             }

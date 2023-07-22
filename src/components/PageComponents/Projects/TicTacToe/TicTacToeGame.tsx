@@ -35,7 +35,7 @@ export const TicTacToeGame: FunctionComponent<TicTacToeGameProps> = (props) => {
                 boxSizing: 'border-box',
                 alignItems: 'center',
                 justifyContent: 'flex-start',
-                margin: mobile.mobile ? '0px 0px 20px 0px ' : '20px',
+                margin: mobile.mobile ? '0px 0px 20px 0px ' : '0px',
                 ...props.sx
             }}
         >
@@ -67,7 +67,8 @@ export const TicTacToeGame: FunctionComponent<TicTacToeGameProps> = (props) => {
                 sx={{
                     flex: 1,
                     flexDirection: 'column',
-                    width: mobile.mobile ? '100%' : '400px',
+                    width: mobile.mobile ? '100%' : user || skipLogin ? '100%' : '400px',
+                    height: user ? '100%' : undefined,
                     justifyContent: 'center',
                     alignItems: 'flex-start',
                     padding: '20px'
@@ -77,7 +78,7 @@ export const TicTacToeGame: FunctionComponent<TicTacToeGameProps> = (props) => {
                 {!user?.username && !skipLogin ? (
                     <TicTacToeLoginForm setSkipLogin={setSkipLogin} />
                 ) : (
-                    <TicTacToeLoginUI />
+                    <TicTacToeLoginUI setSkipLogin={setSkipLogin} />
                 )}
             </Container>
         </Card>

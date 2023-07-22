@@ -16,7 +16,7 @@ export interface User {
 
 export interface IUserContext {
     user?: User
-    setUser: (value: User) => void
+    setUser: (value?: User) => void
 }
 
 export const UserContext = createContext<IUserContext | undefined>(undefined)
