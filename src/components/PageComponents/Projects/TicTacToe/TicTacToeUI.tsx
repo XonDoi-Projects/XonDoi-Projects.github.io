@@ -1,4 +1,4 @@
-import { FunctionComponent, useCallback, useEffect, useState } from 'react'
+import { FunctionComponent, useCallback, useEffect, useRef, useState } from 'react'
 import { colors } from '@/components/Colors'
 import { Container, FadeInOut, FixedDiv } from '@/components/LayoutComponents'
 import { useDarkTheme, useSize, useUser } from '@/components/Providers'
@@ -35,13 +35,18 @@ export const TicTacToeLoginUI: FunctionComponent<TicTacToeLoginUIProps> = (props
     const [lose, setLose] = useState(false)
     const [draw, setDraw] = useState(false)
 
+    const playStateRef = useRef(playState)
+
     //for easy, just use random number
     //for medium, base play on combination with highest win yield
     //for hard, base play on cell with highest win yield and block to avoid loss
 
+    useEffect(() => {
+        playStateRef.current = playState
+    }, [playState])
+
     const handleBotPlay = useCallback(() => {
-        console.log(playState)
-        if (playState) {
+        if (playStateRef.current) {
             let ticTacPositions = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
             //easy
@@ -197,7 +202,19 @@ export const TicTacToeLoginUI: FunctionComponent<TicTacToeLoginUIProps> = (props
                 let maxIndexX = distanceX.findIndex((distance) => distance === maxX)
                 let maxIndexO = distanceO.findIndex((distance) => distance === maxO)
 
-                if (maxIndex === 0) {
+                console.log(
+                    maxX,
+                    maxO,
+                    max,
+                    filteredWinningCombinationsX,
+                    filteredWinningCombinationsO,
+                    maxIndexX
+                )
+                if (!filteredWinningCombinationsX.length) {
+                    let filteredPositions = ticTacPositions.filter((_, index) => !tempTicTac[index])
+                    const randomIndex = Math.floor(Math.random() * filteredPositions.length)
+                    tempTicTac[filteredPositions[randomIndex] - 1] = 'o'
+                } else if (maxIndex === 0) {
                     const filteredPlayer2Positions = filteredWinningCombinationsX[maxIndexX].filter(
                         (position) => {
                             return !tempTicTac[position - 1]
@@ -241,7 +258,7 @@ export const TicTacToeLoginUI: FunctionComponent<TicTacToeLoginUIProps> = (props
             }
             setPlayState(false)
         }
-    }, [playState, ticTac])
+    }, [ticTac])
 
     const sendData = useCallback(async () => {}, [])
 
@@ -325,7 +342,7 @@ export const TicTacToeLoginUI: FunctionComponent<TicTacToeLoginUIProps> = (props
                             alignItems: 'center'
                         }}
                         onClick={() => {
-                            if (!playState && !lose) {
+                            if (playState !== undefined && playState !== true && !lose) {
                                 let tempPrev = cloneDeep(ticTac)
                                 tempPrev[index] = 'x'
 
@@ -370,21 +387,44 @@ export const TicTacToeLoginUI: FunctionComponent<TicTacToeLoginUIProps> = (props
                             borderRadius: '15px',
                             justifyContent: 'center',
                             alignItems: 'center',
-                            backgroundColor: 'rgba(0,255,0,0.8)'
+                            backgroundColor: 'rgba(0,150,0,0.96)'
                         }}
                     >
                         <Typography
                             variant="title"
                             sx={{
                                 margin: '0',
-                                textAlign: 'center'
+                                textAlign: 'center',
+                                whiteSpace: 'nowrap'
                             }}
                         >
                             Nailed it
                         </Typography>
-                        <Typography variant="subtitle" sx={{ margin: '0', textAlign: 'center' }}>
+                        <Typography
+                            variant="subtitle"
+                            sx={{ margin: '0', textAlign: 'center', whiteSpace: 'nowrap' }}
+                        >
                             You Win!
                         </Typography>
+
+                        <Button
+                            sx={{
+                                borderRadius: '19px',
+                                backgroundColor: light ? colors.light.accent : colors.dark.accent
+                            }}
+                            contentSx={{ width: 'fit-content', marginTop: '10px' }}
+                            // onClick={handleScore}
+                        >
+                            <Typography
+                                sx={{
+                                    whiteSpace: 'nowrap',
+                                    margin: '0px 10px',
+                                    color: light
+                                        ? colors.light.accentForeground
+                                        : colors.dark.accentForeground
+                                }}
+                            >{`Submit Score: ${1}`}</Typography>
+                        </Button>
                     </Container>
                 </FadeInOut>
 
@@ -408,14 +448,15 @@ export const TicTacToeLoginUI: FunctionComponent<TicTacToeLoginUIProps> = (props
                             borderRadius: '15px',
                             justifyContent: 'center',
                             alignItems: 'center',
-                            backgroundColor: 'rgba(255,0,0,0.8)'
+                            backgroundColor: 'rgba(150,0,0,0.96)'
                         }}
                     >
                         <Typography
                             variant="title"
                             sx={{
                                 margin: '0',
-                                textAlign: 'center'
+                                textAlign: 'center',
+                                whiteSpace: 'nowrap'
                             }}
                         >
                             Toe Bad
@@ -424,7 +465,8 @@ export const TicTacToeLoginUI: FunctionComponent<TicTacToeLoginUIProps> = (props
                             variant="subtitle"
                             sx={{
                                 margin: '0',
-                                textAlign: 'center'
+                                textAlign: 'center',
+                                whiteSpace: 'nowrap'
                             }}
                         >
                             You Lose!
@@ -451,7 +493,7 @@ export const TicTacToeLoginUI: FunctionComponent<TicTacToeLoginUIProps> = (props
                             borderRadius: '15px',
                             justifyContent: 'center',
                             alignItems: 'center',
-                            backgroundColor: 'rgba(255,255,0,0.8)'
+                            backgroundColor: 'rgba(150,150,0,0.96)'
                         }}
                     >
                         <Typography
@@ -472,6 +514,7 @@ export const TicTacToeLoginUI: FunctionComponent<TicTacToeLoginUIProps> = (props
                     height: '50px',
                     width: '100%',
                     justifyContent: 'space-between',
+                    alignItems: 'center',
                     marginTop: '10px'
                 }}
             >
@@ -502,19 +545,32 @@ export const TicTacToeLoginUI: FunctionComponent<TicTacToeLoginUIProps> = (props
                         Login
                     </Button>
                 )}
-                <Button
-                    sx={{
-                        borderRadius: '19px',
-                        color: light ? colors.light.accentForeground : colors.dark.accentForeground,
-                        backgroundColor: light ? colors.light.accent : colors.dark.accent
-                    }}
-                    onClick={() => {
-                        setPlayState(Math.ceil(Math.random() * 2) === 1 ? true : false)
-                    }}
-                    disabled={playState !== undefined ? true : false}
-                >
-                    Start
-                </Button>
+                {playState === undefined ? (
+                    <Button
+                        sx={{
+                            borderRadius: '19px',
+                            color: light
+                                ? colors.light.accentForeground
+                                : colors.dark.accentForeground,
+                            backgroundColor: light ? colors.light.accent : colors.dark.accent
+                        }}
+                        onClick={() => {
+                            setPlayState(Math.ceil(Math.random() * 2) === 1 ? true : false)
+                        }}
+                    >
+                        Start
+                    </Button>
+                ) : playState === true ? (
+                    <Typography variant="body" sx={{ margin: '0' }}>
+                        {' '}
+                        Player 2
+                    </Typography>
+                ) : (
+                    <Typography variant="body" sx={{ margin: '0' }}>
+                        {' '}
+                        Player 1
+                    </Typography>
+                )}
 
                 <Button
                     sx={{
