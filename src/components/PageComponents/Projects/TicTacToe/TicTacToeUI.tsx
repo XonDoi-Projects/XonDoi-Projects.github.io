@@ -5,12 +5,14 @@ import { useDarkTheme, useSize, useUser } from '@/components/Providers'
 import { Typography } from '@/components/LayoutComponents/Typography'
 import { cloneDeep, isEqual } from 'lodash'
 import { Button } from '@/components/InputComponents'
-import e from 'cors'
+import { DateTime } from 'luxon'
 
 export type TicTac = 'x' | 'o'
 
 export interface TicTacToeLoginUIProps {
     setSkipLogin?: (value: boolean) => void
+    time?: DateTime
+    setTime: (value?: DateTime) => void
 }
 
 const winningCombinations = [
@@ -24,10 +26,19 @@ const winningCombinations = [
     [7, 8, 9]
 ]
 
-export const TicTacToeLoginUI: FunctionComponent<TicTacToeLoginUIProps> = (props) => {
+export const TicTacToeLoginUI: FunctionComponent<TicTacToeLoginUIProps> = ({
+    time,
+    setTime,
+    ...props
+}) => {
+    const [showSnackbar, setShowSnackbar] = useState<{ message: string; color: string }>()
+    const timeoutRef = useRef<NodeJS.Timeout>()
+
     const mobile = useSize()
     const { light } = useDarkTheme()
     const { user, setUser } = useUser()
+
+    const [loadingScore, setLoadingScore] = useState(false)
 
     const [ticTac, setTicTac] = useState<(TicTac | undefined)[]>(Array.from(Array(9)))
     const [playState, setPlayState] = useState<boolean>()
@@ -35,17 +46,133 @@ export const TicTacToeLoginUI: FunctionComponent<TicTacToeLoginUIProps> = (props
     const [lose, setLose] = useState(false)
     const [draw, setDraw] = useState(false)
 
+    const [score, setScore] = useState(0)
+    const [moves, setMoves] = useState(0)
+
     const playStateRef = useRef(playState)
+
+    const [intervalId, setIntervalId] = useState<NodeJS.Timer>()
+    const [startTime, setStartTime] = useState(false)
 
     //for easy, just use random number
     //for medium, base play on combination with highest win yield
     //for hard, base play on cell with highest win yield and block to avoid loss
 
     useEffect(() => {
+        if (startTime && playState !== undefined) {
+            let interval = setTimeout(() => {
+                const tempTime = cloneDeep(time)
+                setTime(
+                    tempTime?.plus({ second: 1 }) ||
+                        DateTime.now().set({
+                            minute: 0,
+                            second: 0,
+                            millisecond: 0
+                        })
+                )
+            }, 1000)
+
+            setIntervalId(interval)
+            return () => clearTimeout(interval)
+        }
+    }, [playState, setTime, startTime, time])
+
+    useEffect(() => {
         playStateRef.current = playState
     }, [playState])
 
-    const handleBotPlay = useCallback(() => {
+    const sendData = useCallback(async () => {}, [])
+
+    useEffect(() => {
+        if (win) {
+            sendData()
+        }
+    }, [sendData, win])
+
+    const handleCheckWin = (value: (TicTac | undefined)[]) => {
+        let ticTacPositions = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+        let filteredPositions = ticTacPositions.filter((_, index) => value[index] === 'x')
+
+        let win = winningCombinations.find((combination) => {
+            return combination
+                .map((position) => filteredPositions.includes(position))
+                .every((item) => item)
+        })
+
+        if (win) {
+            let seconds
+            const minutes = time?.minute
+
+            if (minutes) {
+                seconds = minutes * 60
+                seconds += time.second
+            } else {
+                seconds = time?.second || 0
+            }
+
+            const normalizedTime = seconds / 120 > 1 ? 1 : seconds / 120
+            const normalizedMoves = moves / 5
+
+            console.log(
+                parseFloat(
+                    (
+                        1 - Math.sqrt(Math.pow(normalizedTime, 2) + Math.pow(normalizedMoves, 2))
+                    ).toFixed(3)
+                )
+            )
+            setScore(
+                parseFloat(
+                    (
+                        1 - Math.sqrt(Math.pow(normalizedTime, 2) + Math.pow(normalizedMoves, 2))
+                    ).toFixed(3)
+                )
+            )
+            setPlayState(undefined)
+            clearTimeout(intervalId)
+            return true
+        }
+        return false
+    }
+
+    const handleCheckLose = useCallback(
+        (value: (TicTac | undefined)[]) => {
+            let ticTacPositions = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+            let filteredPositions = ticTacPositions.filter((_, index) => value[index] === 'o')
+
+            let lose = winningCombinations.find((combination) => {
+                return combination
+                    .map((position) => filteredPositions.includes(position))
+                    .every((item) => item)
+            })
+
+            if (lose) {
+                setPlayState(undefined)
+                clearTimeout(intervalId)
+                return true
+            }
+            return false
+        },
+        [intervalId]
+    )
+
+    const handleCheckDraw = useCallback(
+        (value: (TicTac | undefined)[]) => {
+            let ticTacPositions = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+            let filteredPositions = ticTacPositions.filter((_, index) => !value[index])
+
+            if (!filteredPositions.length) {
+                setPlayState(undefined)
+                clearTimeout(intervalId)
+                return true
+            }
+            return false
+        },
+        [intervalId]
+    )
+
+    const handleBotPlay = (ticTac: (TicTac | undefined)[]) => {
         if (playStateRef.current) {
             let ticTacPositions = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
@@ -106,7 +233,7 @@ export const TicTacToeLoginUI: FunctionComponent<TicTacToeLoginUIProps> = (props
             //     tempTicTac[filteredPlatyer2Positions[randomIndex] - 1] = 'o'
 
             //hard
-            let tempTicTac = cloneDeep(ticTac)
+            let tempTicTac = ticTac
 
             let currentPositions = ticTacPositions.filter((_, index) => tempTicTac[index] === 'o')
 
@@ -202,14 +329,6 @@ export const TicTacToeLoginUI: FunctionComponent<TicTacToeLoginUIProps> = (props
                 let maxIndexX = distanceX.findIndex((distance) => distance === maxX)
                 let maxIndexO = distanceO.findIndex((distance) => distance === maxO)
 
-                console.log(
-                    maxX,
-                    maxO,
-                    max,
-                    filteredWinningCombinationsX,
-                    filteredWinningCombinationsO,
-                    maxIndexX
-                )
                 if (!filteredWinningCombinationsX.length) {
                     let filteredPositions = ticTacPositions.filter((_, index) => !tempTicTac[index])
                     const randomIndex = Math.floor(Math.random() * filteredPositions.length)
@@ -258,65 +377,84 @@ export const TicTacToeLoginUI: FunctionComponent<TicTacToeLoginUIProps> = (props
             }
             setPlayState(false)
         }
-    }, [ticTac])
+    }
 
-    const sendData = useCallback(async () => {}, [])
+    const handleScore = async () => {
+        setLoadingScore(true)
+        try {
+            let result: Response
+            if (user) {
+                result = await fetch(`/api/scores/submit-score`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        userId: user?._id,
+                        score,
+                        moves,
+                        time
+                    })
+                })
+            } else {
+                result = await fetch(`/api/scores/submit-score-anon`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        score,
+                        moves,
+                        time
+                    })
+                })
+            }
+
+            if (result.status === 200) {
+                const data = await result.json()
+
+                setShowSnackbar({
+                    message: data.message,
+                    color: colors.light.success
+                })
+                setTicTac(Array.from(Array(9)))
+                setPlayState(undefined)
+                setWin(false)
+                setLose(false)
+                setDraw(false)
+                setMoves(0)
+                setTime(undefined)
+                setScore(0)
+                clearTimeout(intervalId)
+                setStartTime(false)
+            } else {
+                const data = await result.json()
+
+                setShowSnackbar({
+                    message: data.message,
+                    color: colors.light.error
+                })
+            }
+        } catch (e: any) {
+            setShowSnackbar({
+                message: e.message,
+                color: colors.light.error
+            })
+        }
+        setLoadingScore(false)
+    }
 
     useEffect(() => {
-        if (playState && !win) {
-            setTimeout(handleBotPlay, 2000)
+        if (timeoutRef.current !== undefined) {
+            clearTimeout(timeoutRef.current)
         }
-    }, [handleBotPlay, playState, win])
 
-    useEffect(() => {
-        if (win) {
-            sendData()
+        if (showSnackbar) {
+            timeoutRef.current = setTimeout(() => {
+                setShowSnackbar(undefined)
+            }, 3000)
         }
-    }, [sendData, win])
-
-    const handleCheckWin = (value: (TicTac | undefined)[]) => {
-        let ticTacPositions = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-
-        let filteredPositions = ticTacPositions.filter((_, index) => value[index] === 'x')
-
-        let win = winningCombinations.find((combination) => {
-            return combination
-                .map((position) => filteredPositions.includes(position))
-                .every((item) => item)
-        })
-
-        if (win) {
-            return true
-        }
-        return false
-    }
-
-    const handleCheckLose = (value: (TicTac | undefined)[]) => {
-        let ticTacPositions = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-
-        let filteredPositions = ticTacPositions.filter((_, index) => value[index] === 'o')
-
-        let lose = winningCombinations.find((combination) => {
-            return combination
-                .map((position) => filteredPositions.includes(position))
-                .every((item) => item)
-        })
-
-        if (lose) {
-            return true
-        }
-        return false
-    }
-
-    const handleCheckDraw = (value: (TicTac | undefined)[]) => {
-        let ticTacPositions = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-        let filteredPositions = ticTacPositions.filter((_, index) => !value[index])
-
-        if (!filteredPositions.length) {
-            return true
-        }
-        return false
-    }
+    }, [showSnackbar])
 
     return (
         <Container sx={{ height: '100%', width: '100%', flexDirection: 'column' }}>
@@ -348,6 +486,7 @@ export const TicTacToeLoginUI: FunctionComponent<TicTacToeLoginUIProps> = (props
 
                                 setTicTac(tempPrev)
 
+                                setMoves(moves + 1)
                                 let win = handleCheckWin(tempPrev)
                                 if (win) {
                                     setWin(true)
@@ -361,6 +500,8 @@ export const TicTacToeLoginUI: FunctionComponent<TicTacToeLoginUIProps> = (props
                                 }
 
                                 setPlayState(true)
+
+                                setTimeout(() => handleBotPlay(tempPrev), 2000)
                             }
                         }}
                     >
@@ -374,6 +515,7 @@ export const TicTacToeLoginUI: FunctionComponent<TicTacToeLoginUIProps> = (props
                         width: '100%',
                         height: '100%'
                     }}
+                    hideFadeOut
                 >
                     <Container
                         sx={{
@@ -413,7 +555,8 @@ export const TicTacToeLoginUI: FunctionComponent<TicTacToeLoginUIProps> = (props
                                 backgroundColor: light ? colors.light.accent : colors.dark.accent
                             }}
                             contentSx={{ width: 'fit-content', marginTop: '10px' }}
-                            // onClick={handleScore}
+                            onClick={handleScore}
+                            loading={loadingScore}
                         >
                             <Typography
                                 sx={{
@@ -423,7 +566,7 @@ export const TicTacToeLoginUI: FunctionComponent<TicTacToeLoginUIProps> = (props
                                         ? colors.light.accentForeground
                                         : colors.dark.accentForeground
                                 }}
-                            >{`Submit Score: ${1}`}</Typography>
+                            >{`Submit Score: ${score}`}</Typography>
                         </Button>
                     </Container>
                 </FadeInOut>
@@ -435,6 +578,7 @@ export const TicTacToeLoginUI: FunctionComponent<TicTacToeLoginUIProps> = (props
                         width: '100%',
                         height: '100%'
                     }}
+                    hideFadeOut
                 >
                     <Container
                         sx={{
@@ -480,6 +624,7 @@ export const TicTacToeLoginUI: FunctionComponent<TicTacToeLoginUIProps> = (props
                         width: '100%',
                         height: '100%'
                     }}
+                    hideFadeOut
                 >
                     <Container
                         sx={{
@@ -545,7 +690,7 @@ export const TicTacToeLoginUI: FunctionComponent<TicTacToeLoginUIProps> = (props
                         Login
                     </Button>
                 )}
-                {playState === undefined ? (
+                {playState === undefined && time === undefined ? (
                     <Button
                         sx={{
                             borderRadius: '19px',
@@ -555,7 +700,14 @@ export const TicTacToeLoginUI: FunctionComponent<TicTacToeLoginUIProps> = (props
                             backgroundColor: light ? colors.light.accent : colors.dark.accent
                         }}
                         onClick={() => {
-                            setPlayState(Math.ceil(Math.random() * 2) === 1 ? true : false)
+                            let state = Math.ceil(Math.random() * 2) === 1 ? true : false
+                            setPlayState(state)
+
+                            setStartTime(true)
+
+                            if (state) {
+                                setTimeout(() => handleBotPlay(ticTac), 2000)
+                            }
                         }}
                     >
                         Start
@@ -584,11 +736,44 @@ export const TicTacToeLoginUI: FunctionComponent<TicTacToeLoginUIProps> = (props
                         setWin(false)
                         setLose(false)
                         setDraw(false)
+                        setMoves(0)
+                        setTime(undefined)
+                        setScore(0)
+                        clearTimeout(intervalId)
+                        setStartTime(false)
                     }}
                 >
                     Reset
                 </Button>
             </Container>
+            <FadeInOut show={showSnackbar ? true : false}>
+                <FixedDiv
+                    sx={{
+                        bottom: '50px',
+                        left: '50%',
+                        transform: 'translate(-50%,0)',
+                        height: '70px',
+                        maxWidth: mobile.mobile ? mobile.size?.width + 'px' : '400px',
+                        padding: '0px 20px',
+                        overflow: 'hidden',
+                        backgroundColor: showSnackbar?.color,
+                        borderRadius: '35px',
+                        justifyContent: 'center',
+                        alignItems: 'center'
+                    }}
+                >
+                    <Typography
+                        sx={{
+                            color: colors.light.background,
+                            fontSize: '16px',
+                            textAlign: 'center',
+                            margin: 0
+                        }}
+                    >
+                        {showSnackbar?.message}
+                    </Typography>
+                </FixedDiv>
+            </FadeInOut>
         </Container>
     )
 }

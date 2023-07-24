@@ -15,7 +15,7 @@ const login = async (req: NextApiRequest, res: NextApiResponse) => {
             username
         })
 
-        if (user?.password !== password) {
+        if (user && user?.password !== password) {
             return res.status(404).json({ message: 'Incorrect Password' })
         }
 

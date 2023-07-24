@@ -304,37 +304,35 @@ export const AboutPage: FunctionComponent<AboutPageProps> = (props) => {
                                     marginRight: mobile ? '30px' : '0px'
                                 }}
                             >
-                                I am flexible and can adapt to newer technologies because I am a
-                                fast-learner. Despite my background not initially being in Front-end
-                                Web Development, I was able to learn technologies such as React,
-                                Typescript, Javascript, HTML, CSS and others. Moreover, in over a
-                                year of work experience in this field, I learned to write such code
-                                in a way that is abstracted, readble and optimized. This site was
-                                built using custom-built, reusable components on NextJs framework,
-                                with React, Typescript, and Styled Components.
+                                Despite my nontraditional background in Web Development, I have
+                                acquired comprehensive knowledge and expertise in a range of
+                                technologies, including React, Typescript, and Javascript. During my
+                                tenure in this field, I have honed my ability to write abstracted
+                                and optimized code.
                             </Typography>
                             <Typography
                                 sx={{
                                     marginRight: mobile ? '30px' : '0px'
                                 }}
                             >
-                                At Sector Eleven Ltd. I worked on the Front-End aspect of multiple
-                                B2C and B2B projects with a team of 3 (1 Back-End 1 Full-Stack and 1
-                                Front-End). This would typically involve the creation of the site
-                                components, feature integration, api calls to the backend-end
-                                server, data visualization (tables, autocompletes) with querying and
-                                pagination, and feature testing.
+                                At Sector Eleven Ltd., I collaborated with a team of three
+                                individuals, primarily functioning as a Front-end Developer. As part
+                                of the team, I successfully delivered multiple B2C and B2B projects
+                                by integrating project-specific features and building complex
+                                components, such as a recursive selector. I played a major role in
+                                the development of an in-house component library that allowed for
+                                seamless customization across projects.
                             </Typography>
                             <Typography
                                 sx={{
                                     marginRight: mobile ? '30px' : '0px'
                                 }}
                             >
-                                Moreover, we created our own component library, with the main
-                                purpose being to have reusable components while making sure that
-                                they can be modified from project side as required. Using this
-                                custom library resulted in an immediate increase in project
-                                development efficiency by 65%.
+                                By leveraging this custom component library, my team achieved a
+                                remarkable 65% increase in project development efficiency, leading
+                                to expedited timelines and enhanced productivity. This
+                                accomplishment stands as a testament to my ability to deliver
+                                tangible results and drive successful project outcomes.
                             </Typography>
                         </Container>
                         <Container
@@ -400,21 +398,26 @@ export const AboutPage: FunctionComponent<AboutPageProps> = (props) => {
                                     marginRight: mobile ? '30px' : '0px'
                                 }}
                             >
-                                I was born and raised on the warm Mediterranean island of Malta, so
-                                I am still learning how to cope with the snow in the states. I have
-                                always loved football - or rather soccer - and I am a big Juventus
-                                fan. Currently, I am (unsuccessfully) trying to teach myself how to
-                                play tennis.
+                                I was born and raised on the sunny, Mediterranean, island of Malta,
+                                so it is safe to say I was not fully prepared for my first winter in
+                                Chicagoland. Although I am still getting used to the cold, I can now
+                                truly appreciate the beauty of fresh-fallen snow. Football (or
+                                soccer, <i>I guess</i>) is one of my passions, and I am die-hard
+                                Juventus fan. My current goal is to teach myself how to play tennis,
+                                but let’s just say I won’t be giving up my career in Web Development
+                                any time soon.
                             </Typography>
                             <Typography
                                 sx={{
                                     marginRight: mobile ? '30px' : '0px'
                                 }}
                             >
-                                In my free time I like to watch anime (my current watchlist is
-                                below), TV shows, and play PC games, although recently I have been
-                                exploring PS5 gameplay. You can come to me for corny jokes, and a
-                                nice cup of lemon tea.
+                                In my downtime, I like to watch TV and anime - I have been actively
+                                keeping up with One Piece since I was 15, so you <i>know</i> I am
+                                committed! I also am an avid PC gamer, although lately I have been
+                                exploring more PS5 gameplay. If you want to team-up on PUBG, are in
+                                the mood for a corny joke, or just want a good cup of tea, I am your
+                                guy.
                             </Typography>
                             <Accordian
                                 title="Favorite Anime"

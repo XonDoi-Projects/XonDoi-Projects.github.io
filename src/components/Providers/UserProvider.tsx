@@ -1,17 +1,8 @@
-import React, {
-    createContext,
-    FunctionComponent,
-    ReactNode,
-    useContext,
-    useEffect,
-    useState
-} from 'react'
-import { useFirebase } from './FirebaseProvider'
-import { Container, Spinner } from '../LayoutComponents'
-import { Typography } from '../LayoutComponents/Typography'
+import React, { createContext, FunctionComponent, ReactNode, useContext, useState } from 'react'
 
 export interface User {
     username: string
+    _id?: string
 }
 
 export interface IUserContext {

@@ -107,7 +107,7 @@ export const TicTacToeLoginForm: FunctionComponent<TicTacToeLoginFormProps> = (p
                 Login to start
             </Typography>
             <Typography variant="small" sx={{ marginTop: '10px', marginBottom: '0px' }}>
-                If this is your first time a user will be create. This is only required for
+                If this is your first time, a user will be created. This is only required for
                 leadboard tracking.{' '}
             </Typography>
             <TextField
