@@ -6,6 +6,7 @@ import { Typography } from '@/components/LayoutComponents/Typography'
 import { cloneDeep, isEqual } from 'lodash'
 import { Button } from '@/components/InputComponents'
 import { DateTime } from 'luxon'
+import Image from 'next/image'
 
 export type TicTac = 'x' | 'o'
 
@@ -505,7 +506,39 @@ export const TicTacToeLoginUI: FunctionComponent<TicTacToeLoginUIProps> = ({
                             }
                         }}
                     >
-                        <Typography>{cell || ''}</Typography>
+                        {cell === 'o' ? (
+                            <Container
+                                sx={{
+                                    width: '50%',
+                                    height: '50%',
+                                    padding: '0px'
+                                }}
+                            >
+                                <Image
+                                    src="https://firebasestorage.googleapis.com/v0/b/portfolio-3b624.appspot.com/o/TicTac.png?alt=media&token=8614269a-99b5-4b34-8f7a-592ba520dc32"
+                                    alt="Tic Tac"
+                                    fill
+                                    style={{ objectFit: 'scale-down' }}
+                                />
+                            </Container>
+                        ) : cell === 'x' ? (
+                            <Container
+                                sx={{
+                                    width: '50%',
+                                    height: '50%',
+                                    padding: '0px'
+                                }}
+                            >
+                                <Image
+                                    src="https://firebasestorage.googleapis.com/v0/b/portfolio-3b624.appspot.com/o/Toe.png?alt=media&token=0835107b-7ae9-4929-bdc6-c76ee16c7107"
+                                    alt="Tic Tac"
+                                    fill
+                                    style={{ objectFit: 'scale-down' }}
+                                />
+                            </Container>
+                        ) : (
+                            <></>
+                        )}
                     </Container>
                 ))}
                 <FadeInOut

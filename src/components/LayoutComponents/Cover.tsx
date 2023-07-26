@@ -19,7 +19,8 @@ export const Cover: FunctionComponent<CoverProps> = (props) => {
                 left: 0,
                 height: '100vh',
                 width: '100vw',
-                backgroundColor: 'rgba(10,10,10,0.3)'
+                backgroundColor: 'rgba(10,10,10,0.3)',
+                zIndex: 3
             }}
             onClick={() => props.onClose && props.onClose()}
         />

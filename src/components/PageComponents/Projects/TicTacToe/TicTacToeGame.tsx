@@ -1,5 +1,5 @@
 import { colors } from '@/components/Colors'
-import { Button } from '@/components/InputComponents'
+import { Button, RadioButtonGroup } from '@/components/InputComponents'
 import { Card, Container, Overlay, Spinner } from '@/components/LayoutComponents'
 import { useDarkTheme, useSize, useUser } from '@/components/Providers'
 import { CSSProperties, FunctionComponent, useCallback, useEffect, useState } from 'react'
@@ -8,6 +8,8 @@ import { TicTacToeLoginForm } from './TicTacToeLoginForm'
 import { Typography } from '@/components/LayoutComponents/Typography'
 import { TicTacToeLoginUI } from './TicTacToeUI'
 import { DateTime } from 'luxon'
+import { keyframes } from '@emotion/react'
+import { filter } from 'lodash'
 
 export interface TicTacToeGameProps {
     sx?: CSSProperties
@@ -16,6 +18,11 @@ export interface TicTacToeGameProps {
 interface Leaderboard {
     scores: { name: any; score: string; moves: string; time: string }[]
 }
+
+const rotate = keyframes({
+    '0%': { transform: 'rotate(0deg)' },
+    '100%': { transform: 'rotate(360deg)' }
+})
 
 export const TicTacToeGame: FunctionComponent<TicTacToeGameProps> = (props) => {
     const { light } = useDarkTheme()
@@ -32,15 +39,26 @@ export const TicTacToeGame: FunctionComponent<TicTacToeGameProps> = (props) => {
 
     const [time, setTime] = useState<DateTime>()
 
+    const [filterBy, setFilterBy] = useState('Score')
+
     const pullData = useCallback(async () => {
         setLoadingLeaderboard(true)
         try {
+            let sort = {}
+
+            if (filterBy === 'Score') {
+                sort = { score: -1 }
+            } else if (filterBy === 'Time') {
+                sort = { time: -1 }
+            } else {
+                sort = { moves: 1 }
+            }
             const result = await fetch('/api/scores/get-scores', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ sort: { score: -1 } })
+                body: JSON.stringify({ sort })
             })
 
             const data = await result.json()
@@ -53,7 +71,7 @@ export const TicTacToeGame: FunctionComponent<TicTacToeGameProps> = (props) => {
         } catch (e: any) {}
 
         setLoadingLeaderboard(false)
-    }, [dirty])
+    }, [dirty, filterBy])
 
     useEffect(() => {
         pullData()
@@ -159,8 +177,7 @@ export const TicTacToeGame: FunctionComponent<TicTacToeGameProps> = (props) => {
                             width: '100%',
                             flexDirection: 'row',
                             justifyContent: 'space-between',
-                            alignItems: 'flex-start',
-                            marginBottom: '20px'
+                            alignItems: 'flex-start'
                         }}
                     >
                         <Typography
@@ -183,7 +200,11 @@ export const TicTacToeGame: FunctionComponent<TicTacToeGameProps> = (props) => {
                                     backgroundColor: 'transparent',
                                     color: light
                                         ? colors.light.accentForeground
-                                        : colors.dark.accentForeground
+                                        : colors.dark.accentForeground,
+                                    animation: loadingLeaderboard ? `${rotate}` : undefined,
+                                    animationDuration: '1s',
+                                    animationTimingFunction: 'linear',
+                                    animationIterationCount: 'infinite'
                                 }}
                                 onClick={() => setDirty(true)}
                             >
@@ -206,6 +227,15 @@ export const TicTacToeGame: FunctionComponent<TicTacToeGameProps> = (props) => {
                             </Button>
                         </Container>
                     </Container>
+                    <Container sx={{ flexDirection: 'row', marginBottom: '40px' }}>
+                        <RadioButtonGroup
+                            buttonList={['Score', 'Time', 'Moves']}
+                            value={filterBy}
+                            onChange={setFilterBy}
+                            direction="left"
+                            contentSx={{ flexDirection: 'column' }}
+                        />
+                    </Container>
                     <Container sx={{ flexDirection: 'column' }}>
                         <Container
                             sx={{
@@ -216,7 +246,7 @@ export const TicTacToeGame: FunctionComponent<TicTacToeGameProps> = (props) => {
                                 alignItems: 'center'
                             }}
                         >
-                            <Container sx={{ flexDirection: 'row', flex: 1, maxWidth: '40px' }}>
+                            <Container sx={{ flexDirection: 'row', width: '40px' }}>
                                 <Typography
                                     sx={{
                                         fontWeight: 600,
@@ -242,9 +272,11 @@ export const TicTacToeGame: FunctionComponent<TicTacToeGameProps> = (props) => {
                                     Name
                                 </Typography>
                             </Container>
-                            <Container sx={{ flexDirection: 'row', flex: 1, maxWidth: '70px' }}>
+                            <Container sx={{ flexDirection: 'row', width: '70px' }}>
                                 <Typography
                                     sx={{
+                                        width: '100%',
+                                        textAlign: 'right',
                                         fontWeight: 600,
                                         margin: '0px',
                                         color: light
@@ -252,7 +284,11 @@ export const TicTacToeGame: FunctionComponent<TicTacToeGameProps> = (props) => {
                                             : colors.dark.accentForeground
                                     }}
                                 >
-                                    Score
+                                    {filterBy === 'Score'
+                                        ? 'Score'
+                                        : filterBy === 'Time'
+                                        ? 'Time'
+                                        : 'Moves'}
                                 </Typography>
                             </Container>
                         </Container>
@@ -272,9 +308,7 @@ export const TicTacToeGame: FunctionComponent<TicTacToeGameProps> = (props) => {
                                         alignItems: 'center'
                                     }}
                                 >
-                                    <Container
-                                        sx={{ flexDirection: 'row', flex: 1, maxWidth: '40px' }}
-                                    >
+                                    <Container sx={{ flexDirection: 'row', width: '40px' }}>
                                         <Typography
                                             sx={{
                                                 margin: '0px',
@@ -290,23 +324,31 @@ export const TicTacToeGame: FunctionComponent<TicTacToeGameProps> = (props) => {
                                                 margin: '0px',
                                                 color: light
                                                     ? colors.light.accentForeground
-                                                    : colors.dark.accentForeground
+                                                    : colors.dark.accentForeground,
+                                                whiteSpace: 'nowrap',
+                                                textOverflow: 'ellipsis'
                                             }}
                                         >
                                             {line.name ? `${line.name.username}` : `Anonymous`}
                                         </Typography>
                                     </Container>
-                                    <Container
-                                        sx={{ flexDirection: 'row', flex: 1, maxWidth: '70px' }}
-                                    >
+                                    <Container sx={{ flexDirection: 'row', width: '70px' }}>
                                         <Typography
                                             sx={{
+                                                width: '100%',
+                                                textAlign: 'right',
                                                 margin: '0px',
                                                 color: light
                                                     ? colors.light.accentForeground
                                                     : colors.dark.accentForeground
                                             }}
-                                        >{`${line.score}`}</Typography>
+                                        >{`${
+                                            filterBy === 'Score'
+                                                ? line.score
+                                                : filterBy === 'Time'
+                                                ? DateTime.fromISO(line.time).toFormat('mm:ss')
+                                                : line.moves
+                                        }`}</Typography>
                                     </Container>
                                 </Container>
                             ))
