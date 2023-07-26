@@ -177,62 +177,6 @@ export const TicTacToeLoginUI: FunctionComponent<TicTacToeLoginUIProps> = ({
         if (playStateRef.current) {
             let ticTacPositions = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
-            //easy
-            // let tempTicTac = cloneDeep(ticTac)
-
-            // let filteredPositions = ticTacPositions.filter((_, index) => !ticTac[index])
-            // const randomIndex = Math.floor(Math.random() * filteredPositions.length)
-
-            // tempTicTac[filteredPositions[randomIndex] - 1] = 'o'
-
-            //medium
-            // let tempTicTac = cloneDeep(ticTac)
-
-            // let currentPositions = ticTacPositions.filter((_, index) => tempTicTac[index] === 'o')
-
-            // if (!currentPositions.length) {
-            //     let filteredPositions = ticTacPositions.filter((_, index) => !tempTicTac[index])
-            //     const randomIndex = Math.floor(Math.random() * filteredPositions.length)
-            //     tempTicTac[filteredPositions[randomIndex] - 1] = 'o'
-            // } else {
-            //     let distance: number[] = Array.from(Array(7)).fill(0)
-
-            //     let filteredWinningCombinations = winningCombinations.filter(
-            //         (combination) =>
-            //             !combination.some((position) => tempTicTac[position - 1] === 'x')
-            //     )
-            //     filteredWinningCombinations.forEach((combination, index) => {
-            //         let match = combination.map(
-            //             (position) =>
-            //                 currentPositions.includes(position) && tempTicTac[position - 1] !== 'x'
-            //         )
-
-            //         distance[index] =
-            //             match.reduce(
-            //                 (previous, _, subIndex) =>
-            //                     tempTicTac[filteredWinningCombinations[index][subIndex] - 1] === 'o'
-            //                         ? previous + 1
-            //                         : tempTicTac[
-            //                               filteredWinningCombinations[index][subIndex] - 1
-            //                           ] === 'x'
-            //                         ? previous - 1
-            //                         : previous + 0,
-            //                 0
-            //             ) / 3
-            //     })
-
-            //     let max = Math.max(...distance)
-            //     let maxIndex = distance.findIndex((distance) => distance === max)
-
-            //     let filteredPlatyer2Positions = filteredWinningCombinations[maxIndex].filter(
-            //         (position) => {
-            //             return !tempTicTac[position - 1]
-            //         }
-            //     )
-
-            //     const randomIndex = Math.floor(Math.random() * filteredPlatyer2Positions.length)
-            //     tempTicTac[filteredPlatyer2Positions[randomIndex] - 1] = 'o'
-
             //hard
             let tempTicTac = ticTac
 
