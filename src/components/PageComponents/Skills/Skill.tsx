@@ -1,9 +1,9 @@
 import { CSSProperties, FunctionComponent, ReactNode, useEffect, useRef } from 'react'
-import { Card, Container } from '../LayoutComponents'
-import { Typography } from '../LayoutComponents/Typography'
+import { Card, Container } from '../../LayoutComponents'
+import { Typography } from '../../LayoutComponents/Typography'
 import Image from 'next/image'
-import { useDarkTheme, useSize } from '../Providers'
-import { colors } from '../Colors'
+import { useDarkTheme, useSize } from '../../Providers'
+import { colors } from '../../Colors'
 
 export interface SkillProps {
     src: string
