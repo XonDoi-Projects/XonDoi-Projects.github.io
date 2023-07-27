@@ -4,6 +4,7 @@ import { Button, TextField } from '@/components/InputComponents'
 import { colors } from '@/components/Colors'
 import { Container, FadeInOut, FixedDiv } from '@/components/LayoutComponents'
 import { useDarkTheme, useSize, useUser } from '@/components/Providers'
+import { BiHide, BiShow, BiShowAlt } from 'react-icons/bi'
 
 export interface TicTacToeLoginFormProps {
     setSkipLogin: (value: boolean) => void
@@ -20,6 +21,8 @@ export const TicTacToeLoginForm: FunctionComponent<TicTacToeLoginFormProps> = (p
     const [errorUsername, setErrorUsername] = useState('')
     const [password, setPassword] = useState('')
     const [errorPassword, setErrorPassword] = useState('')
+
+    const [showPass, setShowPass] = useState(false)
 
     const mobile = useSize()
     const { light } = useDarkTheme()
@@ -122,16 +125,36 @@ export const TicTacToeLoginForm: FunctionComponent<TicTacToeLoginFormProps> = (p
                 }}
             />
             <TextField
+                type={showPass ? 'text' : 'password'}
                 value={password}
                 onChange={setPassword}
                 errorText={errorPassword}
                 label="Password"
                 fieldContainerSx={{ marginBottom: '28px' }}
                 sx={{ color: light ? colors.dark.background : colors.light.background }}
+                suffix={
+                    <Button
+                        sx={{
+                            width: '40px',
+                            height: '40px',
+                            borderRadius: '50%',
+                            padding: '0px',
+                            backgroundColor: 'transparent'
+                        }}
+                        onClick={() => setShowPass(!showPass)}
+                    >
+                        {!showPass ? (
+                            <BiShow style={{ fontSize: '24px' }} />
+                        ) : (
+                            <BiHide style={{ fontSize: '24px' }} />
+                        )}
+                    </Button>
+                }
             />
             <Container
                 sx={{
                     flex: 1,
+                    marginTop: '16px',
                     flexDirection: mobile.mobile ? 'column' : 'row',
                     width: '100%',
                     backgroundColor: 'transparent',

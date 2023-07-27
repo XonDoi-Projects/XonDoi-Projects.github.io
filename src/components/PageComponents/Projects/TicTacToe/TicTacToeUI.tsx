@@ -60,8 +60,8 @@ export const TicTacToeLoginUI: FunctionComponent<TicTacToeLoginUIProps> = ({
     //for hard, base play on cell with highest win yield and block to avoid loss
 
     useEffect(() => {
-        if (startTime && playState !== undefined) {
-            let interval = setTimeout(() => {
+        if (startTime && !win && !lose && !draw) {
+            let interval = setInterval(() => {
                 const tempTime = cloneDeep(time)
                 setTime(
                     tempTime?.plus({ second: 1 }) ||
@@ -74,9 +74,11 @@ export const TicTacToeLoginUI: FunctionComponent<TicTacToeLoginUIProps> = ({
             }, 1000)
 
             setIntervalId(interval)
-            return () => clearTimeout(interval)
+            return () => clearInterval(interval)
+        } else {
+            setStartTime(false)
         }
-    }, [playState, setTime, startTime, time])
+    }, [draw, lose, setTime, startTime, time, win])
 
     useEffect(() => {
         playStateRef.current = playState
@@ -130,7 +132,7 @@ export const TicTacToeLoginUI: FunctionComponent<TicTacToeLoginUIProps> = ({
                 )
             )
             setPlayState(undefined)
-            clearTimeout(intervalId)
+            clearInterval(intervalId)
             return true
         }
         return false
@@ -150,7 +152,8 @@ export const TicTacToeLoginUI: FunctionComponent<TicTacToeLoginUIProps> = ({
 
             if (lose) {
                 setPlayState(undefined)
-                clearTimeout(intervalId)
+                console.log(intervalId)
+                clearInterval(intervalId)
                 return true
             }
             return false
@@ -165,7 +168,8 @@ export const TicTacToeLoginUI: FunctionComponent<TicTacToeLoginUIProps> = ({
 
             if (!filteredPositions.length) {
                 setPlayState(undefined)
-                clearTimeout(intervalId)
+                console.log(intervalId)
+                clearInterval(intervalId)
                 return true
             }
             return false
@@ -370,7 +374,7 @@ export const TicTacToeLoginUI: FunctionComponent<TicTacToeLoginUIProps> = ({
                 setMoves(0)
                 setTime(undefined)
                 setScore(0)
-                clearTimeout(intervalId)
+                clearInterval(intervalId)
                 setStartTime(false)
             } else {
                 const data = await result.json()
@@ -425,7 +429,12 @@ export const TicTacToeLoginUI: FunctionComponent<TicTacToeLoginUIProps> = ({
                             alignItems: 'center'
                         }}
                         onClick={() => {
-                            if (playState !== undefined && playState !== true && !lose) {
+                            if (
+                                playState !== undefined &&
+                                playState !== true &&
+                                !lose &&
+                                !ticTac[index]
+                            ) {
                                 let tempPrev = cloneDeep(ticTac)
                                 tempPrev[index] = 'x'
 
@@ -474,8 +483,8 @@ export const TicTacToeLoginUI: FunctionComponent<TicTacToeLoginUIProps> = ({
                                 }}
                             >
                                 <Image
-                                    src="https://firebasestorage.googleapis.com/v0/b/portfolio-3b624.appspot.com/o/Toe.png?alt=media&token=0835107b-7ae9-4929-bdc6-c76ee16c7107"
-                                    alt="Tic Tac"
+                                    src="https://firebasestorage.googleapis.com/v0/b/portfolio-3b624.appspot.com/o/Toe2.png?alt=media&token=8c69da02-1ad3-4112-ab65-15e248ddc759"
+                                    alt="Toe"
                                     fill
                                     style={{ objectFit: 'scale-down' }}
                                 />
@@ -716,7 +725,7 @@ export const TicTacToeLoginUI: FunctionComponent<TicTacToeLoginUIProps> = ({
                         setMoves(0)
                         setTime(undefined)
                         setScore(0)
-                        clearTimeout(intervalId)
+                        clearInterval(intervalId)
                         setStartTime(false)
                     }}
                 >

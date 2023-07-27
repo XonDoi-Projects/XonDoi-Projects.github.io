@@ -9,7 +9,6 @@ import { Typography } from '@/components/LayoutComponents/Typography'
 import { TicTacToeLoginUI } from './TicTacToeUI'
 import { DateTime } from 'luxon'
 import { keyframes } from '@emotion/react'
-import { filter } from 'lodash'
 
 export interface TicTacToeGameProps {
     sx?: CSSProperties
@@ -106,29 +105,6 @@ export const TicTacToeGame: FunctionComponent<TicTacToeGameProps> = (props) => {
                         alignItems: 'center'
                     }}
                 >
-                    <Container
-                        sx={{
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                            justifyContent: 'space-between',
-                            width: '250px'
-                        }}
-                    >
-                        <Typography sx={{ margin: '0px 0px 0px 20px' }}>
-                            {time?.toFormat('mm:ss') || 'Time'}
-                        </Typography>
-                        <Typography sx={{ width: '20px' }}>{' - '}</Typography>
-                        <Typography
-                            sx={{
-                                margin: '0px 0px 0px 20px',
-                                whiteSpace: 'nowrap',
-                                textOverflow: 'ellipsis'
-                            }}
-                        >
-                            {user?.username || 'Anonymous'}
-                        </Typography>
-                    </Container>
-
                     <Button
                         sx={{
                             width: '40px',
@@ -141,6 +117,27 @@ export const TicTacToeGame: FunctionComponent<TicTacToeGameProps> = (props) => {
                     >
                         <BiTrophy style={{ fontSize: '24px' }} />
                     </Button>
+                    {/* <Container
+                        sx={{
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                            width: 'fit-content'
+                        }}
+                    > */}
+                    <Typography
+                        sx={{
+                            margin: '0px 0px 0px 20px',
+                            whiteSpace: 'nowrap',
+                            textOverflow: 'ellipsis'
+                        }}
+                    >
+                        {user?.username || 'Anonymous'}
+                    </Typography>
+                    <Typography sx={{ margin: '0px 0px 0px 20px' }}>
+                        {time?.toFormat('mm:ss') || 'Time'}
+                    </Typography>
+                    {/* </Container> */}
                 </Container>
                 <Container
                     sx={{
