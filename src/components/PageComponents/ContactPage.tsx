@@ -14,6 +14,21 @@ export const ContactPage: FunctionComponent<ContactPageProps> = (props) => {
     const mobile = useSize()
     const { light } = useDarkTheme()
 
+    const pullStats = useCallback(async () => {
+        try {
+            let result = await fetch('/api/git-reads/get-languages', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+        } catch (e) {
+            console.log(e)
+        }
+    }, [])
+    useEffect(() => {
+        pullStats()
+    }, [pullStats])
     return (
         <Container
             sx={{
