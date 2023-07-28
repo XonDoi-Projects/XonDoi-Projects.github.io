@@ -4,18 +4,20 @@ import { Button, TextField } from '@/components/InputComponents'
 import { colors } from '@/components/Colors'
 import { Container, FadeInOut, FixedDiv } from '@/components/LayoutComponents'
 import { useDarkTheme, useSize, useUser } from '@/components/Providers'
-import { BiHide, BiShow, BiShowAlt } from 'react-icons/bi'
+import { BiHide, BiShow } from 'react-icons/bi'
 
 export interface TicTacToeLoginFormProps {
     setSkipLogin: (value: boolean) => void
 }
 
 export const TicTacToeLoginForm: FunctionComponent<TicTacToeLoginFormProps> = (props) => {
-    const [showSnackbar, setShowSnackbar] = useState<{ message: string; color: string }>()
+    const [snackbar, setSnackbar] = useState<{ message: string; color: string }>()
+    const [showSnackbar, setShowSnackbar] = useState(false)
+
     const { setUser } = useUser()
 
     const [loading, setLoading] = useState(false)
-    const timeoutRef = useRef<NodeJS.Timeout>()
+    let timeoutRef = useRef<NodeJS.Timeout>()
 
     const [username, setUsername] = useState('')
     const [errorUsername, setErrorUsername] = useState('')
@@ -65,10 +67,11 @@ export const TicTacToeLoginForm: FunctionComponent<TicTacToeLoginFormProps> = (p
                     const data = await result.json()
 
                     setUser(data.user)
-                    setShowSnackbar({
+                    setSnackbar({
                         message: data.message,
                         color: colors.light.success
                     })
+                    setShowSnackbar(true)
                     setUsername('')
                     setErrorUsername('')
                     setPassword('')
@@ -76,17 +79,19 @@ export const TicTacToeLoginForm: FunctionComponent<TicTacToeLoginFormProps> = (p
                 } else {
                     const data = await result.json()
 
-                    setShowSnackbar({
+                    setSnackbar({
                         message: data.message,
                         color: colors.light.error
                     })
+                    setShowSnackbar(true)
                 }
             } catch (e: any) {
                 console.log(e)
-                setShowSnackbar({
+                setSnackbar({
                     message: e.message,
                     color: colors.light.error
                 })
+                setShowSnackbar(true)
             }
             setLoading(false)
         }
@@ -99,9 +104,11 @@ export const TicTacToeLoginForm: FunctionComponent<TicTacToeLoginFormProps> = (p
 
         if (showSnackbar) {
             timeoutRef.current = setTimeout(() => {
-                setShowSnackbar(undefined)
+                setShowSnackbar(false)
             }, 3000)
         }
+
+        return () => clearTimeout(timeoutRef.current)
     }, [showSnackbar])
 
     return (
@@ -190,7 +197,7 @@ export const TicTacToeLoginForm: FunctionComponent<TicTacToeLoginFormProps> = (p
                 </Button>
             </Container>
 
-            <FadeInOut show={showSnackbar ? true : false}>
+            <FadeInOut show={showSnackbar}>
                 <FixedDiv
                     sx={{
                         bottom: '50px',
@@ -200,7 +207,7 @@ export const TicTacToeLoginForm: FunctionComponent<TicTacToeLoginFormProps> = (p
                         maxWidth: mobile.mobile ? mobile.size?.width + 'px' : '400px',
                         padding: '0px 20px',
                         overflow: 'hidden',
-                        backgroundColor: showSnackbar?.color,
+                        backgroundColor: snackbar?.color,
                         borderRadius: '35px',
                         justifyContent: 'center',
                         alignItems: 'center'
@@ -214,7 +221,7 @@ export const TicTacToeLoginForm: FunctionComponent<TicTacToeLoginFormProps> = (p
                             margin: 0
                         }}
                     >
-                        {showSnackbar?.message}
+                        {snackbar?.message}
                     </Typography>
                 </FixedDiv>
             </FadeInOut>
