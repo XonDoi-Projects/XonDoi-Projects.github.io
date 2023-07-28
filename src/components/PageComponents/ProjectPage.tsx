@@ -1,19 +1,16 @@
-import { FunctionComponent, createRef, useCallback, useEffect, useRef, useState } from 'react'
-import { Accordian, Container } from '../LayoutComponents'
+import { FunctionComponent } from 'react'
+import { Container } from '../LayoutComponents'
 import { useDarkTheme, useSize } from '../Providers'
 import { Typography } from '../LayoutComponents/Typography'
-import Link from 'next/link'
 import { colors } from '../Colors'
-import { BiRightArrowAlt } from 'react-icons/bi'
-import { Button } from '../InputComponents'
-import { Projects } from './Projects'
-import { Project } from './ProjectCard'
+import { Projects } from './Projects/Projects'
+import { Project } from './Projects'
 
 const projectList: Project[] = [
     {
-        title: 'test1',
-        description:
-            "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+        title: 'Tic Tac Toe',
+        description: 'A simple Tic Tac Toe game with a score leaderboard.',
+        link: '/projects/tic-tac-toe'
     },
     {
         title: 'test2',
@@ -92,7 +89,8 @@ export const ProjectPage: FunctionComponent<ProjectPageProps> = (props) => {
                             width: mobile.mobile ? '100%' : '70%',
                             height: mobile.mobile ? '100%' : '70%',
                             overflowY: mobile.mobile ? 'hidden' : 'auto',
-                            overflowX: 'hidden'
+                            overflowX: 'hidden',
+                            alignItems: 'center'
                         }}
                         hidescrollBar
                     >

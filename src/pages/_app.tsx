@@ -4,7 +4,8 @@ import {
     ContactFormProvider,
     DarkThemeProvider,
     FirebaseProvider,
-    SizeProvider
+    SizeProvider,
+    UserProvider
 } from '@/components/Providers'
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
@@ -15,9 +16,11 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
             <FirebaseProvider>
                 <DarkThemeProvider>
                     <SizeProvider>
-                        <ContactFormProvider>
-                            <Component {...pageProps} />
-                        </ContactFormProvider>
+                        <UserProvider>
+                            <ContactFormProvider>
+                                <Component {...pageProps} />
+                            </ContactFormProvider>
+                        </UserProvider>
                     </SizeProvider>
                 </DarkThemeProvider>
             </FirebaseProvider>

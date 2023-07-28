@@ -8,7 +8,8 @@ import { Container, FadeInOut, FixedDiv } from '../LayoutComponents'
 export interface ContactMeFormProps {}
 
 export const ContactMeForm: FunctionComponent<ContactMeFormProps> = (props) => {
-    const [showSnackbar, setShowSnackbar] = useState<{ message: string; color: string }>()
+    const [snackbar, setSnackbar] = useState<{ message: string; color: string }>()
+    const [showSnackbar, setShowSnackbar] = useState(false)
 
     const [loading, setLoading] = useState(false)
     const timeoutRef = useRef<NodeJS.Timeout>()
@@ -74,10 +75,11 @@ export const ContactMeForm: FunctionComponent<ContactMeFormProps> = (props) => {
                 })
                 const data = await result.json()
 
-                setShowSnackbar({
+                setSnackbar({
                     message: data.message,
                     color: colors.light.success
                 })
+                setShowSnackbar(true)
                 setDisplayName('')
                 setErrorName('')
                 setEmail('')
@@ -85,10 +87,11 @@ export const ContactMeForm: FunctionComponent<ContactMeFormProps> = (props) => {
                 setMessage('')
                 setErrorMessage('')
             } catch (e) {
-                setShowSnackbar({
+                setSnackbar({
                     message: 'Failed to send message!',
                     color: colors.light.error
                 })
+                setShowSnackbar(true)
             }
             setLoading(false)
         }
@@ -101,7 +104,7 @@ export const ContactMeForm: FunctionComponent<ContactMeFormProps> = (props) => {
 
         if (showSnackbar) {
             timeoutRef.current = setTimeout(() => {
-                setShowSnackbar(undefined)
+                setShowSnackbar(false)
             }, 3000)
         }
     }, [showSnackbar])
@@ -156,7 +159,7 @@ export const ContactMeForm: FunctionComponent<ContactMeFormProps> = (props) => {
                 </Button>
             </Container>
 
-            <FadeInOut show={showSnackbar ? true : false}>
+            <FadeInOut show={showSnackbar}>
                 <FixedDiv
                     sx={{
                         bottom: '50px',
@@ -166,7 +169,7 @@ export const ContactMeForm: FunctionComponent<ContactMeFormProps> = (props) => {
                         maxWidth: mobile.mobile ? mobile.size?.width + 'px' : '400px',
                         padding: '0px 20px',
                         overflow: 'hidden',
-                        backgroundColor: showSnackbar?.color,
+                        backgroundColor: snackbar?.color,
                         borderRadius: '35px',
                         justifyContent: 'center',
                         alignItems: 'center'
@@ -180,7 +183,7 @@ export const ContactMeForm: FunctionComponent<ContactMeFormProps> = (props) => {
                             margin: 0
                         }}
                     >
-                        {showSnackbar?.message}
+                        {snackbar?.message}
                     </Typography>
                 </FixedDiv>
             </FadeInOut>

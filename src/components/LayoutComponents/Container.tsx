@@ -54,6 +54,8 @@ export const Container: FunctionComponent<StyledContainerProps> = forwardRef((pr
             onTouchStart={props.onTouchStart}
             onTouchEnd={props.onTouchEnd}
             onTouchMove={props.onTouchMove}
+            onMouseEnter={props.onMouseEnter}
+            onMouseLeave={props.onMouseLeave}
         >
             {props.children}
         </StyledContainer>

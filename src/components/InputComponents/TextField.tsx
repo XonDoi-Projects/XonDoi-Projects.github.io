@@ -1,4 +1,4 @@
-import { CSSProperties, ChangeEvent, FunctionComponent, useState } from 'react'
+import { CSSProperties, ChangeEvent, FunctionComponent, ReactNode, useState } from 'react'
 import { FieldContainer } from '../LayoutComponents'
 import styled from '@emotion/styled'
 
@@ -9,6 +9,8 @@ export interface TextFieldProps extends StyledInputProps {
     fieldContainerSx?: CSSProperties
     value: string
     onChange: (value: string) => void
+    suffix?: ReactNode
+    type?: 'text' | 'password'
 }
 
 interface StyledInputProps {
@@ -50,13 +52,14 @@ export const TextField: FunctionComponent<TextFieldProps> = ({
     return (
         <FieldContainer sx={fieldContainerSx} {...props} isFocus={isFocus}>
             <StyledInput
+                type={props.type || 'text'}
                 value={value}
                 onChange={onValueChange}
-                type="text"
                 sx={{ ...sx }}
                 onFocus={() => setIsFocus(true)}
                 onBlur={() => setIsFocus(false)}
             />
+            {props.suffix ? props.suffix : <></>}
         </FieldContainer>
     )
 }
