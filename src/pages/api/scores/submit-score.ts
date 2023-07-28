@@ -9,7 +9,6 @@ const submitScore = async (req: NextApiRequest, res: NextApiResponse) => {
 
         userId = userId.trim()
 
-        console.log(userId)
         let result = await db
             .collection('scores')
             .findOneAndUpdate(

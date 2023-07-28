@@ -119,13 +119,6 @@ export const TicTacToeLoginUI: FunctionComponent<TicTacToeLoginUIProps> = ({
             const normalizedTime = seconds / 120 > 1 ? 1 : seconds / 120
             const normalizedMoves = moves / 5
 
-            console.log(
-                parseFloat(
-                    (
-                        1 - Math.sqrt(Math.pow(normalizedTime, 2) + Math.pow(normalizedMoves, 2))
-                    ).toFixed(3)
-                )
-            )
             setScore(
                 parseFloat(
                     (
@@ -154,7 +147,6 @@ export const TicTacToeLoginUI: FunctionComponent<TicTacToeLoginUIProps> = ({
 
             if (lose) {
                 setPlayState(undefined)
-                console.log(intervalId)
                 clearInterval(intervalId)
                 return true
             }
@@ -170,7 +162,6 @@ export const TicTacToeLoginUI: FunctionComponent<TicTacToeLoginUIProps> = ({
 
             if (!filteredPositions.length) {
                 setPlayState(undefined)
-                console.log(intervalId)
                 clearInterval(intervalId)
                 return true
             }
