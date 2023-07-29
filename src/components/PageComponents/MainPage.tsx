@@ -184,7 +184,7 @@ export const MainPage: FunctionComponent<MainPageProps> = (props) => {
                     <Container
                         sx={{
                             minHeight: '200px',
-                            maxHeight: '300px',
+                            maxHeight: mobile.mobile ? undefined : '300px',
                             height: mobile.mobile ? 'fit-content' : '35%',
                             width: 'fit-content',
                             justifyContent: 'center',

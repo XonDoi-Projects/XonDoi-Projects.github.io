@@ -38,7 +38,8 @@ export const Accordian: FunctionComponent<AccordianProps> = (props) => {
                     backgroundColor: light ? colors.light.accent : colors.dark.accent,
                     justifyContent: 'space-between',
                     alignItems: 'center',
-                    paddingLeft: '10px'
+                    padding: '0px 10px',
+                    height: '50px'
                 }}
             >
                 <Typography
@@ -51,8 +52,8 @@ export const Accordian: FunctionComponent<AccordianProps> = (props) => {
                 </Typography>
                 <Button
                     sx={{
-                        width: '50px',
-                        height: '50px',
+                        width: '32px',
+                        height: '32px',
                         borderRadius: '50%',
                         transform: show ? 'rotate(90deg)' : 'rotate(0deg)',
                         transition: 'transform 0.3s',
@@ -63,7 +64,7 @@ export const Accordian: FunctionComponent<AccordianProps> = (props) => {
                 >
                     <BiChevronRight
                         style={{
-                            fontSize: '60px',
+                            fontSize: '32px',
                             color: light
                                 ? colors.light.accentForeground
                                 : colors.dark.accentForeground

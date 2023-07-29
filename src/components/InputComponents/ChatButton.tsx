@@ -21,8 +21,8 @@ export const ChatButton: FunctionComponent<ChatButtonProps> = (props) => {
     return (
         <FixedDiv
             sx={{
-                bottom: '50px',
-                right: '50px',
+                bottom: '30px',
+                right: '30px',
                 width: '50px',
                 height: '50px',
                 boxShadow: `0 0px 20px  ${light ? colors.light.secondary : colors.dark.secondary}`,

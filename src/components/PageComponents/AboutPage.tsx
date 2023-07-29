@@ -34,14 +34,13 @@ export const AboutPage: FunctionComponent<AboutPageProps> = (props) => {
 
     const [showMobile, setShowMobile] = useState(false)
 
-    const [_, setScrollPosition] = useState(0)
+    const [scrollPosition, setScrollPosition] = useState(0)
     const [touchStart, setTouchStart] = useState(0)
     const [touchEnd, setTouchEnd] = useState(0)
     const [touchVelocity, setTouchVelocity] = useState(0)
     const requestRef = useRef<number>()
 
     useEffect(() => {
-        // if (!mobile) {
         if (scrollTo === 0) {
             aboutRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
         } else if (scrollTo === 1) {
@@ -49,11 +48,10 @@ export const AboutPage: FunctionComponent<AboutPageProps> = (props) => {
         } else if (scrollTo === 2) {
             hobbyRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
         }
-        // }
     }, [mobile, scrollTo])
 
     const updateScrollPosition = useCallback(() => {
-        const bannerBottom = bannerRef.current?.getBoundingClientRect().bottom
+        const bannerTop = bannerRef.current?.getBoundingClientRect().top
         const parentBottom = parentRef.current?.getBoundingClientRect().bottom
         const parentTop = parentRef.current?.getBoundingClientRect().top
         const aboutTop = aboutRef.current?.getBoundingClientRect().top
@@ -89,13 +87,13 @@ export const AboutPage: FunctionComponent<AboutPageProps> = (props) => {
             ) {
                 setScrollTo(2)
             }
-        } else if (mobile && size && bannerBottom !== undefined) {
+        } else if (mobile && size && bannerTop !== undefined) {
             const { innerHeight } = window
 
             if (
                 aboutTop &&
                 aboutBottom &&
-                ((aboutTop < innerHeight / 2 && aboutTop >= 0) ||
+                ((aboutTop < innerHeight / 4 && aboutTop >= 0) ||
                     (aboutBottom > innerHeight / 2 && aboutBottom <= innerHeight))
             ) {
                 setShowMobile(true)
@@ -116,7 +114,7 @@ export const AboutPage: FunctionComponent<AboutPageProps> = (props) => {
             ) {
                 setShowMobile(true)
                 setScrollTo(2)
-            } else if (bannerBottom && bannerBottom > innerHeight / 4) {
+            } else if (bannerTop && bannerTop > -100) {
                 setScrollTo(undefined)
                 setShowMobile(false)
             }
@@ -125,24 +123,29 @@ export const AboutPage: FunctionComponent<AboutPageProps> = (props) => {
 
     //----------------- Mobile Momentum Scrolling Logic ------------------------
 
-    const animateScroll = () => {
-        updateScrollPosition()
-        setScrollPosition((prevPosition) => {
-            const currentPosition = touchEnd
-            const delta = touchStart - currentPosition
-            setTouchVelocity(delta)
-            setTouchStart(currentPosition)
+    const animateScroll = useCallback(() => {
+        if (scrollPosition) {
+            updateScrollPosition()
+            setScrollPosition((prevPosition) => {
+                const currentPosition = touchEnd
+                const delta = touchStart - currentPosition
+                setTouchVelocity(delta)
+                setTouchStart(currentPosition)
 
-            return prevPosition + delta
-        })
+                return prevPosition + delta
+            })
 
-        if (Math.abs(touchVelocity) > 0.1) {
-            requestRef.current = requestAnimationFrame(animateScroll)
+            if (Math.abs(touchVelocity) > 0.1) {
+                requestRef.current = requestAnimationFrame(animateScroll)
+            } else {
+                setScrollPosition(0)
+            }
         }
-    }
+    }, [scrollPosition, touchEnd, touchStart, touchVelocity, updateScrollPosition])
 
     const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
         setTouchStart(e.touches[0].clientY)
+        setScrollPosition(0)
         cancelAnimationFrame(requestRef.current as number)
     }
 
@@ -231,6 +234,10 @@ export const AboutPage: FunctionComponent<AboutPageProps> = (props) => {
                                 } else {
                                     setScrollTo(0)
                                     aboutRef.current?.scrollIntoView({ behavior: 'smooth' })
+                                }
+
+                                if (mobile) {
+                                    setShowMobile(true)
                                 }
                             }}
                             swapHover
@@ -428,9 +435,8 @@ export const AboutPage: FunctionComponent<AboutPageProps> = (props) => {
                                     '4. Attack on Titan',
                                     '5. Demon Slayer'
                                 ]}
-                                sx={{ marginRight: mobile ? '30px' : '0px' }}
+                                sx={{ marginRight: mobile ? '30px' : '0px', marginBottom: '20px' }}
                             />
-                            <Container sx={{ height: '20px' }} />
                             <Accordian
                                 title="Favorite TV Shows"
                                 data={[
@@ -440,7 +446,18 @@ export const AboutPage: FunctionComponent<AboutPageProps> = (props) => {
                                     '4. The Boys',
                                     '5. Peaky Blinders'
                                 ]}
-                                sx={{ marginRight: mobile ? '30px' : '0px' }}
+                                sx={{ marginRight: mobile ? '30px' : '0px', marginBottom: '20px' }}
+                            />
+                            <Accordian
+                                title="Favorite Games"
+                                data={[
+                                    '1. PUBG',
+                                    '2. God of War',
+                                    '3. The Last of Us',
+                                    '4. Rocket League',
+                                    '5. OG Pokemon'
+                                ]}
+                                sx={{ marginRight: mobile ? '30px' : '0px', marginBottom: '20px' }}
                             />
                         </Container>
                     </Container>

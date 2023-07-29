@@ -313,7 +313,7 @@ export const TicTacToeGame: FunctionComponent<TicTacToeGameProps> = (props) => {
                                                     ? colors.light.accentForeground
                                                     : colors.dark.accentForeground
                                             }}
-                                        >{`${index}.`}</Typography>
+                                        >{`${index + 1}.`}</Typography>
                                     </Container>
                                     <Container sx={{ flexDirection: 'row', flex: 1 }}>
                                         <Typography
