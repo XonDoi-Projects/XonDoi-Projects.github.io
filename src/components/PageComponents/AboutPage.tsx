@@ -120,38 +120,31 @@ export const AboutPage: FunctionComponent<AboutPageProps> = (props) => {
 
     //----------------- Mobile Momentum Scrolling Logic ------------------------
 
-    const animateScroll = useCallback(
-        (currentPosition: number, touchEnd?: number) => {
-            updateScrollPosition()
-            let delta: number
+    const animateScroll = (currentPosition: number, touchEnd?: number) => {
+        updateScrollPosition()
+        let delta: number
 
-            if (touchEnd) {
-                delta = touchStart - touchEnd
-            } else {
-                delta = touchStart - currentPosition
-            }
+        if (touchEnd) {
+            delta = touchStart - touchEnd
+        } else {
+            delta = touchStart - currentPosition
+        }
 
-            console.log(delta, currentPosition)
-            if (Math.abs(delta) > 0.1) {
-                requestRef.current = requestAnimationFrame(() =>
-                    animateScroll(currentPosition + delta * 0.2)
-                )
-            }
-        },
-        [touchStart, updateScrollPosition]
-    )
+        if (Math.abs(delta) > 0.1) {
+            requestRef.current = requestAnimationFrame(() =>
+                animateScroll(currentPosition + delta * 0.2)
+            )
+        }
+    }
 
     const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
         setTouchStart(e.touches[0].clientY)
         cancelAnimationFrame(requestRef.current as number)
     }
 
-    const handleTouchMove = useCallback(
-        (e: React.TouchEvent<HTMLDivElement>) => {
-            updateScrollPosition()
-        },
-        [updateScrollPosition]
-    )
+    const handleTouchMove = () => {
+        updateScrollPosition()
+    }
 
     const handleTouchEnd = (e: React.TouchEvent<HTMLDivElement>) => {
         if (touchStart !== e.changedTouches[0].clientY) {
@@ -173,9 +166,9 @@ export const AboutPage: FunctionComponent<AboutPageProps> = (props) => {
             }}
             hidescrollBar
             onWheel={updateScrollPosition}
-            onTouchMove={(e) => setTimeout(() => handleTouchMove(e), 100)}
-            onTouchStart={(e) => setTimeout(() => handleTouchStart(e), 100)}
-            onTouchEnd={(e) => setTimeout(() => handleTouchEnd(e), 100)}
+            onTouchMove={handleTouchMove}
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
         >
             <Container
                 sx={{
