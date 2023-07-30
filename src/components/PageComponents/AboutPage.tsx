@@ -154,9 +154,11 @@ export const AboutPage: FunctionComponent<AboutPageProps> = (props) => {
     )
 
     const handleTouchEnd = (e: React.TouchEvent<HTMLDivElement>) => {
-        requestRef.current = requestAnimationFrame(() =>
-            animateScroll(touchStart - e.changedTouches[0].clientY, e.changedTouches[0].clientY)
-        )
+        if (touchStart !== e.changedTouches[0].clientY) {
+            requestRef.current = requestAnimationFrame(() =>
+                animateScroll(touchStart - e.changedTouches[0].clientY, e.changedTouches[0].clientY)
+            )
+        }
     }
 
     //---------------------------- End ---------------------------------
