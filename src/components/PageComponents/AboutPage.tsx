@@ -34,7 +34,6 @@ export const AboutPage: FunctionComponent<AboutPageProps> = (props) => {
 
     const [showMobile, setShowMobile] = useState(false)
 
-    const [scrollPosition, setScrollPosition] = useState(0)
     const [touchStart, setTouchStart] = useState(0)
     const requestRef = useRef<number>()
 
@@ -123,51 +122,40 @@ export const AboutPage: FunctionComponent<AboutPageProps> = (props) => {
 
     const animateScroll = useCallback(
         (currentPosition: number, touchEnd?: number) => {
-            if (scrollPosition) {
-                updateScrollPosition()
-                let delta: number
+            updateScrollPosition()
+            let delta: number
 
-                if (touchEnd) {
-                    delta = touchStart - touchEnd
-                } else {
-                    delta = touchStart - currentPosition
-                }
+            if (touchEnd) {
+                delta = touchStart - touchEnd
+            } else {
+                delta = touchStart - currentPosition
+            }
 
-                if (Math.abs(delta) > 0.1) {
-                    requestRef.current = requestAnimationFrame(() =>
-                        animateScroll(currentPosition + delta * 0.2)
-                    )
-                } else {
-                    setScrollPosition(0)
-                }
+            console.log(delta, currentPosition)
+            if (Math.abs(delta) > 0.1) {
+                requestRef.current = requestAnimationFrame(() =>
+                    animateScroll(currentPosition + delta * 0.2)
+                )
             }
         },
-        [scrollPosition, touchStart, updateScrollPosition]
+        [touchStart, updateScrollPosition]
     )
 
     const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
         setTouchStart(e.touches[0].clientY)
-        setScrollPosition(0)
         cancelAnimationFrame(requestRef.current as number)
     }
 
     const handleTouchMove = useCallback(
         (e: React.TouchEvent<HTMLDivElement>) => {
             updateScrollPosition()
-            setScrollPosition((prevPosition) => {
-                const currentPosition = e.touches[0].clientY
-                const delta = touchStart - currentPosition
-                setTouchStart(currentPosition)
-
-                return prevPosition + delta
-            })
         },
-        [touchStart, updateScrollPosition]
+        [updateScrollPosition]
     )
 
     const handleTouchEnd = (e: React.TouchEvent<HTMLDivElement>) => {
         requestRef.current = requestAnimationFrame(() =>
-            animateScroll(scrollPosition, e.changedTouches[0].clientY)
+            animateScroll(touchStart - e.changedTouches[0].clientY, e.changedTouches[0].clientY)
         )
     }
 
