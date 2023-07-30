@@ -7,10 +7,11 @@ const submitScoreAnon = async (req: NextApiRequest, res: NextApiResponse) => {
         const db = client.db('scores')
         let { score, moves, time } = req.body
 
+        console.log(time)
         let result = await db.collection('scores').insertOne({
             score,
             moves,
-            time
+            time: new Date(time)
         })
 
         if (result?.acknowledged) {

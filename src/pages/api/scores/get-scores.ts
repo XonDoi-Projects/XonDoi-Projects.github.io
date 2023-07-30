@@ -8,7 +8,13 @@ const getScores = async (req: NextApiRequest, res: NextApiResponse) => {
         const dbScore = client.db('scores')
         const { filter, sort } = req.body
 
-        let result = await dbScore.collection('scores').find(filter).limit(10).sort(sort).toArray()
+        let fullSort = { ...sort, _id: 1 }
+        let result = await dbScore
+            .collection('scores')
+            .find(filter)
+            .sort(fullSort)
+            .limit(10)
+            .toArray()
 
         const dbUsers = client.db('users')
         let resolvedResult = await Promise.all(

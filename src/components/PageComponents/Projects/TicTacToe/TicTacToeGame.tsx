@@ -73,8 +73,10 @@ export const TicTacToeGame: FunctionComponent<TicTacToeGameProps> = (props) => {
     }, [dirty, filterBy])
 
     useEffect(() => {
-        pullData()
-    }, [pullData])
+        if (showScore) {
+            pullData()
+        }
+    }, [pullData, showScore])
 
     return (
         <>
@@ -168,7 +170,9 @@ export const TicTacToeGame: FunctionComponent<TicTacToeGameProps> = (props) => {
                 cover
                 onClose={() => setShowScore(false)}
             >
-                <Container sx={{ flexDirection: 'column', padding: '20px', width: '100%' }}>
+                <Container
+                    sx={{ flexDirection: 'column', padding: '20px', width: '100%', height: '100%' }}
+                >
                     <Container
                         sx={{
                             width: '100%',
@@ -230,13 +234,14 @@ export const TicTacToeGame: FunctionComponent<TicTacToeGameProps> = (props) => {
                             value={filterBy}
                             onChange={setFilterBy}
                             direction="left"
-                            contentSx={{ flexDirection: 'column' }}
+                            contentSx={{ flexDirection: 'row' }}
                         />
                     </Container>
-                    <Container sx={{ flexDirection: 'column' }}>
+                    <Container sx={{ flexDirection: 'column', flex: 1, overflow: 'hidden' }}>
                         <Container
                             sx={{
-                                flex: 1,
+                                // flex: 1,
+                                flexShrink: 0,
                                 flexDirection: 'row',
                                 marginBottom: '20px',
                                 justifyContent: 'space-between',
@@ -294,61 +299,69 @@ export const TicTacToeGame: FunctionComponent<TicTacToeGameProps> = (props) => {
                                 <Spinner />
                             </Container>
                         ) : leaderboard?.scores.length ? (
-                            leaderboard?.scores.map((line, index) => (
-                                <Container
-                                    key={index}
-                                    sx={{
-                                        flex: 1,
-                                        flexDirection: 'row',
-                                        marginBottom: '10px',
-                                        justifyContent: 'space-between',
-                                        alignItems: 'center'
-                                    }}
-                                >
-                                    <Container sx={{ flexDirection: 'row', width: '40px' }}>
-                                        <Typography
-                                            sx={{
-                                                margin: '0px',
-                                                color: light
-                                                    ? colors.light.accentForeground
-                                                    : colors.dark.accentForeground
-                                            }}
-                                        >{`${index + 1}.`}</Typography>
+                            <Container
+                                sx={{
+                                    flexDirection: 'column',
+                                    overflowY: 'auto',
+                                    overflowX: 'hidden'
+                                }}
+                                swapScrollBar
+                            >
+                                {leaderboard?.scores.map((line, index) => (
+                                    <Container
+                                        key={index}
+                                        sx={{
+                                            flexDirection: 'row',
+                                            marginBottom: '10px',
+                                            justifyContent: 'space-between',
+                                            alignItems: 'center'
+                                        }}
+                                    >
+                                        <Container sx={{ flexDirection: 'row', width: '40px' }}>
+                                            <Typography
+                                                sx={{
+                                                    margin: '0px',
+                                                    color: light
+                                                        ? colors.light.accentForeground
+                                                        : colors.dark.accentForeground
+                                                }}
+                                            >{`${index + 1}.`}</Typography>
+                                        </Container>
+                                        <Container sx={{ flexDirection: 'row', flex: 1 }}>
+                                            <Typography
+                                                sx={{
+                                                    margin: '0px',
+                                                    color: light
+                                                        ? colors.light.accentForeground
+                                                        : colors.dark.accentForeground,
+                                                    whiteSpace: 'nowrap',
+                                                    textOverflow: 'ellipsis'
+                                                }}
+                                            >
+                                                {line.name ? `${line.name.username}` : `Anonymous`}
+                                            </Typography>
+                                        </Container>
+                                        <Container sx={{ flexDirection: 'row', width: '70px' }}>
+                                            <Typography
+                                                sx={{
+                                                    width: '100%',
+                                                    textAlign: 'right',
+                                                    margin: '0px',
+                                                    color: light
+                                                        ? colors.light.accentForeground
+                                                        : colors.dark.accentForeground
+                                                }}
+                                            >{`${
+                                                filterBy === 'Score'
+                                                    ? line.score
+                                                    : filterBy === 'Time'
+                                                    ? DateTime.fromISO(line.time).toFormat('mm:ss')
+                                                    : line.moves
+                                            }`}</Typography>
+                                        </Container>
                                     </Container>
-                                    <Container sx={{ flexDirection: 'row', flex: 1 }}>
-                                        <Typography
-                                            sx={{
-                                                margin: '0px',
-                                                color: light
-                                                    ? colors.light.accentForeground
-                                                    : colors.dark.accentForeground,
-                                                whiteSpace: 'nowrap',
-                                                textOverflow: 'ellipsis'
-                                            }}
-                                        >
-                                            {line.name ? `${line.name.username}` : `Anonymous`}
-                                        </Typography>
-                                    </Container>
-                                    <Container sx={{ flexDirection: 'row', width: '70px' }}>
-                                        <Typography
-                                            sx={{
-                                                width: '100%',
-                                                textAlign: 'right',
-                                                margin: '0px',
-                                                color: light
-                                                    ? colors.light.accentForeground
-                                                    : colors.dark.accentForeground
-                                            }}
-                                        >{`${
-                                            filterBy === 'Score'
-                                                ? line.score
-                                                : filterBy === 'Time'
-                                                ? DateTime.fromISO(line.time).toFormat('mm:ss')
-                                                : line.moves
-                                        }`}</Typography>
-                                    </Container>
-                                </Container>
-                            ))
+                                ))}
+                            </Container>
                         ) : (
                             <Container>
                                 <Typography

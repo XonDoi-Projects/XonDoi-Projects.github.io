@@ -324,6 +324,14 @@ export const TicTacToeLoginUI: FunctionComponent<TicTacToeLoginUIProps> = ({
     const handleScore = async () => {
         setLoadingScore(true)
         try {
+            let timeObject = {
+                year: 1993,
+                month: 12,
+                day: 12,
+                hour: 0,
+                minute: time?.minute,
+                second: time?.second
+            }
             let result: Response
             if (user) {
                 result = await fetch(`/api/scores/submit-score`, {
@@ -335,7 +343,7 @@ export const TicTacToeLoginUI: FunctionComponent<TicTacToeLoginUIProps> = ({
                         userId: user?._id,
                         score,
                         moves,
-                        time
+                        time: DateTime.fromObject(timeObject).toUTC().toISO()
                     })
                 })
             } else {
@@ -347,7 +355,7 @@ export const TicTacToeLoginUI: FunctionComponent<TicTacToeLoginUIProps> = ({
                     body: JSON.stringify({
                         score,
                         moves,
-                        time
+                        time: DateTime.fromObject(timeObject).toUTC().toISO()
                     })
                 })
             }
@@ -485,6 +493,7 @@ export const TicTacToeLoginUI: FunctionComponent<TicTacToeLoginUIProps> = ({
                                     alt="Toe"
                                     fill
                                     style={{ objectFit: 'scale-down' }}
+                                    placeholder="blur"
                                 />
                             </Container>
                         ) : (
@@ -696,12 +705,12 @@ export const TicTacToeLoginUI: FunctionComponent<TicTacToeLoginUIProps> = ({
                 ) : playState === true ? (
                     <Typography variant="body" sx={{ margin: '0' }}>
                         {' '}
-                        Player 2
+                        Bot’s Turn
                     </Typography>
                 ) : (
                     <Typography variant="body" sx={{ margin: '0' }}>
                         {' '}
-                        Player 1
+                        Your Turn
                     </Typography>
                 )}
 
