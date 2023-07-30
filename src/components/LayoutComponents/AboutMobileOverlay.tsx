@@ -86,7 +86,7 @@ export const AboutMobileOverlay: FunctionComponent<AboutMobileOverlayProps> = (p
                     <BiSquare
                         fill={light ? colors.light.background : colors.dark.background}
                         stroke={light ? colors.light.accent : colors.dark.accent}
-                        strokeWidth={'1px'}
+                        strokeWidth={'2px'}
                     />
                 )}
             </Container>
@@ -119,7 +119,7 @@ export const AboutMobileOverlay: FunctionComponent<AboutMobileOverlayProps> = (p
                     <BiSquare
                         fill={light ? colors.light.background : colors.dark.background}
                         stroke={light ? colors.light.accent : colors.dark.accent}
-                        strokeWidth={'1px'}
+                        strokeWidth={'2px'}
                     />
                 )}
             </Container>
@@ -152,7 +152,7 @@ export const AboutMobileOverlay: FunctionComponent<AboutMobileOverlayProps> = (p
                     <BiSquare
                         fill={light ? colors.light.background : colors.dark.background}
                         stroke={light ? colors.light.accent : colors.dark.accent}
-                        strokeWidth={'1px'}
+                        strokeWidth={'2px'}
                     />
                 )}
             </Container>

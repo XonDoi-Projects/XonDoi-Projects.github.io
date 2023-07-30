@@ -59,7 +59,7 @@ export const ProjectCard: FunctionComponent<ProjectCardProps> = (props) => {
                             flexDirection: 'column',
                             flex: 1,
                             width: '100%',
-                            height: '200px',
+                            height: 'fit-content',
                             padding: '20px',
                             overflow: 'auto'
                         }}
@@ -75,7 +75,7 @@ export const ProjectCard: FunctionComponent<ProjectCardProps> = (props) => {
                     >
                         <Typography
                             variant="subtitle"
-                            sx={{ marginTop: '10px', marginBottom: '10px' }}
+                            sx={{ fontSize: '30px', marginTop: '10px', marginBottom: '10px' }}
                         >
                             {props.project.title}
                         </Typography>
@@ -90,7 +90,7 @@ export const ProjectCard: FunctionComponent<ProjectCardProps> = (props) => {
                         flexDirection: 'column',
                         flex: 1,
                         width: '100%',
-                        height: '200px',
+                        height: 'fit-content',
                         padding: '20px',
                         overflow: 'auto'
                     }}
@@ -104,7 +104,10 @@ export const ProjectCard: FunctionComponent<ProjectCardProps> = (props) => {
                         setHover(false)
                     }}
                 >
-                    <Typography variant="subtitle" sx={{ marginTop: '10px', marginBottom: '10px' }}>
+                    <Typography
+                        variant="subtitle"
+                        sx={{ fontSize: '30px', marginTop: '10px', marginBottom: '10px' }}
+                    >
                         {props.project.title}
                     </Typography>
                     <Typography variant="body" sx={{ flex: 1 }}>

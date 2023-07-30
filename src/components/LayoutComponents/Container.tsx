@@ -9,33 +9,42 @@ export interface StyledContainerProps extends HTMLProps<HTMLDivElement> {
     hidescrollBar?: boolean
     ref?: Ref<HTMLDivElement>
     light?: boolean
+    swapScrollBar?: boolean
     // onWheel?: () => void
 }
 
-export const StyledContainer = styled.div<StyledContainerProps>(({ sx, hidescrollBar, light }) => ({
-    display: 'flex',
-    position: 'relative',
-    padding: '0',
-    margin: '0',
-    flexShrink: 0,
-    flexGrow: 0,
-    boxSizing: 'border-box',
+export const StyledContainer = styled.div<StyledContainerProps>(
+    ({ sx, hidescrollBar, light, swapScrollBar }) => ({
+        display: 'flex',
+        position: 'relative',
+        padding: '0',
+        margin: '0',
+        flexShrink: 0,
+        flexGrow: 0,
+        boxSizing: 'border-box',
 
-    ...sx,
-    '::-webkit-scrollbar': {
-        width: '10px',
-        height: '10px',
-        backgroundColor: 'transparent',
-        display: hidescrollBar ? 'none' : undefined
-    },
-    '::-webkit-scrollbar-thumb': {
-        border: '2px solid transparent',
-        backgroundClip: 'content-box',
-        borderRadius: '8px',
-        backgroundColor: light ? colors.light.accent : colors.dark.accent
-    },
-    '::-webkit-scrollbar-track': {}
-}))
+        ...sx,
+        '::-webkit-scrollbar': {
+            width: '10px',
+            height: '10px',
+            backgroundColor: 'transparent',
+            display: hidescrollBar ? 'none' : undefined
+        },
+        '::-webkit-scrollbar-thumb': {
+            border: '2px solid transparent',
+            backgroundClip: 'content-box',
+            borderRadius: '8px',
+            backgroundColor: swapScrollBar
+                ? light
+                    ? colors.light.background
+                    : colors.dark.background
+                : light
+                ? colors.light.foreground
+                : colors.dark.foreground
+        },
+        '::-webkit-scrollbar-track': {}
+    })
+)
 
 export const Container: FunctionComponent<StyledContainerProps> = forwardRef((props, ref) => {
     const { light } = useDarkTheme()
@@ -56,6 +65,7 @@ export const Container: FunctionComponent<StyledContainerProps> = forwardRef((pr
             onTouchMove={props.onTouchMove}
             onMouseEnter={props.onMouseEnter}
             onMouseLeave={props.onMouseLeave}
+            swapScrollBar={props.swapScrollBar}
         >
             {props.children}
         </StyledContainer>

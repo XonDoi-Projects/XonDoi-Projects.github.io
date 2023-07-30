@@ -76,9 +76,10 @@ export const RadioButtonGroup: FunctionComponent<RadioButtonGroupProps> = (props
                             display: 'flex',
                             justifyContent: 'center',
                             alignItems: 'center',
-                            height: '40px',
-                            width: '40px',
+                            height: '30px',
+                            width: '30px',
                             borderRadius: '50%',
+                            padding: '0px',
                             ...props.sx
                         }}
                     >

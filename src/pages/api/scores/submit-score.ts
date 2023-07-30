@@ -13,7 +13,7 @@ const submitScore = async (req: NextApiRequest, res: NextApiResponse) => {
             .collection('scores')
             .findOneAndUpdate(
                 { userId },
-                { $set: { score, moves, time, userId } },
+                { $set: { score, moves, time: new Date(time), userId } },
                 { upsert: true }
             )
 
