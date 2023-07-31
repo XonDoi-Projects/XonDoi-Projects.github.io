@@ -42,7 +42,7 @@ export const TicTacToePage: FunctionComponent<TicTacToePageProps> = (props) => {
                         variant="supertitle"
                         sx={{ marginTop: '20px', marginBottom: '20px' }}
                     >
-                        Tic Tac Toe
+                        Tic-Tac-Toe
                     </Typography>
                     <TicTacToeGame />
                 </Container>

@@ -26,7 +26,6 @@ export const SkillsShowcase: FunctionComponent<SkillsShowcaseProps> = (props) =>
         }
     }, [mobile, skillsShowcaseRef])
 
-    console.log(scrollIntoView)
     return (
         <Container
             ref={skillsShowcaseRef}

@@ -116,7 +116,10 @@ export const ContactMeForm: FunctionComponent<ContactMeFormProps> = (props) => {
             </Typography>
             <TextField
                 value={displayName}
-                onChange={setDisplayName}
+                onChange={(value) => {
+                    setDisplayName(value)
+                    setErrorName('')
+                }}
                 errorText={errorName}
                 label="Name"
                 fieldContainerSx={{ marginBottom: '28px' }}
@@ -124,7 +127,10 @@ export const ContactMeForm: FunctionComponent<ContactMeFormProps> = (props) => {
             />
             <TextField
                 value={email}
-                onChange={setEmail}
+                onChange={(value) => {
+                    setEmail(value)
+                    setErrorEmail('')
+                }}
                 errorText={errorEmail}
                 label="Email"
                 fieldContainerSx={{ marginBottom: '28px' }}
@@ -134,6 +140,7 @@ export const ContactMeForm: FunctionComponent<ContactMeFormProps> = (props) => {
                 value={message}
                 onChange={(value) => {
                     if (value.length <= 500) setMessage(value)
+                    setErrorMessage('')
                 }}
                 errorText={errorMessage}
                 label="Message"
