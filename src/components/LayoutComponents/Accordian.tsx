@@ -61,6 +61,7 @@ export const Accordian: FunctionComponent<AccordianProps> = (props) => {
                         backgroundColor: 'transparent'
                     }}
                     onClick={() => setShow(!show)}
+                    swapHover
                 >
                     <BiChevronRight
                         style={{

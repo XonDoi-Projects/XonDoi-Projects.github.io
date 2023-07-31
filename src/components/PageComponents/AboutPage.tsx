@@ -147,7 +147,7 @@ export const AboutPage: FunctionComponent<AboutPageProps> = (props) => {
     }
 
     const handleTouchEnd = (e: React.TouchEvent<HTMLDivElement>) => {
-        if (touchStart !== e.changedTouches[0].clientY) {
+        if (Math.abs(touchStart - e.changedTouches[0].clientY) > 10) {
             requestRef.current = requestAnimationFrame(() =>
                 animateScroll(touchStart - e.changedTouches[0].clientY, e.changedTouches[0].clientY)
             )
@@ -231,7 +231,7 @@ export const AboutPage: FunctionComponent<AboutPageProps> = (props) => {
                             swapHover
                         >
                             <Typography
-                                variant="linker"
+                                variant="body"
                                 sx={{
                                     fontFamily: '"Montserrat", sans-serif',
                                     fontSize: scrollTo === index && !mobile ? '28px' : '22px',
