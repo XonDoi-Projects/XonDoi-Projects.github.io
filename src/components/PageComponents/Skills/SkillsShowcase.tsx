@@ -33,7 +33,8 @@ export const SkillsShowcase: FunctionComponent<SkillsShowcaseProps> = (props) =>
                 flexDirection: 'column',
                 width: '100%',
                 justifyContent: 'center',
-                alignItems: 'center'
+                alignItems: 'center',
+                gap: '20px'
             }}
         >
             <Typography
@@ -75,7 +76,7 @@ export const SkillsShowcase: FunctionComponent<SkillsShowcaseProps> = (props) =>
                                 scrollIntoView ? scrollIntoView - 1 : props.skills.length - 1
                             )
                         }
-                        disabled={scrollIntoView === 0}
+                        disabled={!scrollIntoView}
                     >
                         <BiChevronLeft style={{ fontSize: '60px' }} />
                     </Button>

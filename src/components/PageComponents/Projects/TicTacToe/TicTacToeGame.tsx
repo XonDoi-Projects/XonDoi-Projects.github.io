@@ -48,7 +48,7 @@ export const TicTacToeGame: FunctionComponent<TicTacToeGameProps> = (props) => {
             if (filterBy === 'Score') {
                 sort = { score: -1 }
             } else if (filterBy === 'Time') {
-                sort = { time: -1 }
+                sort = { time: 1 }
             } else {
                 sort = { moves: 1 }
             }

@@ -51,11 +51,35 @@ export const TicTacToeLoginUI: FunctionComponent<TicTacToeLoginUIProps> = ({
 
     const [score, setScore] = useState(0)
     const [moves, setMoves] = useState(0)
+    const [highScore, setHighScore] = useState(0)
 
     const playStateRef = useRef(playState)
 
     const [intervalId, setIntervalId] = useState<NodeJS.Timer>()
     const [startTime, setStartTime] = useState(false)
+
+    const getUserScore = useCallback(async () => {
+        console.log(1, user)
+        if (user) {
+            try {
+                const result = await fetch('/api/scores/get-user-score', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ query: { userId: user._id } })
+                })
+
+                const data = await result.json()
+
+                setHighScore(data.score.score)
+            } catch (e: any) {}
+        }
+    }, [user])
+
+    useEffect(() => {
+        getUserScore()
+    }, [getUserScore])
 
     //for easy, just use random number
     //for medium, base play on combination with highest win yield
@@ -122,8 +146,10 @@ export const TicTacToeLoginUI: FunctionComponent<TicTacToeLoginUIProps> = ({
             setScore(
                 parseFloat(
                     (
-                        1 - Math.sqrt(Math.pow(normalizedTime, 2) + Math.pow(normalizedMoves, 2))
-                    ).toFixed(3)
+                        (1 -
+                            Math.sqrt(Math.pow(normalizedTime, 2) + Math.pow(normalizedMoves, 2))) *
+                        1000
+                    ).toFixed(1)
                 )
             )
             setPlayState(undefined)
@@ -361,6 +387,7 @@ export const TicTacToeLoginUI: FunctionComponent<TicTacToeLoginUIProps> = ({
             }
 
             if (result.status === 200) {
+                setHighScore(score)
                 const data = await result.json()
 
                 setSnackbar({
@@ -493,7 +520,6 @@ export const TicTacToeLoginUI: FunctionComponent<TicTacToeLoginUIProps> = ({
                                     alt="Toe"
                                     fill
                                     style={{ objectFit: 'scale-down' }}
-                                    placeholder="blur"
                                 />
                             </Container>
                         ) : (
@@ -541,25 +567,38 @@ export const TicTacToeLoginUI: FunctionComponent<TicTacToeLoginUIProps> = ({
                             You Win!
                         </Typography>
 
-                        <Button
-                            sx={{
-                                borderRadius: '19px',
-                                backgroundColor: light ? colors.light.accent : colors.dark.accent
-                            }}
-                            contentSx={{ width: 'fit-content', marginTop: '10px' }}
-                            onClick={handleScore}
-                            loading={loadingScore}
-                        >
-                            <Typography
+                        {score > highScore ? (
+                            <Button
                                 sx={{
-                                    whiteSpace: 'nowrap',
-                                    margin: '0px 10px',
-                                    color: light
-                                        ? colors.light.accentForeground
-                                        : colors.dark.accentForeground
+                                    borderRadius: '19px',
+                                    backgroundColor: light
+                                        ? colors.light.accent
+                                        : colors.dark.accent
                                 }}
-                            >{`Submit Score: ${score}`}</Typography>
-                        </Button>
+                                contentSx={{ width: 'fit-content', marginTop: '10px' }}
+                                onClick={handleScore}
+                                loading={loadingScore}
+                            >
+                                <Typography
+                                    sx={{
+                                        whiteSpace: 'nowrap',
+                                        margin: '0px 10px',
+                                        color: light
+                                            ? colors.light.accentForeground
+                                            : colors.dark.accentForeground
+                                    }}
+                                >{`Submit high score: ${score}`}</Typography>
+                            </Button>
+                        ) : (
+                            <Container sx={{ flexDirection: 'column' }}>
+                                <Typography
+                                    sx={{ margin: '3px 0px', textAlign: 'center' }}
+                                >{`Your Score: ${score}`}</Typography>
+                                <Typography
+                                    sx={{ margin: '3px 0px', textAlign: 'center' }}
+                                >{`High Score: ${highScore}`}</Typography>
+                            </Container>
+                        )}
                     </Container>
                 </FadeInOut>
 

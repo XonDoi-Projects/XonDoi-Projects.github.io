@@ -8,8 +8,8 @@ import { Project } from './Projects'
 
 const projectList: Project[] = [
     {
-        title: 'Tic Tac Toe',
-        description: 'A simple Tic Tac Toe game with a score leaderboard.',
+        title: 'Tic-Tac-Toe',
+        description: 'My take on Tic-Tac-Toe, also features a leaderboard.',
         link: '/projects/tic-tac-toe'
     },
     {

@@ -76,8 +76,10 @@ export const ContactPage: FunctionComponent<ContactPageProps> = (props) => {
                         }}
                     >
                         <Typography
-                            variant="linker"
+                            // variant="linker"
                             sx={{
+                                fontSize: '18px',
+                                fontWeight: 400,
                                 color: light ? colors.light.background : colors.dark.background,
                                 margin: '0px',
                                 marginBottom: '20px',
@@ -102,8 +104,10 @@ export const ContactPage: FunctionComponent<ContactPageProps> = (props) => {
                         Discord
                     </Typography>
                     <Typography
-                        variant="linker"
+                        // variant="linker"
                         sx={{
+                            fontSize: '18px',
+                            fontWeight: 400,
                             color: light ? colors.light.background : colors.dark.background,
                             margin: '0px',
                             marginBottom: '20px',
@@ -127,8 +131,10 @@ export const ContactPage: FunctionComponent<ContactPageProps> = (props) => {
                         Email
                     </Typography>
                     <Typography
-                        variant="linker"
+                        // variant="linker"
                         sx={{
+                            fontSize: '18px',
+                            fontWeight: 400,
                             color: light ? colors.light.background : colors.dark.background,
                             margin: '0px',
                             marginBottom: '20px',

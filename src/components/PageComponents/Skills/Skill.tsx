@@ -85,8 +85,8 @@ export const Skill: FunctionComponent<SkillProps> = (props) => {
             ) : props.alt === 'Next' && !light ? (
                 <Container
                     sx={{
-                        height: '170px',
-                        width: '170px',
+                        height: '160px',
+                        width: '160px',
                         borderRadius: '50%',
                         backgroundColor: colors.light.background
                     }}

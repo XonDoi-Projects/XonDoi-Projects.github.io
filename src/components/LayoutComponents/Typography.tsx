@@ -14,7 +14,6 @@ type FontVariants =
     | 'small'
 
 export interface TypographyProps extends StyledTypographyProps {
-    variant?: FontVariants
     children: ReactNode
 }
 
@@ -66,11 +65,24 @@ const fontTemplates: FontVariant = {
 
 interface StyledTypographyProps {
     sx?: CSSProperties
+    variant?: FontVariants
+    light?: boolean
 }
 
-const StyledTypography = styled.p<StyledTypographyProps>(({ sx }) => ({
+const StyledTypography = styled.p<StyledTypographyProps>(({ sx, variant, light }) => ({
     fontStyle: 'normal',
-    ...sx
+    ...sx,
+
+    '@media (hover:hover) and (pointer: fine)': {
+        '&:hover': {
+            color:
+                variant === 'linker'
+                    ? light
+                        ? colors.light.accent
+                        : colors.dark.accent
+                    : undefined
+        }
+    }
 }))
 
 export const Typography: FunctionComponent<TypographyProps> = (props) => {
@@ -100,6 +112,8 @@ export const Typography: FunctionComponent<TypographyProps> = (props) => {
                 ...variantSx,
                 ...props.sx
             }}
+            variant={props.variant}
+            light={light}
         >
             {props.children}
         </StyledTypography>

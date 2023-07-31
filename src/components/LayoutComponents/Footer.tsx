@@ -1,26 +1,26 @@
-import { CSSProperties, FunctionComponent, ReactNode } from 'react'
+import { CSSProperties, FunctionComponent } from 'react'
 import { Container } from './Container'
-import { Card } from './Card'
 import { Button } from '../InputComponents'
 import Image from 'next/image'
-import { Typography } from './Typography'
 import Link from 'next/link'
 import { useDarkTheme, useSize } from '../Providers'
 import { colors } from '../Colors'
+import { useRouter } from 'next/router'
 
 export interface FooterProps {
     sx?: CSSProperties
 }
 
 export const Footer: FunctionComponent<FooterProps> = (props) => {
-    const { mobile, size } = useSize()
+    const { mobile } = useSize()
     const { light } = useDarkTheme()
+
+    const router = useRouter()
 
     return (
         <Container
             sx={{
                 flexDirection: 'row',
-                // flex: 1,
                 width: '100%',
                 height: '50px',
                 position: mobile ? 'relative' : 'absolute',
@@ -50,7 +50,7 @@ export const Footer: FunctionComponent<FooterProps> = (props) => {
                         : colors.dark.background
                 }}
             >
-                <Link href="https://github.com/xondoi" target="_blank">
+                <Link href="https://github.com/XonDoi-Projects" target="_blank">
                     <Button
                         sx={{
                             width: '50px',
@@ -62,7 +62,15 @@ export const Footer: FunctionComponent<FooterProps> = (props) => {
                     >
                         <Image
                             src={
-                                light
+                                !mobile
+                                    ? router.pathname === '/'
+                                        ? light
+                                            ? 'https://firebasestorage.googleapis.com/v0/b/portfolio-3b624.appspot.com/o/GitLogo.svg?alt=media&token=ad62ea12-9e45-4d88-b113-d572a871e7b7'
+                                            : 'https://firebasestorage.googleapis.com/v0/b/portfolio-3b624.appspot.com/o/GitLogoDark.png?alt=media&token=0a9c4264-9db5-42cb-bd53-8cb23e50bfdc'
+                                        : !light
+                                        ? 'https://firebasestorage.googleapis.com/v0/b/portfolio-3b624.appspot.com/o/GitLogo.svg?alt=media&token=ad62ea12-9e45-4d88-b113-d572a871e7b7'
+                                        : 'https://firebasestorage.googleapis.com/v0/b/portfolio-3b624.appspot.com/o/GitLogoDark.png?alt=media&token=0a9c4264-9db5-42cb-bd53-8cb23e50bfdc'
+                                    : light
                                     ? 'https://firebasestorage.googleapis.com/v0/b/portfolio-3b624.appspot.com/o/GitLogo.svg?alt=media&token=ad62ea12-9e45-4d88-b113-d572a871e7b7'
                                     : 'https://firebasestorage.googleapis.com/v0/b/portfolio-3b624.appspot.com/o/GitLogoDark.png?alt=media&token=0a9c4264-9db5-42cb-bd53-8cb23e50bfdc'
                             }

@@ -67,7 +67,7 @@ export const Page: FunctionComponent<PageProps> = (props) => {
         >
             <Header />
             {props.children}
-            {mobile.mobile ? <Footer /> : <></>}
+            <Footer />
             {router.pathname !== '/contact' ? <ChatButton /> : <></>}
         </Container>
     )
