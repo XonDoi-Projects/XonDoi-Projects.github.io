@@ -144,7 +144,7 @@ export const MainPage: FunctionComponent<MainPageProps> = (props) => {
                             Web Developer
                         </Typography>
                         <Link
-                            href="/Nathan_Magro_Resume.pdf"
+                            href="/Nathan_Magro_Resume_(Redacted).pdf"
                             download="NathanMagro_Resume.pdf"
                             target="_blank"
                             style={{
