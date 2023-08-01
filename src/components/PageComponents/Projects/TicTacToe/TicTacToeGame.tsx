@@ -107,39 +107,39 @@ export const TicTacToeGame: FunctionComponent<TicTacToeGameProps> = (props) => {
                         alignItems: 'center'
                     }}
                 >
-                    <Button
-                        sx={{
-                            width: '40px',
-                            height: '40px',
-                            borderRadius: '50%',
-                            padding: '0px',
-                            backgroundColor: 'transparent'
-                        }}
-                        onClick={() => setShowScore(!showScore)}
-                    >
-                        <BiTrophy style={{ fontSize: '24px' }} />
-                    </Button>
-                    {/* <Container
-                        sx={{
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                            justifyContent: 'space-between',
-                            width: 'fit-content'
-                        }}
-                    > */}
-                    <Typography
-                        sx={{
-                            margin: '0px 0px 0px 20px',
-                            whiteSpace: 'nowrap',
-                            textOverflow: 'ellipsis'
-                        }}
-                    >
-                        {user?.username || 'Anonymous'}
-                    </Typography>
-                    <Typography sx={{ margin: '0px 0px 0px 20px' }}>
-                        {time?.toFormat('mm:ss') || 'Time'}
-                    </Typography>
-                    {/* </Container> */}
+                    <Container sx={{ flex: 1 }}>
+                        <Button
+                            sx={{
+                                width: '40px',
+                                height: '40px',
+                                borderRadius: '50%',
+                                padding: '0px',
+                                backgroundColor: 'transparent'
+                            }}
+                            onClick={() => setShowScore(!showScore)}
+                        >
+                            <BiTrophy style={{ fontSize: '24px' }} />
+                        </Button>
+                    </Container>
+
+                    <Container sx={{ flex: 1, justifyContent: 'center' }}>
+                        {' '}
+                        <Typography
+                            sx={{
+                                margin: '0px 0px 0px 20px',
+                                whiteSpace: 'nowrap',
+                                textOverflow: 'ellipsis'
+                            }}
+                        >
+                            {user?.username || 'Anonymous'}
+                        </Typography>
+                    </Container>
+
+                    <Container sx={{ flex: 1, justifyContent: 'flex-end', minWidth: '100px' }}>
+                        <Typography sx={{ textAlign: 'right', width: '100%' }}>
+                            {time?.toFormat('mm:ss.S').replace(/(\.\d{1})\d+/, '$1') || 'Time'}
+                        </Typography>
+                    </Container>
                 </Container>
                 <Container
                     sx={{

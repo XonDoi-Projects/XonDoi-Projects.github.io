@@ -90,14 +90,14 @@ export const TicTacToeLoginUI: FunctionComponent<TicTacToeLoginUIProps> = ({
             let interval = setInterval(() => {
                 const tempTime = cloneDeep(time)
                 setTime(
-                    tempTime?.plus({ second: 1 }) ||
+                    tempTime?.plus({ millisecond: 100 }) ||
                         DateTime.now().set({
                             minute: 0,
                             second: 0,
                             millisecond: 0
                         })
                 )
-            }, 1000)
+            }, 100)
 
             setIntervalId(interval)
             return () => clearInterval(interval)
@@ -130,14 +130,18 @@ export const TicTacToeLoginUI: FunctionComponent<TicTacToeLoginUIProps> = ({
         })
 
         if (win) {
-            let seconds
+            let seconds = 0
             const minutes = time?.minute
 
-            if (minutes) {
-                seconds = minutes * 60
-                seconds += time.second
-            } else {
-                seconds = time?.second || 0
+            if (time) {
+                if (minutes) {
+                    seconds = minutes * 60
+                    seconds += time.second
+                    seconds = seconds + time.millisecond / 1000
+                } else {
+                    seconds = time?.second || 0
+                    seconds = seconds + time.millisecond / 1000
+                }
             }
 
             const normalizedTime = seconds / 120 > 1 ? 1 : seconds / 120
@@ -516,7 +520,7 @@ export const TicTacToeLoginUI: FunctionComponent<TicTacToeLoginUIProps> = ({
                                 }}
                             >
                                 <Image
-                                    src="https://firebasestorage.googleapis.com/v0/b/portfolio-3b624.appspot.com/o/Toe2.png?alt=media&token=8c69da02-1ad3-4112-ab65-15e248ddc759"
+                                    src="https://firebasestorage.googleapis.com/v0/b/portfolio-3b624.appspot.com/o/Toe3.png?alt=media&token=2c0c57b5-0594-40a1-93a3-1824157c818d"
                                     alt="Toe"
                                     fill
                                     style={{ objectFit: 'scale-down' }}
