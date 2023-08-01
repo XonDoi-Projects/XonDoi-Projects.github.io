@@ -3,7 +3,7 @@ import { Container } from './Container'
 import { Typography } from './Typography'
 import { useDarkTheme } from '../Providers'
 import { colors } from '../Colors'
-import { BiChevronDown, BiChevronRight } from 'react-icons/bi'
+import { BiChevronRight } from 'react-icons/bi'
 import { Button } from '../InputComponents'
 
 export interface AccordianProps {

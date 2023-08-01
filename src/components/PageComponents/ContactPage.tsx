@@ -1,11 +1,9 @@
-import { FunctionComponent, createRef, useCallback, useEffect, useRef, useState } from 'react'
+import { FunctionComponent } from 'react'
 import { Container } from '../LayoutComponents'
-import { ContactFormProvider, useDarkTheme, useSize } from '../Providers'
+import { useDarkTheme, useSize } from '../Providers'
 import { Typography } from '../LayoutComponents/Typography'
 import Link from 'next/link'
 import { colors } from '../Colors'
-import { BiRightArrowAlt } from 'react-icons/bi'
-import { Button } from '../InputComponents'
 import { ContactMeForm } from './ContactMeForm'
 
 export interface ContactPageProps {}

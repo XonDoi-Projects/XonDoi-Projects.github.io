@@ -1,6 +1,5 @@
-import { CSSProperties, FunctionComponent, ReactNode, useEffect, useRef } from 'react'
-import { Card, Container } from '../../LayoutComponents'
-import { Typography } from '../../LayoutComponents/Typography'
+import { FunctionComponent, useEffect, useRef } from 'react'
+import { Container } from '../../LayoutComponents'
 import Image from 'next/image'
 import { useDarkTheme, useSize } from '../../Providers'
 import { colors } from '../../Colors'

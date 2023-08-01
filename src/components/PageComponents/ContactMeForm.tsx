@@ -1,6 +1,6 @@
 import { FunctionComponent, useEffect, useRef, useState } from 'react'
 import { Button, TextAreaField, TextField } from '../InputComponents'
-import { mobileWidth, useContactForm, useDarkTheme, useSize } from '../Providers'
+import { useContactForm, useDarkTheme, useSize } from '../Providers'
 import { colors } from '../Colors'
 import { Typography } from '../LayoutComponents/Typography'
 import { Container, FadeInOut, FixedDiv } from '../LayoutComponents'

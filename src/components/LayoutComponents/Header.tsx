@@ -1,4 +1,4 @@
-import { CSSProperties, FunctionComponent, ReactNode, useEffect, useRef, useState } from 'react'
+import { CSSProperties, FunctionComponent, useEffect, useRef, useState } from 'react'
 import { Container } from './Container'
 import { Card } from './Card'
 import { Button } from '../InputComponents'
@@ -6,10 +6,7 @@ import { Typography } from './Typography'
 import Link from 'next/link'
 import { useDarkTheme, useSize } from '../Providers'
 import { BiMenu, BiAdjust } from 'react-icons/bi'
-import { keyframes } from '@emotion/react'
 import { colors } from '../Colors'
-import { FadeInOut } from './FadeInOut'
-import { SkillsShowcase } from '../PageComponents'
 import { useClickOutside } from '../hooks'
 
 export interface HeaderProps {

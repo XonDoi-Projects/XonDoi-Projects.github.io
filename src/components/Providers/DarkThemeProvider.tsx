@@ -6,9 +6,6 @@ import React, {
     useEffect,
     useState
 } from 'react'
-import { useFirebase } from './FirebaseProvider'
-import { Container, Spinner } from '../LayoutComponents'
-import { Typography } from '../LayoutComponents/Typography'
 
 export interface IDarkThemeContext {
     light: boolean | undefined

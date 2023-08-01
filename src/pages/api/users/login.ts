@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import clientPromise from '../../../lib/mongodb'
-import { InsertOneResult, WithId } from 'mongodb'
+import { InsertOneResult } from 'mongodb'
 
 const login = async (req: NextApiRequest, res: NextApiResponse) => {
     try {

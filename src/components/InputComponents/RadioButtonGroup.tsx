@@ -1,18 +1,10 @@
 import styled from '@emotion/styled'
-import {
-    CSSProperties,
-    ChangeEvent,
-    Fragment,
-    FunctionComponent,
-    HTMLProps,
-    ReactNode
-} from 'react'
+import { CSSProperties, FunctionComponent, ReactNode } from 'react'
 import { Container } from '../LayoutComponents'
 import { Typography } from '../LayoutComponents/Typography'
 import { useDarkTheme } from '../Providers'
 import { colors } from '../Colors'
 import { Button } from './Button'
-import { values } from 'lodash'
 import { BiRadioCircle, BiRadioCircleMarked, BiSolidRadio } from 'react-icons/bi'
 
 export interface RadioButtonGroupProps extends StyledRadioButton {
