@@ -2,11 +2,11 @@ import { FunctionComponent } from 'react'
 import { Container } from '../LayoutComponents'
 import { useSize } from '../Providers'
 import { Typography } from '../LayoutComponents/Typography'
-import { TicTacToeGame } from './Projects'
+import { DadJokeGenerator } from './Projects'
 
-export interface TicTacToePageProps {}
+export interface DadJokeGeneratorPageProps {}
 
-export const TicTacToePage: FunctionComponent<TicTacToePageProps> = (props) => {
+export const DadJokeGeneratorPage: FunctionComponent<DadJokeGeneratorPageProps> = (props) => {
     const mobile = useSize()
 
     return (
@@ -41,9 +41,9 @@ export const TicTacToePage: FunctionComponent<TicTacToePageProps> = (props) => {
                         variant="supertitle"
                         sx={{ marginTop: '20px', marginBottom: '20px' }}
                     >
-                        Tic-Tac-Toe
+                        Dad Joke Generator
                     </Typography>
-                    <TicTacToeGame />
+                    <DadJokeGenerator />
                 </Container>
             </Container>
         </Container>
