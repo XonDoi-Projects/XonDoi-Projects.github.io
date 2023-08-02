@@ -137,7 +137,7 @@ export const TicTacToeGame: FunctionComponent<TicTacToeGameProps> = (props) => {
 
                     <Container sx={{ flex: 1, justifyContent: 'flex-end', minWidth: '100px' }}>
                         <Typography sx={{ textAlign: 'right', width: '100%' }}>
-                            {time?.toFormat('mm:ss.S').replace(/(\.\d{1})\d+/, '$1') || 'Time'}
+                            {time?.toFormat('ss.S').replace(/(\.\d{1})\d+/, '$1') || 'Time'}
                         </Typography>
                     </Container>
                 </Container>

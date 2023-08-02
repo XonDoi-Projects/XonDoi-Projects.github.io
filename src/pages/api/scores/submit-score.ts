@@ -9,13 +9,18 @@ const submitScore = async (req: NextApiRequest, res: NextApiResponse) => {
 
         userId = userId.trim()
 
-        let result = await db
-            .collection('scores')
-            .findOneAndUpdate(
-                { userId },
-                { $set: { score, moves, time: new Date(time), userId } },
-                { upsert: true }
-            )
+        let result = await db.collection('scores').findOneAndUpdate(
+            { userId },
+            {
+                $set: {
+                    score,
+                    moves,
+                    time: new Date(new Date(new Date(time).setHours(0)).setMinutes(0)),
+                    userId
+                }
+            },
+            { upsert: true }
+        )
 
         if (result?.ok) {
             return res.status(200).json({ message: 'Score Submitted!' })

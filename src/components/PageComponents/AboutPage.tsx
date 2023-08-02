@@ -291,11 +291,11 @@ export const AboutPage: FunctionComponent<AboutPageProps> = (props) => {
                                     marginRight: mobile ? '30px' : '0px'
                                 }}
                             >
-                                Despite my nontraditional background in Web Development, I have
-                                acquired comprehensive knowledge and expertise in a range of
-                                technologies, including React, Typescript, and Javascript. During my
-                                tenure in this field, I have honed my ability to write abstracted
-                                and optimized code.
+                                Throughout my tenure in Web Development, I have acquired
+                                comprehensive knowledge and expertise in a range of technologies,
+                                including React, Typescript, and Javascript. During my tenure in
+                                this field, I have honed my ability to write abstracted and
+                                optimized code.
                             </Typography>
                             <Typography
                                 sx={{

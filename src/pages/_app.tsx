@@ -9,6 +9,7 @@ import {
 } from '@/components/Providers'
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
+    document.title = 'Nathan M Portfolio'
     return (
         <>
             <DefaultFonts />
