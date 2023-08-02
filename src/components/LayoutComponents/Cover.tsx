@@ -1,8 +1,5 @@
-import { FunctionComponent, ReactNode, useRef } from 'react'
+import { FunctionComponent } from 'react'
 import { Container } from './Container'
-import { useSize } from '../Providers'
-import { keyframes } from '@emotion/react'
-import { useClickOutside } from '../hooks'
 
 export interface CoverProps {
     dismissable?: boolean

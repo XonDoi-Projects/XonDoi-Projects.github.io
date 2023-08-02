@@ -1,7 +1,6 @@
 import { CSSProperties, FunctionComponent, ReactNode } from 'react'
 import { Container } from './Container'
 import { useDarkTheme, useSize } from '../Providers'
-import { keyframes } from '@emotion/react'
 import { Cover } from './Cover'
 import { colors } from '../Colors'
 

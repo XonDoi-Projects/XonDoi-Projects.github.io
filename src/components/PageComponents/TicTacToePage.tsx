@@ -1,6 +1,6 @@
 import { FunctionComponent } from 'react'
 import { Container } from '../LayoutComponents'
-import { useDarkTheme, useSize } from '../Providers'
+import { useSize } from '../Providers'
 import { Typography } from '../LayoutComponents/Typography'
 import { TicTacToeGame } from './Projects'
 
@@ -8,7 +8,6 @@ export interface TicTacToePageProps {}
 
 export const TicTacToePage: FunctionComponent<TicTacToePageProps> = (props) => {
     const mobile = useSize()
-    const { light } = useDarkTheme()
 
     return (
         <Container

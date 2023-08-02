@@ -63,7 +63,10 @@ export const Footer: FunctionComponent<FooterProps> = (props) => {
                         <Image
                             src={
                                 !mobile
-                                    ? router.pathname === '/'
+                                    ? router.pathname === '/' ||
+                                      (router.pathname !== '/contact' &&
+                                          router.pathname !== '/projects' &&
+                                          router.pathname !== '/about')
                                         ? light
                                             ? 'https://firebasestorage.googleapis.com/v0/b/portfolio-3b624.appspot.com/o/GitLogo.svg?alt=media&token=ad62ea12-9e45-4d88-b113-d572a871e7b7'
                                             : 'https://firebasestorage.googleapis.com/v0/b/portfolio-3b624.appspot.com/o/GitLogoDark.png?alt=media&token=0a9c4264-9db5-42cb-bd53-8cb23e50bfdc'

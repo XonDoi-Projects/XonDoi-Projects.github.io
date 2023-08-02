@@ -10,7 +10,7 @@ const submitScoreAnon = async (req: NextApiRequest, res: NextApiResponse) => {
         let result = await db.collection('scores').insertOne({
             score,
             moves,
-            time: new Date(time)
+            time: new Date(new Date(new Date(time).setHours(0)).setMinutes(0))
         })
 
         if (result?.acknowledged) {

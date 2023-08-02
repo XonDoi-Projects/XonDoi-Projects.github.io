@@ -3,7 +3,7 @@ import { colors } from '@/components/Colors'
 import { Container, FadeInOut, FixedDiv } from '@/components/LayoutComponents'
 import { useDarkTheme, useSize, useUser } from '@/components/Providers'
 import { Typography } from '@/components/LayoutComponents/Typography'
-import { cloneDeep, isEqual } from 'lodash'
+import { cloneDeep } from 'lodash'
 import { Button } from '@/components/InputComponents'
 import { DateTime } from 'luxon'
 import Image from 'next/image'
@@ -48,6 +48,7 @@ export const TicTacToeLoginUI: FunctionComponent<TicTacToeLoginUIProps> = ({
     const [win, setWin] = useState(false)
     const [lose, setLose] = useState(false)
     const [draw, setDraw] = useState(false)
+    const [gameTimeout, setGameTimeout] = useState(false)
 
     const [score, setScore] = useState(0)
     const [moves, setMoves] = useState(0)
@@ -59,7 +60,7 @@ export const TicTacToeLoginUI: FunctionComponent<TicTacToeLoginUIProps> = ({
     const [startTime, setStartTime] = useState(false)
 
     const getUserScore = useCallback(async () => {
-        console.log(1, user)
+        console.log(user)
         if (user) {
             try {
                 const result = await fetch('/api/scores/get-user-score', {
@@ -86,25 +87,30 @@ export const TicTacToeLoginUI: FunctionComponent<TicTacToeLoginUIProps> = ({
     //for hard, base play on cell with highest win yield and block to avoid loss
 
     useEffect(() => {
-        if (startTime && !win && !lose && !draw) {
+        if (startTime && !win && !lose && !draw && !gameTimeout) {
             let interval = setInterval(() => {
                 const tempTime = cloneDeep(time)
-                setTime(
-                    tempTime?.plus({ second: 1 }) ||
-                        DateTime.now().set({
-                            minute: 0,
-                            second: 0,
-                            millisecond: 0
-                        })
-                )
-            }, 1000)
+                let updatedTime =
+                    tempTime?.plus({ millisecond: 100 }) ||
+                    DateTime.now().set({
+                        minute: 0,
+                        second: 0,
+                        millisecond: 0
+                    })
+
+                if (updatedTime.minute < 1) {
+                    setTime(updatedTime)
+                } else {
+                    setGameTimeout(true)
+                }
+            }, 100)
 
             setIntervalId(interval)
             return () => clearInterval(interval)
         } else {
             setStartTime(false)
         }
-    }, [draw, lose, setTime, startTime, time, win])
+    }, [draw, gameTimeout, lose, setTime, startTime, time, win])
 
     useEffect(() => {
         playStateRef.current = playState
@@ -130,14 +136,18 @@ export const TicTacToeLoginUI: FunctionComponent<TicTacToeLoginUIProps> = ({
         })
 
         if (win) {
-            let seconds
+            let seconds = 0
             const minutes = time?.minute
 
-            if (minutes) {
-                seconds = minutes * 60
-                seconds += time.second
-            } else {
-                seconds = time?.second || 0
+            if (time) {
+                if (minutes) {
+                    seconds = minutes * 60
+                    seconds += time.second
+                    seconds = seconds + time.millisecond / 1000
+                } else {
+                    seconds = time?.second || 0
+                    seconds = seconds + time.millisecond / 1000
+                }
             }
 
             const normalizedTime = seconds / 120 > 1 ? 1 : seconds / 120
@@ -355,8 +365,9 @@ export const TicTacToeLoginUI: FunctionComponent<TicTacToeLoginUIProps> = ({
                 month: 12,
                 day: 12,
                 hour: 0,
-                minute: time?.minute,
-                second: time?.second
+                minute: 0,
+                second: time?.second,
+                millisecond: time?.millisecond
             }
             let result: Response
             if (user) {
@@ -387,7 +398,9 @@ export const TicTacToeLoginUI: FunctionComponent<TicTacToeLoginUIProps> = ({
             }
 
             if (result.status === 200) {
-                setHighScore(score)
+                if (user) {
+                    setHighScore(score)
+                }
                 const data = await result.json()
 
                 setSnackbar({
@@ -405,6 +418,7 @@ export const TicTacToeLoginUI: FunctionComponent<TicTacToeLoginUIProps> = ({
                 setScore(0)
                 clearInterval(intervalId)
                 setStartTime(false)
+                setGameTimeout(false)
             } else {
                 const data = await result.json()
 
@@ -516,7 +530,7 @@ export const TicTacToeLoginUI: FunctionComponent<TicTacToeLoginUIProps> = ({
                                 }}
                             >
                                 <Image
-                                    src="https://firebasestorage.googleapis.com/v0/b/portfolio-3b624.appspot.com/o/Toe2.png?alt=media&token=8c69da02-1ad3-4112-ab65-15e248ddc759"
+                                    src="https://firebasestorage.googleapis.com/v0/b/portfolio-3b624.appspot.com/o/Toe3.png?alt=media&token=2c0c57b5-0594-40a1-93a3-1824157c818d"
                                     alt="Toe"
                                     fill
                                     style={{ objectFit: 'scale-down' }}
@@ -681,6 +695,40 @@ export const TicTacToeLoginUI: FunctionComponent<TicTacToeLoginUIProps> = ({
                         </Typography>
                     </Container>
                 </FadeInOut>
+                <FadeInOut
+                    show={gameTimeout}
+                    sx={{
+                        position: 'absolute',
+                        width: '100%',
+                        height: '100%'
+                    }}
+                >
+                    <Container
+                        sx={{
+                            flexDirection: 'column',
+                            position: 'absolute',
+                            padding: '10px 20px',
+                            height: 'fit-content',
+                            top: '50%',
+                            left: '50%',
+                            transform: 'translate(-50%, -50%)',
+                            borderRadius: '15px',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            backgroundColor: 'rgba(150,150,0,0.96)'
+                        }}
+                    >
+                        <Typography
+                            variant="title"
+                            sx={{
+                                margin: '0',
+                                textAlign: 'center'
+                            }}
+                        >
+                            Timed Out
+                        </Typography>
+                    </Container>
+                </FadeInOut>
             </Container>
             <Container
                 sx={{
@@ -770,6 +818,7 @@ export const TicTacToeLoginUI: FunctionComponent<TicTacToeLoginUIProps> = ({
                         setScore(0)
                         clearInterval(intervalId)
                         setStartTime(false)
+                        setGameTimeout(false)
                     }}
                 >
                     Reset

@@ -1,4 +1,4 @@
-import { FunctionComponent, useEffect, useMemo, useState } from 'react'
+import { FunctionComponent, useEffect, useState } from 'react'
 import { FixedDiv } from './FixedDiv'
 import { BiSolidSquare, BiSquare } from 'react-icons/bi'
 import { Container } from './Container'
