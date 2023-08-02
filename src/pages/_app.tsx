@@ -7,9 +7,12 @@ import {
     SizeProvider,
     UserProvider
 } from '@/components/Providers'
+import { useEffect } from 'react'
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
-    document.title = 'Nathan M Portfolio'
+    useEffect(() => {
+        document.title = 'Nathan M Portfolio'
+    })
     return (
         <>
             <DefaultFonts />
