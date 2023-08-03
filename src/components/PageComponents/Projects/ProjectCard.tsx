@@ -43,7 +43,7 @@ export const ProjectCard: FunctionComponent<ProjectCardProps> = (props) => {
                 boxSizing: 'border-box',
                 justifyContent: 'center',
                 alignItems: 'center',
-                margin: mobile.mobile ? '0px 0px 20px 0px ' : '20px',
+                margin: mobile.mobile ? '0px 0px 20px 0px ' : '20px 0px',
                 animation: `${hover ? scaleUp : hover !== undefined ? scaleDown : undefined}`,
                 animationDuration: '0.1s',
                 animationDirection: 'normal',

@@ -88,15 +88,15 @@ export const MainPage: FunctionComponent<MainPageProps> = (props) => {
                         width: mobile.mobile ? '100%' : '35%',
                         height: mobile.mobile ? 'fit-content' : '100%',
                         justifyContent: 'center',
-                        backgroundColor: light ? colors.light.accent : colors.dark.accent
+                        backgroundColor: light ? colors.light.accent : colors.dark.accent,
+                        gap: '10px'
                     }}
                 >
                     <Container
                         sx={{
                             width: bannerWidth,
                             height: `calc(1451/2736 * ${bannerWidth}px)`,
-                            marginTop: mobile.mobile ? '30px' : '50px',
-                            marginBottom: mobile.mobile ? '0px' : '20px'
+                            marginTop: mobile.mobile ? '30px' : '50px'
                         }}
                     >
                         <Image
@@ -113,6 +113,7 @@ export const MainPage: FunctionComponent<MainPageProps> = (props) => {
                             // flex: 1,
                             padding: '20px',
                             flexDirection: 'column',
+                            height: mobile.mobile ? undefined : '259px',
                             width: '100%',
                             justifyContent: 'center'
                         }}
@@ -178,20 +179,22 @@ export const MainPage: FunctionComponent<MainPageProps> = (props) => {
                         width: mobile.mobile ? '100%' : '55%',
                         height: '100%',
                         alignItems: 'center',
-                        justifyContent: 'center'
+                        justifyContent: 'center',
+                        gap: '10px'
                     }}
                 >
                     <Container
                         sx={{
-                            minHeight: '200px',
-                            maxHeight: mobile.mobile ? undefined : '300px',
-                            height: mobile.mobile ? 'fit-content' : '35%',
+                            minHeight: '150px',
+                            // maxHeight: mobile.mobile ? undefined : '250px',
+                            height: mobile.mobile
+                                ? undefined
+                                : `calc(1451/2736 * ${bannerWidth}px)`,
                             width: 'fit-content',
                             justifyContent: 'center',
                             alignItems: 'flex-start',
                             marginLeft: mobile.mobile ? '0px' : '70px',
-                            marginBottom: mobile.mobile ? '20px' : '30px',
-                            marginTop: mobile.mobile ? '20px' : '30px',
+                            marginTop: mobile.mobile ? '30px' : '50px',
                             overflowY: 'auto'
                         }}
                         hidescrollBar
@@ -199,7 +202,7 @@ export const MainPage: FunctionComponent<MainPageProps> = (props) => {
                         <Typography
                             variant="body"
                             sx={{
-                                fontSize: '24px',
+                                fontSize: '20px',
                                 lineHeight: mobile.mobile ? undefined : '30px',
                                 margin: '0px'
                             }}
