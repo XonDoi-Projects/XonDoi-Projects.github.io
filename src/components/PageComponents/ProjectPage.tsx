@@ -49,7 +49,6 @@ export const ProjectPage: FunctionComponent<ProjectPageProps> = (props) => {
                 <Container
                     sx={{
                         width: mobile.mobile ? '100%' : '35%',
-                        minWidth: '360px',
                         height: mobile.mobile ? 'fit-content' : '100vh',
                         padding: '30px',
                         flexDirection: 'column',
