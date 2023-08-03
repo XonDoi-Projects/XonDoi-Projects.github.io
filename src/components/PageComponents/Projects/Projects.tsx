@@ -13,8 +13,9 @@ export const Projects: FunctionComponent<ProjectsProps> = (props) => {
             sx={{
                 flex: 1,
                 flexDirection: 'column',
-                height: '100%',
+                height: 'fit-content',
                 width: '85%',
+                padding: '20px 0px',
                 ...props.sx
             }}
         >
