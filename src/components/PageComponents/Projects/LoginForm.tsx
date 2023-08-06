@@ -6,11 +6,14 @@ import { Container, FadeInOut, FixedDiv } from '@/components/LayoutComponents'
 import { useDarkTheme, useSize, useUser } from '@/components/Providers'
 import { BiHide, BiShow } from 'react-icons/bi'
 
-export interface TicTacToeLoginFormProps {
-    setSkipLogin: (value: boolean) => void
+export interface LoginFormProps {
+    setSkipLogin?: (value: boolean) => void
+    warning?: string
+    title: string
+    loginText?: string
 }
 
-export const TicTacToeLoginForm: FunctionComponent<TicTacToeLoginFormProps> = (props) => {
+export const LoginForm: FunctionComponent<LoginFormProps> = (props) => {
     const [snackbar, setSnackbar] = useState<{ message: string; color: string }>()
     const [showSnackbar, setShowSnackbar] = useState(false)
 
@@ -112,14 +115,18 @@ export const TicTacToeLoginForm: FunctionComponent<TicTacToeLoginFormProps> = (p
     }, [showSnackbar])
 
     return (
-        <Container sx={{ width: '100%', flexDirection: 'column' }}>
+        <Container sx={{ width: '100%', height: 'fit-content', flexDirection: 'column' }}>
             <Typography variant="subtitle" sx={{ margin: '0px', textTransform: 'uppercase' }}>
-                Login to start
+                {props.title}
             </Typography>
-            <Typography variant="small" sx={{ marginTop: '10px', marginBottom: '0px' }}>
-                If this is your first time, a user will be created. This is only required for
-                leadboard tracking.{' '}
-            </Typography>
+            {props.warning ? (
+                <Typography variant="small" sx={{ marginTop: '10px', marginBottom: '0px' }}>
+                    {props.warning}
+                </Typography>
+            ) : (
+                <></>
+            )}
+
             <TextField
                 value={username}
                 onChange={setUsername}
@@ -180,21 +187,27 @@ export const TicTacToeLoginForm: FunctionComponent<TicTacToeLoginFormProps> = (p
                     loading={loading}
                     contentSx={{ flex: 1 }}
                 >
-                    Start
+                    {props.loginText || 'Login'}
                 </Button>
-                <Button
-                    onClick={() => props.setSkipLogin(true)}
-                    sx={{
-                        width: '100%',
-                        borderRadius: '19px',
-                        color: light ? colors.light.accentForeground : colors.dark.accentForeground,
-                        backgroundColor: light ? colors.light.accent : colors.dark.accent
-                    }}
-                    swapHover
-                    contentSx={{ flex: 1 }}
-                >
-                    Skip
-                </Button>
+                {props.setSkipLogin ? (
+                    <Button
+                        onClick={() => props.setSkipLogin && props.setSkipLogin(true)}
+                        sx={{
+                            width: '100%',
+                            borderRadius: '19px',
+                            color: light
+                                ? colors.light.accentForeground
+                                : colors.dark.accentForeground,
+                            backgroundColor: light ? colors.light.accent : colors.dark.accent
+                        }}
+                        swapHover
+                        contentSx={{ flex: 1 }}
+                    >
+                        Skip
+                    </Button>
+                ) : (
+                    <></>
+                )}
             </Container>
 
             <FadeInOut show={showSnackbar}>

@@ -4,7 +4,7 @@ import { Card, Container, Overlay, Spinner } from '@/components/LayoutComponents
 import { useDarkTheme, useSize, useUser } from '@/components/Providers'
 import { CSSProperties, FunctionComponent, useCallback, useEffect, useState } from 'react'
 import { BiRefresh, BiTrophy, BiX } from 'react-icons/bi'
-import { TicTacToeLoginForm } from './TicTacToeLoginForm'
+import { LoginForm } from '../LoginForm'
 import { Typography } from '@/components/LayoutComponents/Typography'
 import { TicTacToeLoginUI } from './TicTacToeUI'
 import { DateTime } from 'luxon'
@@ -154,7 +154,13 @@ export const TicTacToeGame: FunctionComponent<TicTacToeGameProps> = (props) => {
                 >
                     {/**Get user from provider to switch between form and game*/}
                     {!user?.username && !skipLogin ? (
-                        <TicTacToeLoginForm setSkipLogin={setSkipLogin} />
+                        <LoginForm
+                            setSkipLogin={setSkipLogin}
+                            title="Login to start"
+                            warning="If this is your first time, a user will be created. This is only required for
+                    leadboard tracking."
+                            loginText="Start"
+                        />
                     ) : (
                         <TicTacToeLoginUI
                             setSkipLogin={setSkipLogin}

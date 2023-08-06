@@ -15,7 +15,8 @@ export const DadJokeGeneratorPage: FunctionComponent<DadJokeGeneratorPageProps> 
                 flex: 1,
                 justifyContent: 'center',
                 alignItems: 'center',
-                width: '100%'
+                width: '100%',
+                height: mobile.mobile ? 'fit-content' : '100%'
             }}
             hidescrollBar
         >
@@ -34,16 +35,34 @@ export const DadJokeGeneratorPage: FunctionComponent<DadJokeGeneratorPageProps> 
                         width: mobile.mobile ? '100%' : '70%',
                         height: '100%',
                         alignItems: mobile.mobile ? 'center' : 'flex-start',
-                        justifyContent: 'flex-start'
+                        justifyContent: 'flex-start',
+                        overflow: 'hidden'
                     }}
                 >
-                    <Typography
-                        variant="supertitle"
-                        sx={{ marginTop: '20px', marginBottom: '20px' }}
+                    <Container sx={{ width: '100%', height: 'fit-content' }}>
+                        <Typography
+                            variant="supertitle"
+                            sx={{ marginTop: '20px', marginBottom: '20px' }}
+                        >
+                            Dad Joke Generator
+                        </Typography>
+                    </Container>
+
+                    <Container
+                        sx={{
+                            flex: 1,
+                            padding: '20px 0px',
+                            position: 'relative',
+                            boxSizing: 'border-box',
+                            width: '100%',
+                            height: mobile.mobile ? 'fit-content' : undefined,
+                            overflowY: mobile.mobile ? undefined : 'auto',
+                            overflowX: 'hidden'
+                        }}
+                        hidescrollBar
                     >
-                        Dad Joke Generator
-                    </Typography>
-                    <DadJokeGenerator />
+                        <DadJokeGenerator />
+                    </Container>
                 </Container>
             </Container>
         </Container>
