@@ -13,6 +13,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
     useEffect(() => {
         document.title = 'Nathan M Portfolio'
     })
+
     return (
         <>
             <DefaultFonts />

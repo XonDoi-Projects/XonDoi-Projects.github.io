@@ -14,7 +14,8 @@ const projectList: Project[] = [
     },
     {
         title: 'Dad Joke Generator',
-        description: 'Coming soon'
+        description: 'Coming soon',
+        link: '/projects/dad-joke-generator'
     },
     {
         title: 'E-Commerce Template',

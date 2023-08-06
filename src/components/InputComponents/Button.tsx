@@ -70,14 +70,7 @@ export const Button: FunctionComponent<ButtonProps> = (props) => {
                 sx={{ justifyContent: 'center', alignItems: 'center', ...props.sx }}
             >
                 {props.loading ? (
-                    <Spinner
-                        sx={{
-                            backgroundColor:
-                                props.sx?.backgroundColor || light
-                                    ? colors.light.accent
-                                    : colors.dark.accent
-                        }}
-                    />
+                    <Spinner />
                 ) : typeof props.children === 'string' ? (
                     <Typography
                         variant="button"
