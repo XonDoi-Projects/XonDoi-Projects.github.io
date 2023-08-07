@@ -146,7 +146,7 @@ export const TicTacToeGame: FunctionComponent<TicTacToeGameProps> = (props) => {
                         flex: 1,
                         flexDirection: 'column',
                         width: mobile.mobile ? '100%' : user || skipLogin ? '100%' : '400px',
-                        height: !user?.username && !skipLogin ? 'fit-content' : '100%',
+                        height: user ? '100%' : undefined,
                         justifyContent: 'center',
                         alignItems: 'flex-start',
                         padding: '20px'
