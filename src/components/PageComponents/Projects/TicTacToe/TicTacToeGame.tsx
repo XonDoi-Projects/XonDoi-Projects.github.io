@@ -301,8 +301,25 @@ export const TicTacToeGame: FunctionComponent<TicTacToeGameProps> = (props) => {
                             </Container>
                         </Container>
                         {loadingLeaderboard ? (
-                            <Container sx={{ flexDirection: 'row', justifyContent: 'center' }}>
+                            <Container
+                                sx={{
+                                    flexDirection: 'column',
+                                    height: '100px',
+                                    width: '100%',
+                                    justifyContent: 'center',
+                                    alignItems: 'center'
+                                }}
+                            >
                                 <Spinner />
+                                <Typography
+                                    sx={{
+                                        color: light
+                                            ? colors.light.accentForeground
+                                            : colors.dark.accentForeground
+                                    }}
+                                >
+                                    Getting Scores
+                                </Typography>
                             </Container>
                         ) : leaderboard?.scores.length ? (
                             <Container

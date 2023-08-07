@@ -30,8 +30,10 @@ export const Accordian: FunctionComponent<AccordianProps> = (props) => {
                 borderColor: light ? colors.light.accent : colors.dark.accent,
                 borderRadius: '10px',
                 overflow: 'hidden',
+                cursor: 'pointer',
                 ...props.sx
             }}
+            onClick={() => setShow(!show)}
         >
             <Container
                 sx={{

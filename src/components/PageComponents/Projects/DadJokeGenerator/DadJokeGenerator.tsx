@@ -121,6 +121,7 @@ export const DadJokeGenerator: FunctionComponent<DadJokeGeneratorProps> = (props
                 {loading ? (
                     <Container
                         sx={{
+                            flexDirection: 'column',
                             height: '100px',
                             width: '100%',
                             justifyContent: 'center',
@@ -132,6 +133,7 @@ export const DadJokeGenerator: FunctionComponent<DadJokeGeneratorProps> = (props
                                 borderTopColor: light ? colors.light.primary : colors.dark.primary
                             }}
                         />
+                        <Typography>Getting Jokes</Typography>
                     </Container>
                 ) : !jokes.length ? (
                     <Container
