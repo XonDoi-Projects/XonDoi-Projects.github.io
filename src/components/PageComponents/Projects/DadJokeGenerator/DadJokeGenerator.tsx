@@ -6,8 +6,6 @@ import { User, useDarkTheme, useSize } from '@/components/Providers'
 import { Typography } from '@/components/LayoutComponents/Typography'
 import { DadJokeForm } from './DadJokeForm'
 import { colors } from '@/components/Colors'
-import { LoginForm } from '../LoginForm'
-import { DateTime } from 'luxon'
 
 export interface DadJokeGeneratorProps {
     sx?: CSSProperties

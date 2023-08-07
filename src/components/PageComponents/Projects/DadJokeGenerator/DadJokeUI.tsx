@@ -1,5 +1,5 @@
-import { CSSProperties, FunctionComponent, useEffect, useRef, useState } from 'react'
-import { Card, Container, FadeInOut } from '@/components/LayoutComponents'
+import { CSSProperties, FunctionComponent } from 'react'
+import { Card, Container } from '@/components/LayoutComponents'
 import { useDarkTheme, useSize } from '@/components/Providers'
 import { colors } from '@/components/Colors'
 import { Button } from '@/components/InputComponents'

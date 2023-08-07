@@ -4,7 +4,7 @@ import { useDarkTheme, useSize, useUser } from '@/components/Providers'
 import { colors } from '@/components/Colors'
 import { LoginForm } from '../LoginForm'
 import { Typography } from '@/components/LayoutComponents/Typography'
-import { Button, TextAreaField, TextField } from '@/components/InputComponents'
+import { Button, TextAreaField } from '@/components/InputComponents'
 
 import BadWords from 'bad-words'
 

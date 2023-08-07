@@ -10,6 +10,7 @@ export interface Project {
     title: string
     description: string
     link?: string
+    tags?: string[]
 }
 export interface ProjectCardProps {
     sx?: CSSProperties
@@ -82,6 +83,49 @@ export const ProjectCard: FunctionComponent<ProjectCardProps> = (props) => {
                         <Typography variant="body" sx={{ flex: 1 }}>
                             {props.project.description}
                         </Typography>
+                        <Container sx={{ flexDirection: 'row', flexWrap: 'wrap', gap: '10px' }}>
+                            {props.project.tags?.map((tag, index, array) => (
+                                <Container key={index} sx={{ gap: '10px' }}>
+                                    <Container
+                                        sx={{
+                                            backgroundColor: light
+                                                ? colors.light.secondary
+                                                : colors.dark.secondary,
+                                            height: '25px',
+                                            width: 'fit-content',
+                                            padding: '5px 10px',
+                                            borderRadius: '12.5px'
+                                        }}
+                                    >
+                                        <Typography
+                                            variant="small"
+                                            sx={{
+                                                margin: '0',
+                                                color: light
+                                                    ? colors.light.background
+                                                    : colors.dark.background
+                                            }}
+                                        >
+                                            {tag}
+                                        </Typography>
+                                    </Container>
+                                    {index < array.length - 1 ? (
+                                        <Typography
+                                            sx={{
+                                                margin: '0px',
+                                                color: light
+                                                    ? colors.light.secondary
+                                                    : colors.dark.secondary
+                                            }}
+                                        >
+                                            •
+                                        </Typography>
+                                    ) : (
+                                        <></>
+                                    )}
+                                </Container>
+                            ))}
+                        </Container>
                     </Container>
                 </Link>
             ) : (

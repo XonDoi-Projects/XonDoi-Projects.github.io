@@ -18,6 +18,8 @@ export const AboutPage: FunctionComponent<AboutPageProps> = (props) => {
 
     const [scrollTo, setScrollTo] = useState<number | undefined>(mobile ? undefined : 0)
 
+    const [parentDiv, setParentDiv] = useState<{ height?: number; width?: number }>()
+
     const bannerRef = useRef<HTMLDivElement | null>(null)
     const parentRef = useRef<HTMLDivElement | null>(null)
     const aboutRef = useRef<HTMLDivElement | null>(null)
@@ -148,6 +150,11 @@ export const AboutPage: FunctionComponent<AboutPageProps> = (props) => {
 
     //---------------------------- End ---------------------------------
 
+    useEffect(() => {
+        const element = document.getElementById('parentDetailsScroll')
+        setParentDiv({ height: element?.clientHeight, width: element?.clientWidth })
+    }, [])
+
     return (
         <Container
             sx={{
@@ -266,6 +273,7 @@ export const AboutPage: FunctionComponent<AboutPageProps> = (props) => {
                         ref={parentRef}
                         sx={{
                             flexDirection: 'column',
+                            padding: mobile ? undefined : '0px 15px',
                             width: mobile ? '100%' : '70%',
                             height: mobile ? '100%' : '70%',
                             overflowY: mobile ? 'hidden' : 'auto',
@@ -273,6 +281,45 @@ export const AboutPage: FunctionComponent<AboutPageProps> = (props) => {
                         }}
                         hidescrollBar
                     >
+                        <Container
+                            sx={{
+                                flexDirection: 'column',
+                                width: parentDiv?.width + 'px',
+                                height: parentDiv?.height + 'px',
+                                pointerEvents: 'none',
+                                zIndex: 1,
+                                position: 'fixed',
+                                justifyContent: 'space-between'
+                            }}
+                        >
+                            <Container
+                                sx={{
+                                    width: '100%',
+                                    height: '30px',
+                                    background: mobile
+                                        ? undefined
+                                        : `linear-gradient(to bottom, ${
+                                              light
+                                                  ? colors.light.background
+                                                  : colors.dark.background
+                                          }, transparent)`
+                                }}
+                            />
+
+                            <Container
+                                sx={{
+                                    width: '100%',
+                                    height: '30px',
+                                    background: mobile
+                                        ? undefined
+                                        : `linear-gradient(to top, ${
+                                              light
+                                                  ? colors.light.background
+                                                  : colors.dark.background
+                                          }, transparent)`
+                                }}
+                            />
+                        </Container>
                         <Container
                             ref={aboutRef}
                             sx={{

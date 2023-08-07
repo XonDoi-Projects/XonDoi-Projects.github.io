@@ -1,4 +1,4 @@
-import { FunctionComponent } from 'react'
+import { FunctionComponent, useEffect, useState } from 'react'
 import { Container } from '../LayoutComponents'
 import { useDarkTheme, useSize } from '../Providers'
 import { Typography } from '../LayoutComponents/Typography'
@@ -9,13 +9,16 @@ import { Project } from './Projects'
 const projectList: Project[] = [
     {
         title: 'Tic-Tac-Toe',
-        description: 'My take on Tic-Tac-Toe, also features a leaderboard.',
-        link: '/projects/tic-tac-toe'
+        description: 'My take on Tic-Tac-Toe, featuring a score leaderboard!',
+        link: '/projects/tic-tac-toe',
+        tags: ['Next.js', 'React', 'Typescript', 'CSS', 'MongoDB']
     },
     {
-        title: 'Dad Joke Generator',
-        description: 'Coming soon',
-        link: '/projects/dad-joke-generator'
+        title: 'Dad Joke Viewer',
+        description:
+            'A simple Dad Joke Viewer, in which you may also submit your own jokes for everyone else to see!',
+        link: '/projects/dad-joke-generator',
+        tags: ['Next.js', 'React', 'Typescript', 'CSS', 'MongoDB']
     },
     {
         title: 'E-Commerce Template',
@@ -28,6 +31,13 @@ export interface ProjectPageProps {}
 export const ProjectPage: FunctionComponent<ProjectPageProps> = (props) => {
     const mobile = useSize()
     const { light } = useDarkTheme()
+
+    const [parentDiv, setParentDiv] = useState<{ height?: number; width?: number }>()
+
+    useEffect(() => {
+        const element = document.getElementById('parentDetailsScroll')
+        setParentDiv({ height: element?.clientHeight, width: element?.clientWidth })
+    }, [])
 
     return (
         <Container
@@ -82,8 +92,10 @@ export const ProjectPage: FunctionComponent<ProjectPageProps> = (props) => {
                     }}
                 >
                     <Container
+                        id="parentDetailsScroll"
                         sx={{
                             flexDirection: 'column',
+                            padding: mobile ? undefined : '0px 15px',
                             width: mobile.mobile ? '100%' : '70%',
                             height: mobile.mobile ? '100%' : '70%',
                             overflowY: mobile.mobile ? 'hidden' : 'auto',
@@ -92,6 +104,45 @@ export const ProjectPage: FunctionComponent<ProjectPageProps> = (props) => {
                         }}
                         hidescrollBar
                     >
+                        <Container
+                            sx={{
+                                flexDirection: 'column',
+                                width: parentDiv?.width + 'px',
+                                height: parentDiv?.height + 'px',
+                                pointerEvents: 'none',
+                                zIndex: 1,
+                                position: 'fixed',
+                                justifyContent: 'space-between'
+                            }}
+                        >
+                            <Container
+                                sx={{
+                                    width: '100%',
+                                    height: '30px',
+                                    background: mobile.mobile
+                                        ? undefined
+                                        : `linear-gradient(to bottom, ${
+                                              light
+                                                  ? colors.light.background
+                                                  : colors.dark.background
+                                          }, transparent)`
+                                }}
+                            />
+
+                            <Container
+                                sx={{
+                                    width: '100%',
+                                    height: '30px',
+                                    background: mobile.mobile
+                                        ? undefined
+                                        : `linear-gradient(to top, ${
+                                              light
+                                                  ? colors.light.background
+                                                  : colors.dark.background
+                                          }, transparent)`
+                                }}
+                            />
+                        </Container>
                         <Projects projects={projectList} />
                     </Container>
                 </Container>
