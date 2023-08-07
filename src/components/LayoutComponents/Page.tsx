@@ -56,9 +56,9 @@ export const Page: FunctionComponent<PageProps> = (props) => {
                 flexDirection: 'column',
                 width: '100vw',
                 maxWidth: '100vw',
-                height: '100dvh',
-                maxHeight: '100dvh',
-                overflowY: 'auto',
+                height: mobile.mobile ? '100dvh' : '100vh',
+                maxHeight: mobile.mobile ? '100dvh' : '100vh',
+                overflowY: mobile.mobile ? 'auto' : 'hidden',
                 overflowX: 'hidden',
                 backgroundColor: light ? colors.light.background : colors.dark.background,
                 ...props.sx

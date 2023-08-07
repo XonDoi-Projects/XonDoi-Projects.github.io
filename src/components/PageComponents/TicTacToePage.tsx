@@ -23,7 +23,7 @@ export const TicTacToePage: FunctionComponent<TicTacToePageProps> = (props) => {
                 sx={{
                     flexDirection: mobile.mobile ? 'column' : 'row',
                     width: mobile.mobile ? mobile.size?.width : '100%',
-                    height: mobile.mobile ? '100%' : '100%',
+                    height: mobile.mobile ? '100%' : '90%',
                     justifyContent: 'center'
                 }}
             >
