@@ -10,6 +10,7 @@ import BadWords from 'bad-words'
 
 export interface DadJokeFormProps {
     sx?: CSSProperties
+    setDirty?: (value: boolean) => void
 }
 
 export const DadJokeForm: FunctionComponent<DadJokeFormProps> = (props) => {
@@ -73,6 +74,9 @@ export const DadJokeForm: FunctionComponent<DadJokeFormProps> = (props) => {
 
                 const data = await result.json()
 
+                props.setDirty && props.setDirty(true)
+                setJokeLine('')
+                setJokeAnswer('')
                 setSnackbar({
                     message: data.message,
                     color: colors.light.success
