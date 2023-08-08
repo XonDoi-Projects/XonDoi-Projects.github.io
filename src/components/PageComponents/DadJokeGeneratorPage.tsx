@@ -44,7 +44,7 @@ export const DadJokeGeneratorPage: FunctionComponent<DadJokeGeneratorPageProps> 
                             variant="supertitle"
                             sx={{ marginTop: '20px', marginBottom: '20px' }}
                         >
-                            Dad Joke Generator
+                            Dad Joke Viewer
                         </Typography>
                     </Container>
 

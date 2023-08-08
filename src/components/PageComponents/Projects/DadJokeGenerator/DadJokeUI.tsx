@@ -154,6 +154,7 @@ export const DadJokeUI: FunctionComponent<DadJokeUIProps> = (props) => {
                 >
                     <Typography
                         sx={{
+                            fontSize: mobile.mobile ? '20px' : '24px',
                             color: light
                                 ? colors.light.accentForeground
                                 : colors.dark.accentForeground
@@ -164,6 +165,7 @@ export const DadJokeUI: FunctionComponent<DadJokeUIProps> = (props) => {
                     <Typography
                         sx={{
                             marginLeft: '20px',
+                            fontSize: mobile.mobile ? '20px' : '24px',
                             color: light
                                 ? colors.light.accentForeground
                                 : colors.dark.accentForeground,
@@ -171,7 +173,7 @@ export const DadJokeUI: FunctionComponent<DadJokeUIProps> = (props) => {
                             transition: 'opacity 300ms ease'
                         }}
                     >
-                        {props.jokes[props.jokeIndex].answer}
+                        <strong>{props.jokes[props.jokeIndex].answer}</strong>
                     </Typography>
                     <Button
                         onClick={() => props.setReveal && props.setReveal(true)}

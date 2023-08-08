@@ -38,6 +38,8 @@ export const DadJokeGenerator: FunctionComponent<DadJokeGeneratorProps> = (props
     const [newJokeIndex, setNewJokeIndex] = useState(0)
     const [previousJokeIndex, setPreviousJokeIndex] = useState(0)
 
+    const [dirty, setDirty] = useState(false)
+
     const [reveal, setReveal] = useState(false)
 
     const updatePreviousRef = useRef<NodeJS.Timer>()
@@ -53,26 +55,29 @@ export const DadJokeGenerator: FunctionComponent<DadJokeGeneratorProps> = (props
 
             const result = await jokes.json()
 
+            if (dirty) {
+                setDirty(false)
+            }
             setJokes(result.jokes)
         } catch (e: any) {
             console.log(e)
         }
         setLoading(false)
-    }, [])
+    }, [dirty])
 
     useEffect(() => {
         getJokes()
     }, [getJokes])
 
     useEffect(() => {
-        if (currentJokeIndex !== newJokeIndex) {
+        if (currentJokeIndex === newJokeIndex) {
             if (updatePreviousRef.current) {
                 clearTimeout(updatePreviousRef.current)
             }
 
             updatePreviousRef.current = setTimeout(
                 () => setPreviousJokeIndex(currentJokeIndex),
-                200
+                350
             )
 
             return () => clearTimeout(updatePreviousRef.current)
@@ -87,7 +92,7 @@ export const DadJokeGenerator: FunctionComponent<DadJokeGeneratorProps> = (props
         updateCurrentRef.current = setTimeout(() => {
             setCurrentJokeIndex(newJokeIndex)
             setReveal(false)
-        }, 200)
+        }, 700)
 
         return () => clearTimeout(updateCurrentRef.current)
     }, [newJokeIndex])
@@ -164,7 +169,7 @@ export const DadJokeGenerator: FunctionComponent<DadJokeGeneratorProps> = (props
                                         ? `${flip}`
                                         : `${flipReverse}`
                                     : undefined,
-                            animationTimingFunction: 'cubic-bezier(0, 1, 0.75, 1)',
+                            animationTimingFunction: 'cubic-bezier(1, 0, 0.75, 1)',
                             animationDuration: '1s',
                             transformStyle: 'preserve-3d'
                         }}
@@ -198,7 +203,6 @@ export const DadJokeGenerator: FunctionComponent<DadJokeGeneratorProps> = (props
                             }}
                         >
                             <DadJokeUI
-                                key={'front'}
                                 jokeIndex={currentJokeIndex}
                                 setJokeIndex={setNewJokeIndex}
                                 jokes={jokes}
@@ -218,8 +222,7 @@ export const DadJokeGenerator: FunctionComponent<DadJokeGeneratorProps> = (props
                             }}
                         >
                             <DadJokeUI
-                                key={'back'}
-                                jokeIndex={newJokeIndex}
+                                jokeIndex={currentJokeIndex}
                                 setJokeIndex={setNewJokeIndex}
                                 jokes={jokes}
                             />
@@ -237,6 +240,7 @@ export const DadJokeGenerator: FunctionComponent<DadJokeGeneratorProps> = (props
                         height: 'fit-content',
                         boxSizing: 'border-box'
                     }}
+                    setDirty={setDirty}
                 />
             </Container>
         </Container>
