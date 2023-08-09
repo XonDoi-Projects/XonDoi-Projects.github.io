@@ -3,10 +3,11 @@ import { Button } from '@/components/InputComponents'
 import { Container } from '@/components/LayoutComponents'
 import { Typography } from '@/components/LayoutComponents/Typography'
 import { useSize, useDarkTheme } from '@/components/Providers'
-import { FunctionComponent, createRef, useEffect, useState } from 'react'
+import { FunctionComponent, createRef, useEffect, useRef, useState } from 'react'
 import { BiChevronLeft, BiChevronRight } from 'react-icons/bi'
 import { ISkill } from '../MainPage'
-import { Skill } from './Skill'
+import { SkillMobile } from './SkillMobile'
+import { SkillDesktop } from './SkillDesktop'
 
 export interface SkillsShowcaseProps {
     skills: ISkill[]
@@ -17,14 +18,63 @@ export const SkillsShowcase: FunctionComponent<SkillsShowcaseProps> = (props) =>
     const mobile = useSize()
     const { light } = useDarkTheme()
     const skillsShowcaseRef = createRef<HTMLDivElement>()
+    const skillsRef = useRef<HTMLDivElement>(null)
+    const requestRef = useRef<number>()
 
     const [skillsShowcaseWidth, setSkillsShowcaseWidth] = useState(0)
+
+    const [touchStart, setTouchStart] = useState(0)
 
     useEffect(() => {
         if (skillsShowcaseRef.current) {
             setSkillsShowcaseWidth(skillsShowcaseRef.current.getBoundingClientRect().width)
         }
-    }, [mobile, skillsShowcaseRef])
+    }, [mobile, skillsRef, skillsShowcaseRef])
+
+    //----------------- Mobile Momentum Scrolling Logic ------------------------
+
+    const updateScrollPosition = () => {
+        let elementScroll = skillsRef.current?.scrollLeft
+        let scrollPos = Math.round((elementScroll || 0) / skillsShowcaseWidth)
+        setScrollIntoView(scrollPos)
+    }
+
+    const animateScroll = (currentPosition: number, touchEnd?: number) => {
+        let delta: number
+
+        updateScrollPosition()
+
+        if (touchEnd) {
+            delta = touchStart - touchEnd
+        } else {
+            delta = touchStart - currentPosition
+        }
+
+        if (Math.abs(delta) > 0.1) {
+            requestRef.current = requestAnimationFrame(() =>
+                animateScroll(currentPosition + delta * 0.2)
+            )
+        }
+    }
+
+    const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
+        setTouchStart(e.touches[0].clientX)
+        cancelAnimationFrame(requestRef.current as number)
+    }
+
+    const handleTouchMove = () => {
+        updateScrollPosition()
+    }
+
+    const handleTouchEnd = (e: React.TouchEvent<HTMLDivElement>) => {
+        if (Math.abs(touchStart - e.changedTouches[0].clientX) > 10) {
+            requestRef.current = requestAnimationFrame(() =>
+                animateScroll(touchStart - e.changedTouches[0].clientX, e.changedTouches[0].clientX)
+            )
+        }
+    }
+
+    //---------------------------- End ---------------------------------
 
     return (
         <Container
@@ -48,77 +98,140 @@ export const SkillsShowcase: FunctionComponent<SkillsShowcaseProps> = (props) =>
             >
                 Technology Stack
             </Typography>
-            <Container sx={{ width: '100%', justifyContent: 'center', alignItems: 'center' }}>
+            {mobile.mobile ? (
+                <Container sx={{ width: '100%', justifyContent: 'center', alignItems: 'center' }}>
+                    <Container
+                        sx={{
+                            position: 'absolute',
+                            flexDirection: 'row',
+                            zIndex: 1,
+                            top: '50%',
+                            left: 0,
+                            transform: 'translateY(-50%)',
+                            justifyContent: 'space-between',
+                            alignItems: 'center'
+                        }}
+                    >
+                        <Button
+                            sx={{
+                                width: '40px',
+                                height: '40px',
+                                borderRadius: '50%',
+                                opacity: !scrollIntoView ? 0.5 : 1,
+                                padding: '0px',
+                                zIndex: 1,
+                                backgroundColor: 'transparent'
+                            }}
+                            onClick={() =>
+                                setScrollIntoView(
+                                    scrollIntoView ? scrollIntoView - 1 : props.skills.length - 1
+                                )
+                            }
+                            disabled={!scrollIntoView}
+                        >
+                            <BiChevronLeft
+                                style={{ fontSize: '40px', backgroundColor: 'transparent' }}
+                            />
+                        </Button>
+                    </Container>
+                    <Container
+                        sx={{
+                            position: 'absolute',
+                            flexDirection: 'row',
+                            zIndex: 1,
+                            top: '50%',
+                            right: 0,
+                            transform: 'translateY(-50%)',
+                            justifyContent: 'space-between',
+                            alignItems: 'center'
+                        }}
+                    >
+                        <Button
+                            sx={{
+                                width: '40px',
+                                height: '40px',
+                                borderRadius: '50%',
+                                opacity: scrollIntoView === props.skills.length - 1 ? 0.5 : 1,
+                                padding: '0px',
+                                zIndex: 1,
+                                backgroundColor: 'transparent'
+                            }}
+                            onClick={() =>
+                                setScrollIntoView(scrollIntoView ? scrollIntoView + 1 : 1)
+                            }
+                            disabled={scrollIntoView === props.skills.length - 1}
+                        >
+                            <BiChevronRight
+                                style={{ fontSize: '40px', backgroundColor: 'transparent' }}
+                            />
+                        </Button>
+                    </Container>
+                    <Container
+                        ref={skillsRef}
+                        sx={{
+                            position: 'relative',
+                            width: '100%',
+                            height: '200px',
+                            overflowX: 'auto',
+                            overflowY: 'hidden'
+                        }}
+                        onTouchStart={handleTouchStart}
+                        onTouchEnd={handleTouchEnd}
+                        onTouchMove={handleTouchMove}
+                        hidescrollBar
+                    >
+                        {props.skills.map((skill, index) => (
+                            <SkillMobile
+                                key={index}
+                                src={skill.src}
+                                alt={skill.alt}
+                                scrollIntoViewPointer={index === scrollIntoView}
+                                parentWidth={skillsShowcaseWidth}
+                            />
+                        ))}
+                    </Container>
+                </Container>
+            ) : (
                 <Container
                     sx={{
-                        position: 'absolute',
-                        flexDirection: 'row',
-                        width: skillsShowcaseWidth,
-                        height: '200px',
-                        overflowX: 'auto',
-                        justifyContent: 'space-between',
+                        width: '100%',
+                        justifyContent: 'center',
                         alignItems: 'center'
                     }}
-                    hidescrollBar
                 >
-                    <Button
+                    <Container
                         sx={{
-                            width: '50px',
-                            height: '50px',
-                            borderRadius: '50%',
-                            opacity: !scrollIntoView ? 0.5 : 1,
-                            padding: '0px',
-                            zIndex: 1,
-                            backgroundColor: 'transparent'
+                            flexDirection: 'row',
+                            flexWrap: 'wrap',
+                            flex: 1,
+                            width: '100%',
+                            height: '200px',
+                            gap: '30px',
+                            justifyContent: 'space-between',
+                            alignContent: 'center'
                         }}
-                        onClick={() =>
-                            setScrollIntoView(
-                                scrollIntoView ? scrollIntoView - 1 : props.skills.length - 1
-                            )
-                        }
-                        disabled={!scrollIntoView}
                     >
-                        <BiChevronLeft style={{ fontSize: '60px' }} />
-                    </Button>
-                    <Button
-                        sx={{
-                            width: '50px',
-                            height: '50px',
-                            borderRadius: '50%',
-                            opacity: scrollIntoView === props.skills.length - 1 ? 0.5 : 1,
-                            padding: '0px',
-                            zIndex: 1,
-                            backgroundColor: 'transparent'
-                        }}
-                        onClick={() => setScrollIntoView(scrollIntoView ? scrollIntoView + 1 : 1)}
-                        disabled={scrollIntoView === props.skills.length - 1}
-                    >
-                        <BiChevronRight
-                            style={{ fontSize: '60px', backgroundColor: 'transparent' }}
-                        />
-                    </Button>
+                        {props.skills.map((skill, index) => (
+                            <Container
+                                key={index}
+                                sx={{
+                                    width: skillsShowcaseWidth / 4 - 40 + 'px',
+                                    height: skillsShowcaseWidth / 4 - 40 + 'px',
+                                    minWidth: '50px',
+                                    minHeight: '50px'
+                                }}
+                            >
+                                <SkillDesktop
+                                    src={skill.src}
+                                    alt={skill.alt}
+                                    scrollIntoViewPointer={index === scrollIntoView}
+                                    parentWidth={skillsShowcaseWidth}
+                                />
+                            </Container>
+                        ))}
+                    </Container>
                 </Container>
-                <Container
-                    sx={{
-                        position: 'relative',
-                        width: '100%',
-                        height: '200px',
-                        overflowX: 'auto',
-                        overflowY: 'hidden'
-                    }}
-                    hidescrollBar
-                >
-                    {props.skills.map((skill, index) => (
-                        <Skill
-                            key={index}
-                            src={skill.src}
-                            alt={skill.alt}
-                            scrollIntoViewPointer={index === scrollIntoView}
-                            parentWidth={skillsShowcaseWidth}
-                        />
-                    ))}
-                </Container>
-            </Container>
+            )}
         </Container>
     )
 }

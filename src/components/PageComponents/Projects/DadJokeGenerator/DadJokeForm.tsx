@@ -157,7 +157,10 @@ export const DadJokeForm: FunctionComponent<DadJokeFormProps> = (props) => {
                         </Button>
                     </Container>
                 ) : (
-                    <LoginForm title="Login to submit" />
+                    <LoginForm
+                        title="Login to submit"
+                        warning='"If this is your first time, a user will be created. '
+                    />
                 )}
             </Card>
 

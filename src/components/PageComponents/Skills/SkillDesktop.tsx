@@ -4,38 +4,22 @@ import Image from 'next/image'
 import { useDarkTheme, useSize } from '../../Providers'
 import { colors } from '../../Colors'
 
-export interface SkillProps {
+export interface SkillDesktopProps {
     src: string
     alt: string
     scrollIntoViewPointer: boolean
     parentWidth: number
 }
 
-export const Skill: FunctionComponent<SkillProps> = (props) => {
-    const skillsRef = useRef<HTMLDivElement>(null)
-
+export const SkillDesktop: FunctionComponent<SkillDesktopProps> = (props) => {
     const mobile = useSize()
     const { light } = useDarkTheme()
 
-    useEffect(() => {
-        if (props.scrollIntoViewPointer) {
-            skillsRef.current?.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start',
-                inline: 'center'
-            })
-        }
-    }, [props.scrollIntoViewPointer])
-
     return (
         <Container
-            ref={skillsRef}
             sx={{
-                minWidth:
-                    mobile.mobile && mobile.size?.width
-                        ? mobile.size?.width - 40 + 'px'
-                        : props.parentWidth,
-                height: '200px',
+                width: '100%',
+                height: '100%',
                 justifyContent: 'center',
                 alignItems: 'center'
             }}
@@ -44,8 +28,8 @@ export const Skill: FunctionComponent<SkillProps> = (props) => {
                 props.alt === 'Next' && !light ? (
                     <Container
                         sx={{
-                            width: '170px',
-                            height: '170px',
+                            width: '100%',
+                            height: '100%',
                             borderRadius: '50%',
                             backgroundColor: colors.light.background
                         }}
@@ -84,8 +68,8 @@ export const Skill: FunctionComponent<SkillProps> = (props) => {
             ) : props.alt === 'Next' && !light ? (
                 <Container
                     sx={{
-                        height: '160px',
-                        width: '160px',
+                        height: '100%',
+                        width: '100%',
                         borderRadius: '50%',
                         backgroundColor: colors.light.background
                     }}
@@ -95,6 +79,7 @@ export const Skill: FunctionComponent<SkillProps> = (props) => {
                         alt={props.alt}
                         fill
                         style={{
+                            boxSizing: 'border-box',
                             objectFit: 'scale-down'
                         }}
                     />
