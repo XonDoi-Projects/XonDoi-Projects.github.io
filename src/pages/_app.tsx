@@ -8,6 +8,7 @@ import {
     UserProvider
 } from '@/components/Providers'
 import { useEffect } from 'react'
+import { Analytics } from '@vercel/analytics/react'
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
     useEffect(() => {
@@ -24,6 +25,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
                         <UserProvider>
                             <ContactFormProvider>
                                 <Component {...pageProps} />
+                                <Analytics />
                             </ContactFormProvider>
                         </UserProvider>
                     </SizeProvider>

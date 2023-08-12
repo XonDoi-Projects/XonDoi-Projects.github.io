@@ -71,13 +71,16 @@ export const SkillDesktop: FunctionComponent<SkillDesktopProps> = (props) => {
                         height: '100%',
                         width: '100%',
                         borderRadius: '50%',
-                        backgroundColor: colors.light.background
+                        backgroundColor: colors.light.background,
+                        justifyContent: 'center',
+                        alignItems: 'center'
                     }}
                 >
                     <Image
                         src={props.src}
                         alt={props.alt}
-                        fill
+                        width={props.parentWidth / 4 - 50}
+                        height={props.parentWidth / 4 - 50}
                         style={{
                             boxSizing: 'border-box',
                             objectFit: 'scale-down'

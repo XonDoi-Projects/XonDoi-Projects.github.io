@@ -81,7 +81,7 @@ export const SkillsShowcase: FunctionComponent<SkillsShowcaseProps> = (props) =>
             ref={skillsShowcaseRef}
             sx={{
                 flexDirection: 'column',
-                width: '100%',
+                width: mobile.mobile ? '100%' : (200 / 2 + 20) * 4 + 'px',
                 justifyContent: 'center',
                 alignItems: 'center',
                 gap: '20px'
