@@ -216,6 +216,7 @@ export const MainPage: FunctionComponent<MainPageProps> = (props) => {
                     </Container>
                     <Container
                         sx={{
+                            marginLeft: mobile.mobile ? '0px' : '70px',
                             height: 'fit-content',
                             width: mobile.mobile ? '100%' : '70%',
                             justifyContent: 'center',

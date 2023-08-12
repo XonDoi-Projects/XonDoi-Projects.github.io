@@ -116,7 +116,7 @@ export const DadJokeForm: FunctionComponent<DadJokeFormProps> = (props) => {
                     borderColor: light ? colors.light.accent : colors.dark.accent,
                     boxSizing: 'border-box',
                     alignItems: 'center',
-                    justifyContent: 'flex-start',
+                    justifyContent: 'center',
                     margin: mobile.mobile ? '0px 0px 20px 0px ' : '0px',
                     ...props.sx
                 }}
@@ -157,7 +157,20 @@ export const DadJokeForm: FunctionComponent<DadJokeFormProps> = (props) => {
                         </Button>
                     </Container>
                 ) : (
-                    <LoginForm title="Login to submit" />
+                    <Container
+                        sx={{
+                            flexDirection: 'column',
+                            width: mobile.mobile ? '100%' : '400px',
+                            justifyContent: 'center',
+                            alignItems: 'flex-start',
+                            padding: '20px'
+                        }}
+                    >
+                        <LoginForm
+                            title="Login to submit"
+                            warning="If this is your first time, a user will be created."
+                        />
+                    </Container>
                 )}
             </Card>
 

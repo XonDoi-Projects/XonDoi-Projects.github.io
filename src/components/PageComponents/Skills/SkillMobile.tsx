@@ -4,14 +4,14 @@ import Image from 'next/image'
 import { useDarkTheme, useSize } from '../../Providers'
 import { colors } from '../../Colors'
 
-export interface SkillProps {
+export interface SkillMobileProps {
     src: string
     alt: string
     scrollIntoViewPointer: boolean
     parentWidth: number
 }
 
-export const Skill: FunctionComponent<SkillProps> = (props) => {
+export const SkillMobile: FunctionComponent<SkillMobileProps> = (props) => {
     const skillsRef = useRef<HTMLDivElement>(null)
 
     const mobile = useSize()
@@ -84,8 +84,8 @@ export const Skill: FunctionComponent<SkillProps> = (props) => {
             ) : props.alt === 'Next' && !light ? (
                 <Container
                     sx={{
-                        height: '160px',
-                        width: '160px',
+                        height: '170px',
+                        width: '170px',
                         borderRadius: '50%',
                         backgroundColor: colors.light.background
                     }}

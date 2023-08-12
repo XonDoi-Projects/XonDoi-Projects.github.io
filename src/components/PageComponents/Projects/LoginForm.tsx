@@ -169,7 +169,7 @@ export const LoginForm: FunctionComponent<LoginFormProps> = (props) => {
                 sx={{
                     flex: 1,
                     marginTop: '16px',
-                    flexDirection: mobile.mobile ? 'column' : 'row',
+                    flexDirection: 'row',
                     width: '100%',
                     backgroundColor: 'transparent',
                     gap: '10px'
