@@ -123,9 +123,7 @@ export const DadJokeForm: FunctionComponent<DadJokeFormProps> = (props) => {
             >
                 {user ? (
                     <Container sx={{ width: '100%', flexDirection: 'column' }}>
-                        <Typography variant="small">
-                            To keep this NSFW, profanity is not allowed.
-                        </Typography>
+                        <Typography variant="small">Profanity is not allowed.</Typography>
                         <TextAreaField
                             value={jokeLine}
                             onChange={setJokeLine}
