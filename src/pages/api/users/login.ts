@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import clientPromise from '../../../lib/mongodb'
 import { InsertOneResult } from 'mongodb'
+import { User } from '@/components/Providers'
 
 const login = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
@@ -11,7 +12,7 @@ const login = async (req: NextApiRequest, res: NextApiResponse) => {
         username = username.trim()
         password = password.trim()
 
-        let user = await db.collection('users').findOne({
+        let user = await db.collection('users').findOne<User>({
             username
         })
 
