@@ -1,9 +1,9 @@
 import { CSSProperties, FunctionComponent } from 'react'
 import { Card, Container } from '@/components/LayoutComponents'
-import { useDarkTheme, useSize } from '@/components/Providers'
+import { useDarkTheme, useSize, useUser } from '@/components/Providers'
 import { colors } from '@/components/Colors'
 import { Button } from '@/components/InputComponents'
-import { BiChevronLeft, BiChevronRight } from 'react-icons/bi'
+import { BiChevronLeft, BiChevronRight, BiLike, BiSolidLike } from 'react-icons/bi'
 import { IJoke } from './DadJokeGenerator'
 import { Typography } from '@/components/LayoutComponents/Typography'
 import { DateTime } from 'luxon'
@@ -15,11 +15,15 @@ export interface DadJokeUIProps {
     sx?: CSSProperties
     reveal?: boolean
     setReveal?: (value: boolean) => void
+    edit?: boolean
+    setEdit?: (value: boolean) => void
+    updateJokeLike?: () => void
 }
 
 export const DadJokeUI: FunctionComponent<DadJokeUIProps> = (props) => {
     const { light } = useDarkTheme()
     const mobile = useSize()
+    const { user } = useUser()
 
     return (
         <Card
@@ -107,47 +111,119 @@ export const DadJokeUI: FunctionComponent<DadJokeUIProps> = (props) => {
                         display: 'flex',
                         flexDirection: 'row',
                         flexWrap: 'wrap',
-                        gap: '20px',
-                        width: '100%'
+                        gap: '20px'
                     }}
                 >
-                    <Typography
+                    <Container
                         sx={{
-                            height: '20px',
-                            fontSize: '14px',
-                            margin: 0,
-                            color: light
-                                ? colors.light.accentForeground
-                                : colors.dark.accentForeground
+                            display: 'flex',
+                            flex: 1,
+                            flexDirection: 'row',
+                            flexWrap: 'wrap',
+                            gap: '20px'
                         }}
                     >
-                        {!props.jokes[props.jokeIndex].submittedBy?.username
-                            ? ''
-                            : `Submitted By: ${props.jokes[props.jokeIndex].submittedBy?.username}`}
-                    </Typography>
-                    <Typography
-                        sx={{
-                            height: '20px',
-                            fontSize: '14px',
-                            margin: 0,
-                            color: light
-                                ? colors.light.accentForeground
-                                : colors.dark.accentForeground
-                        }}
-                    >
-                        {!props.jokes[props.jokeIndex].submittedOn
-                            ? ''
-                            : `Submitted On: ${DateTime.fromISO(
-                                  props.jokes[props.jokeIndex].submittedOn || ''
-                              ).toFormat('MM/dd/yyyy')}`}
-                    </Typography>
+                        <Typography
+                            sx={{
+                                height: '20px',
+                                fontSize: '14px',
+                                margin: 0,
+                                color: light
+                                    ? colors.light.accentForeground
+                                    : colors.dark.accentForeground
+                            }}
+                        >
+                            {!props.jokes[props.jokeIndex].submittedBy?.username
+                                ? ''
+                                : `Submitted By: ${
+                                      props.jokes[props.jokeIndex].submittedBy?.username
+                                  }`}
+                        </Typography>
+                        <Typography
+                            sx={{
+                                height: '20px',
+                                fontSize: '14px',
+                                margin: 0,
+                                color: light
+                                    ? colors.light.accentForeground
+                                    : colors.dark.accentForeground
+                            }}
+                        >
+                            {!props.jokes[props.jokeIndex].submittedOn
+                                ? ''
+                                : `Submitted On: ${DateTime.fromISO(
+                                      props.jokes[props.jokeIndex].submittedOn || ''
+                                  ).toFormat('MM/dd/yyyy')}`}
+                        </Typography>
+                    </Container>
+                    <Container>
+                        <Button
+                            sx={{
+                                width: '20px',
+                                height: '20px',
+                                borderRadius: '50%',
+                                opacity: !user ? 0.5 : 1,
+                                padding: '0px',
+                                zIndex: 1,
+                                backgroundColor: 'transparent'
+                            }}
+                            onClick={() => props.updateJokeLike && props.updateJokeLike()}
+                            disabled={!user ? true : false}
+                            swapHover
+                        >
+                            {user?._id && props.jokes[props.jokeIndex].likes?.includes(user._id) ? (
+                                <BiSolidLike
+                                    style={{
+                                        fontSize: '16px',
+                                        color: light
+                                            ? colors.light.accentForeground
+                                            : colors.dark.accentForeground
+                                    }}
+                                />
+                            ) : (
+                                <BiLike
+                                    style={{
+                                        fontSize: '16px',
+                                        color: light
+                                            ? colors.light.accentForeground
+                                            : colors.dark.accentForeground
+                                    }}
+                                />
+                            )}
+                        </Button>
+                        {props.jokes[props.jokeIndex].likes?.length ? (
+                            <Container
+                                sx={{
+                                    position: 'absolute',
+                                    top: '60%',
+                                    left: '60%',
+                                    backgroundColor: light
+                                        ? colors.light.background
+                                        : colors.dark.background,
+                                    height: '12px',
+                                    borderRadius: '6px',
+                                    width: 'fit-content',
+                                    justifyContent: 'center',
+                                    alignItems: 'center'
+                                }}
+                            >
+                                <Typography
+                                    sx={{ margin: '0', fontSize: '10px', padding: '0px 5px' }}
+                                >
+                                    {props.jokes[props.jokeIndex].likes?.length}
+                                </Typography>
+                            </Container>
+                        ) : (
+                            <></>
+                        )}
+                    </Container>
                 </Container>
                 <Container
                     sx={{
                         flex: 1,
                         flexDirection: 'column',
                         justifyContent: 'space-between',
-                        width: '100$',
+                        width: '100%',
                         overflowY: 'auto'
                     }}
                     hidescrollBar
@@ -175,19 +251,38 @@ export const DadJokeUI: FunctionComponent<DadJokeUIProps> = (props) => {
                     >
                         <strong>{props.jokes[props.jokeIndex].answer}</strong>
                     </Typography>
-                    <Button
-                        onClick={() => props.setReveal && props.setReveal(true)}
-                        sx={{
-                            width: '80px',
-                            borderRadius: '19px',
-                            backgroundColor: light
-                                ? colors.light.accentForeground
-                                : colors.dark.accentForeground,
-                            color: light ? colors.light.accent : colors.dark.accent
-                        }}
-                    >
-                        Reveal
-                    </Button>
+                    <Container sx={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                        <Button
+                            onClick={() => props.setReveal && props.setReveal(true)}
+                            sx={{
+                                width: '80px',
+                                borderRadius: '19px',
+                                backgroundColor: light
+                                    ? colors.light.accentForeground
+                                    : colors.dark.accentForeground,
+                                color: light ? colors.light.accent : colors.dark.accent
+                            }}
+                        >
+                            Reveal
+                        </Button>
+                        {user?._id === props.jokes[props.jokeIndex].submittedBy?._id ? (
+                            <Button
+                                onClick={() => props.setEdit && props.setEdit(true)}
+                                sx={{
+                                    width: '80px',
+                                    borderRadius: '19px',
+                                    backgroundColor: light
+                                        ? colors.light.accentForeground
+                                        : colors.dark.accentForeground,
+                                    color: light ? colors.light.accent : colors.dark.accent
+                                }}
+                            >
+                                Edit
+                            </Button>
+                        ) : (
+                            <></>
+                        )}
+                    </Container>
                 </Container>
             </Container>
         </Card>

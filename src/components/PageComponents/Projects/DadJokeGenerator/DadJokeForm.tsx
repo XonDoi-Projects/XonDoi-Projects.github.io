@@ -1,4 +1,4 @@
-import { CSSProperties, FunctionComponent, useEffect, useRef, useState } from 'react'
+import { CSSProperties, FunctionComponent, useCallback, useEffect, useRef, useState } from 'react'
 import { Card, Container, FadeInOut, FixedDiv } from '@/components/LayoutComponents'
 import { useDarkTheme, useSize, useUser } from '@/components/Providers'
 import { colors } from '@/components/Colors'
@@ -7,10 +7,12 @@ import { Typography } from '@/components/LayoutComponents/Typography'
 import { Button, TextAreaField } from '@/components/InputComponents'
 
 import BadWords from 'bad-words'
+import { IJoke } from './DadJokeGenerator'
 
 export interface DadJokeFormProps {
     sx?: CSSProperties
     setDirty?: (value: boolean) => void
+    data?: IJoke
 }
 
 export const DadJokeForm: FunctionComponent<DadJokeFormProps> = (props) => {
@@ -60,18 +62,32 @@ export const DadJokeForm: FunctionComponent<DadJokeFormProps> = (props) => {
         if (!checkFields()) {
             setLoading(true)
             try {
-                const result = await fetch(`/api/jokes/submit`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        userId: user?._id,
-                        text: jokeLine,
-                        answer: jokeAnswer
+                let result: Response
+                if (!props.data) {
+                    result = await fetch(`/api/jokes/submit`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            userId: user?._id,
+                            text: jokeLine,
+                            answer: jokeAnswer
+                        })
                     })
-                })
-
+                } else {
+                    result = await fetch(`/api/jokes/edit?id=${props.data._id}`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            userId: user?._id,
+                            text: jokeLine,
+                            answer: jokeAnswer
+                        })
+                    })
+                }
                 const data = await result.json()
 
                 props.setDirty && props.setDirty(true)
@@ -79,7 +95,7 @@ export const DadJokeForm: FunctionComponent<DadJokeFormProps> = (props) => {
                 setJokeAnswer('')
                 setSnackbar({
                     message: data.message,
-                    color: colors.light.success
+                    color: result.status === 404 ? colors.light.error : colors.light.success
                 })
                 setShowSnackbar(true)
             } catch (e: any) {
@@ -92,6 +108,24 @@ export const DadJokeForm: FunctionComponent<DadJokeFormProps> = (props) => {
             setLoading(false)
         }
     }
+
+    const changeData = useCallback(() => {
+        if (props.data) {
+            setErrorLine('')
+            setErrorAnswer('')
+            setJokeLine(props.data.text)
+            setJokeAnswer(props.data.answer)
+        } else {
+            setErrorLine('')
+            setErrorAnswer('')
+            setJokeLine('')
+            setJokeAnswer('')
+        }
+    }, [props.data])
+
+    useEffect(() => {
+        changeData()
+    }, [changeData])
 
     useEffect(() => {
         if (timeoutRef.current !== undefined) {

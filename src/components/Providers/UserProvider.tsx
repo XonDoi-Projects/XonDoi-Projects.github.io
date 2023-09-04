@@ -2,6 +2,7 @@ import React, { createContext, FunctionComponent, ReactNode, useContext, useStat
 
 export interface User {
     username: string
+    password: string
     _id?: string
 }
 
