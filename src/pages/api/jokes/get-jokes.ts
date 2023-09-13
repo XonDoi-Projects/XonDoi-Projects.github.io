@@ -1,13 +1,15 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import clientPromise from '../../../lib/mongodb'
 import { ObjectId } from 'mongodb'
+import { User } from '@/components/Providers'
+import { IJoke } from '@/components'
 
 const getJokes = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
         const client = await clientPromise
         const dbScore = client.db('jokes')
 
-        let result = await dbScore.collection('jokes').find({}).toArray()
+        let result = await dbScore.collection('jokes').find<IJoke[]>({}).toArray()
 
         const dbUsers = client.db('users')
         let resolvedResult = await Promise.all(
@@ -15,7 +17,7 @@ const getJokes = async (req: NextApiRequest, res: NextApiResponse) => {
                 ...item,
                 submittedBy: await dbUsers
                     .collection('users')
-                    .findOne({ _id: new ObjectId(item.userId) })
+                    .findOne<User>({ _id: new ObjectId(item.userId) })
             }))
         )
 

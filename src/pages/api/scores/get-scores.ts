@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import clientPromise from '../../../lib/mongodb'
 import { ObjectId } from 'mongodb'
+import { User } from '@/components/Providers'
 
 const getScores = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
@@ -20,7 +21,9 @@ const getScores = async (req: NextApiRequest, res: NextApiResponse) => {
         let resolvedResult = await Promise.all(
             result.map(async (item: any) => ({
                 ...item,
-                name: await dbUsers.collection('users').findOne({ _id: new ObjectId(item.userId) })
+                name: await dbUsers
+                    .collection('users')
+                    .findOne<User>({ _id: new ObjectId(item.userId) })
             }))
         )
 

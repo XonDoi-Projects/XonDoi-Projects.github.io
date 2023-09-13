@@ -2,10 +2,11 @@ import { CSSProperties, FunctionComponent, useCallback, useEffect, useRef, useSt
 import { keyframes } from '@emotion/react'
 import { Container, Spinner } from '@/components/LayoutComponents'
 import { DadJokeUI } from './DadJokeUI'
-import { User, useDarkTheme, useSize } from '@/components/Providers'
+import { User, useDarkTheme, useSize, useUser } from '@/components/Providers'
 import { Typography } from '@/components/LayoutComponents/Typography'
 import { DadJokeForm } from './DadJokeForm'
 import { colors } from '@/components/Colors'
+import { cloneDeep } from 'lodash'
 
 export interface DadJokeGeneratorProps {
     sx?: CSSProperties
@@ -23,13 +24,17 @@ const flipReverse = keyframes({
 export interface IJoke {
     text: string
     answer: string
+    userId: string
     submittedBy?: User
     submittedOn?: string
+    likes?: string[]
+    _id?: string
 }
 
 export const DadJokeGenerator: FunctionComponent<DadJokeGeneratorProps> = (props) => {
     const { light } = useDarkTheme()
     const mobile = useSize()
+    const { user } = useUser()
 
     const [jokes, setJokes] = useState<IJoke[]>([])
     const [loading, setLoading] = useState(true)
@@ -41,6 +46,7 @@ export const DadJokeGenerator: FunctionComponent<DadJokeGeneratorProps> = (props
     const [dirty, setDirty] = useState(false)
 
     const [reveal, setReveal] = useState(false)
+    const [edit, setEdit] = useState(false)
 
     const updatePreviousRef = useRef<NodeJS.Timer>()
     const updateCurrentRef = useRef<NodeJS.Timer>()
@@ -57,6 +63,7 @@ export const DadJokeGenerator: FunctionComponent<DadJokeGeneratorProps> = (props
 
             if (dirty) {
                 setDirty(false)
+                setEdit(false)
             }
             setJokes(result.jokes)
         } catch (e: any) {
@@ -64,6 +71,38 @@ export const DadJokeGenerator: FunctionComponent<DadJokeGeneratorProps> = (props
         }
         setLoading(false)
     }, [dirty])
+
+    const updateJokeLike = async (jokeId?: string) => {
+        try {
+            const controller = new AbortController()
+
+            if (jokeId) {
+                const newJoke = await fetch(`/api/jokes/like?id=${jokeId}`, {
+                    body: JSON.stringify({ userId: user?._id }),
+                    signal: controller.signal,
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' }
+                })
+
+                const result = await newJoke.json()
+
+                if (result.joke) {
+                    let tempJokes = cloneDeep(jokes)
+                    if (tempJokes) {
+                        let index = tempJokes.findIndex((joke) => joke._id === result.joke._id)
+
+                        tempJokes[index] = result.joke
+
+                        setJokes(tempJokes)
+                    }
+                }
+            }
+
+            return () => controller.abort()
+        } catch (e: any) {
+            console.log(e)
+        }
+    }
 
     useEffect(() => {
         getJokes()
@@ -85,6 +124,7 @@ export const DadJokeGenerator: FunctionComponent<DadJokeGeneratorProps> = (props
     }, [currentJokeIndex, newJokeIndex])
 
     useEffect(() => {
+        setEdit(false)
         if (updateCurrentRef.current) {
             clearTimeout(updateCurrentRef.current)
         }
@@ -208,6 +248,9 @@ export const DadJokeGenerator: FunctionComponent<DadJokeGeneratorProps> = (props
                                 jokes={jokes}
                                 reveal={reveal}
                                 setReveal={setReveal}
+                                edit={edit}
+                                setEdit={setEdit}
+                                updateJokeLike={() => updateJokeLike(jokes[currentJokeIndex]._id)}
                             />
                         </Container>
                         <Container
@@ -230,10 +273,6 @@ export const DadJokeGenerator: FunctionComponent<DadJokeGeneratorProps> = (props
                     </Container>
                 )}
             </Container>
-
-            <Typography sx={{ margin: '0px' }} variant="subtitle">
-                OR
-            </Typography>
             <Container sx={{ paddingBottom: '10px', width: '100%' }}>
                 <DadJokeForm
                     sx={{
@@ -241,6 +280,7 @@ export const DadJokeGenerator: FunctionComponent<DadJokeGeneratorProps> = (props
                         boxSizing: 'border-box'
                     }}
                     setDirty={setDirty}
+                    data={edit ? jokes[currentJokeIndex] : undefined}
                 />
             </Container>
         </Container>
