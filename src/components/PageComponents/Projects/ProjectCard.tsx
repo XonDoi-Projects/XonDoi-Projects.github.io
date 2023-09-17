@@ -1,13 +1,16 @@
 import { colors } from '@/components/Colors'
+import { Button } from '@/components/InputComponents'
 import { Card, Container } from '@/components/LayoutComponents'
 import { Typography } from '@/components/LayoutComponents/Typography'
 import { useSize, useDarkTheme } from '@/components/Providers'
 import { keyframes } from '@emotion/react'
 import Link from 'next/link'
 import { CSSProperties, FunctionComponent, useState } from 'react'
+import { BiChevronUp } from 'react-icons/bi'
 
 export interface Project {
     title: string
+    excerpt: string
     description: string
     link?: string
     tags?: string[]
@@ -31,6 +34,9 @@ export const ProjectCard: FunctionComponent<ProjectCardProps> = (props) => {
     const mobile = useSize()
     const { light } = useDarkTheme()
     const [hover, setHover] = useState<boolean>()
+
+    const [show, setShow] = useState(false)
+
     return (
         <Card
             sx={{
@@ -66,12 +72,16 @@ export const ProjectCard: FunctionComponent<ProjectCardProps> = (props) => {
                         }}
                         hidescrollBar
                         onMouseEnter={(e) => {
-                            e.preventDefault()
-                            setHover(true)
+                            if ((e.relatedTarget as HTMLDivElement).id) {
+                                e.preventDefault()
+                                setHover(true)
+                            }
                         }}
                         onMouseLeave={(e) => {
-                            e.preventDefault()
-                            setHover(false)
+                            if ((e.relatedTarget as HTMLDivElement).id) {
+                                e.preventDefault()
+                                setHover(false)
+                            }
                         }}
                     >
                         <Typography
@@ -80,9 +90,60 @@ export const ProjectCard: FunctionComponent<ProjectCardProps> = (props) => {
                         >
                             {props.project.title}
                         </Typography>
-                        <Typography variant="body" sx={{ flex: 1 }}>
-                            {props.project.description}
-                        </Typography>
+                        {show ? (
+                            <Container sx={{ flexDirection: 'column' }}>
+                                <Typography
+                                    variant="body"
+                                    sx={{ flex: 1, whiteSpace: 'pre-line', fontSize: '16px' }}
+                                >
+                                    {props.project.excerpt}
+                                </Typography>
+                                <Typography
+                                    variant="body"
+                                    sx={{ flex: 1, whiteSpace: 'pre-line', fontSize: '16px' }}
+                                >
+                                    {props.project.description}
+                                </Typography>
+                                <Container sx={{ flexDirection: 'row-reverse' }}>
+                                    <Button
+                                        sx={{
+                                            width: '40px',
+                                            height: '40px',
+                                            borderRadius: '50%',
+                                            padding: '0px',
+                                            backgroundColor: 'transparent'
+                                        }}
+                                        onClick={(e) => {
+                                            e.preventDefault()
+                                            setShow(false)
+                                            setHover(false)
+                                        }}
+                                    >
+                                        <BiChevronUp style={{ fontSize: '20px' }} />
+                                    </Button>
+                                </Container>
+                            </Container>
+                        ) : (
+                            <Container sx={{ flexDirection: 'column' }}>
+                                <Typography
+                                    variant="body"
+                                    sx={{ flex: 1, whiteSpace: 'pre-line', fontSize: '16px' }}
+                                >
+                                    {props.project.excerpt}
+                                </Typography>
+                                <Typography
+                                    variant="body"
+                                    sx={{ width: 'fit-content', fontSize: '16px' }}
+                                    onClick={(e) => {
+                                        e.preventDefault()
+                                        setShow(true)
+                                    }}
+                                    hasHover
+                                >
+                                    Read More...
+                                </Typography>
+                            </Container>
+                        )}
                         <Container sx={{ flexDirection: 'row', flexWrap: 'wrap', gap: '10px' }}>
                             {props.project.tags?.map((tag, index, array) => (
                                 <Container key={index} sx={{ gap: '10px' }}>
@@ -154,8 +215,11 @@ export const ProjectCard: FunctionComponent<ProjectCardProps> = (props) => {
                     >
                         {props.project.title}
                     </Typography>
-                    <Typography variant="body" sx={{ flex: 1 }}>
-                        {props.project.description}
+                    <Typography
+                        variant="body"
+                        sx={{ flex: 1, whiteSpace: 'pre-line', fontSize: '16px' }}
+                    >
+                        {props.project.excerpt}
                     </Typography>
                 </Container>
             )}

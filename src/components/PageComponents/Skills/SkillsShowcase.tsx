@@ -185,6 +185,7 @@ export const SkillsShowcase: FunctionComponent<SkillsShowcaseProps> = (props) =>
                                 key={index}
                                 src={skill.src}
                                 alt={skill.alt}
+                                link={skill.link}
                                 scrollIntoViewPointer={index === scrollIntoView}
                                 parentWidth={skillsShowcaseWidth}
                             />
@@ -224,6 +225,7 @@ export const SkillsShowcase: FunctionComponent<SkillsShowcaseProps> = (props) =>
                                 <SkillDesktop
                                     src={skill.src}
                                     alt={skill.alt}
+                                    link={skill.link}
                                     scrollIntoViewPointer={index === scrollIntoView}
                                     parentWidth={skillsShowcaseWidth}
                                 />

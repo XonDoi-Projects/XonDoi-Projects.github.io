@@ -1,5 +1,11 @@
 import styled from '@emotion/styled'
-import { CSSProperties, FunctionComponent, ReactNode } from 'react'
+import {
+    CSSProperties,
+    FunctionComponent,
+    HTMLAttributes,
+    MouseEventHandler,
+    ReactNode
+} from 'react'
 import { useDarkTheme } from '../Providers'
 import { colors } from '../Colors'
 
@@ -13,7 +19,9 @@ type FontVariants =
     | 'field'
     | 'small'
 
-export interface TypographyProps extends StyledTypographyProps {
+export interface TypographyProps
+    extends StyledTypographyProps,
+        HTMLAttributes<HTMLParagraphElement> {
     children: ReactNode
 }
 
@@ -67,16 +75,23 @@ interface StyledTypographyProps {
     sx?: CSSProperties
     variant?: FontVariants
     light?: boolean
+    hasHover?: boolean
 }
 
-const StyledTypography = styled.p<StyledTypographyProps>(({ sx, variant, light }) => ({
+const StyledTypography = styled.p<StyledTypographyProps>(({ sx, variant, light, hasHover }) => ({
     fontStyle: 'normal',
     ...sx,
 
     '@media (hover:hover) and (pointer: fine)': {
         '&:hover': {
             color:
-                variant === 'linker'
+                variant === 'linker' || hasHover
+                    ? light
+                        ? colors.light.accent
+                        : colors.dark.accent
+                    : undefined,
+            textDecorationColor:
+                variant === 'linker' || hasHover
                     ? light
                         ? colors.light.accent
                         : colors.dark.accent
@@ -114,6 +129,8 @@ export const Typography: FunctionComponent<TypographyProps> = (props) => {
             }}
             variant={props.variant}
             light={light}
+            onClick={props.onClick}
+            hasHover={props.hasHover}
         >
             {props.children}
         </StyledTypography>

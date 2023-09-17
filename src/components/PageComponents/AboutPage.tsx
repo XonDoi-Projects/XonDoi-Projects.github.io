@@ -338,7 +338,7 @@ export const AboutPage: FunctionComponent<AboutPageProps> = (props) => {
                                     marginRight: mobile ? '30px' : '0px'
                                 }}
                             >
-                                Throughout my tenure in Web Development, I have acquired
+                                Throughout my career in Web Development, I have acquired
                                 comprehensive knowledge and expertise in a range of technologies,
                                 including React, Typescript, and Javascript. During my tenure in
                                 this field, I have honed my ability to write abstracted and
@@ -397,17 +397,21 @@ export const AboutPage: FunctionComponent<AboutPageProps> = (props) => {
                                 <Link
                                     href="https://ieeexplore.ieee.org/document/9506558"
                                     target="_blank"
-                                    style={{
-                                        display: 'inline-flex',
-                                        textDecorationColor: light
-                                            ? colors.light.primary
-                                            : colors.dark.primary,
-                                        textUnderlineOffset: '3px',
-                                        fontWeight: 'bold',
-                                        color: light ? colors.light.primary : colors.dark.primary
-                                    }}
                                 >
-                                    publication
+                                    <Typography
+                                        sx={{
+                                            margin: 0,
+                                            display: 'inline-flex',
+                                            textDecorationLine: 'underline',
+                                            textDecorationColor: light
+                                                ? colors.light.primary
+                                                : colors.dark.primary,
+                                            textUnderlineOffset: '3px'
+                                        }}
+                                        hasHover
+                                    >
+                                        publication
+                                    </Typography>
                                 </Link>{' '}
                                 that I successfully presented at the 2021 International Conference
                                 on Image Processing (ICIP) in Alaska. Outside of my thesis, I also
