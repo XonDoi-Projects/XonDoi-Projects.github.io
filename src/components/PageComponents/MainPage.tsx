@@ -12,40 +12,49 @@ import { SkillsShowcase } from './Skills'
 export interface ISkill {
     src: string
     alt: string
+    link: string
 }
 
 const skills: ISkill[] = [
     {
         src: 'https://firebasestorage.googleapis.com/v0/b/portfolio-3b624.appspot.com/o/React.svg?alt=media&token=e304398c-c39c-4a72-ada2-3deda2efc9c6',
-        alt: 'React'
+        alt: 'React',
+        link: 'https://react.dev/'
     },
     {
         src: 'https://firebasestorage.googleapis.com/v0/b/portfolio-3b624.appspot.com/o/JS.svg?alt=media&token=a8837565-7313-4d0c-8f40-55c9f21bca1e',
-        alt: 'JS'
+        alt: 'JS',
+        link: 'https://www.javascript.com/'
     },
     {
         src: 'https://firebasestorage.googleapis.com/v0/b/portfolio-3b624.appspot.com/o/TS.svg?alt=media&token=0d2352da-ae22-4a6d-ac81-8e0cbafd50bd',
-        alt: 'TS'
+        alt: 'TS',
+        link: 'https://www.typescriptlang.org/docs/'
     },
     {
         src: 'https://firebasestorage.googleapis.com/v0/b/portfolio-3b624.appspot.com/o/Jest.svg?alt=media&token=050b9a70-b08b-43bc-b879-1a4169999416',
-        alt: 'Jest'
+        alt: 'Jest',
+        link: 'https://jestjs.io/docs/getting-started'
     },
     {
         src: 'https://firebasestorage.googleapis.com/v0/b/portfolio-3b624.appspot.com/o/Node.svg?alt=media&token=dcc30c9a-de76-4632-9a0d-1413a9eed92d',
-        alt: 'NodeJS'
+        alt: 'NodeJS',
+        link: 'https://nodejs.org/en/docs'
     },
     {
         src: 'https://firebasestorage.googleapis.com/v0/b/portfolio-3b624.appspot.com/o/Mongo.svg?alt=media&token=f9b42dbc-f985-47c5-b87a-47e372719b3e',
-        alt: 'MongoDB'
+        alt: 'MongoDB',
+        link: 'https://www.mongodb.com/docs/'
     },
     {
         src: 'https://firebasestorage.googleapis.com/v0/b/portfolio-3b624.appspot.com/o/Firebase.svg?alt=media&token=7452c6ec-cb2c-4725-8e7a-32449d6514d8',
-        alt: 'Firebase'
+        alt: 'Firebase',
+        link: 'https://firebase.google.com/docs'
     },
     {
         src: 'https://firebasestorage.googleapis.com/v0/b/portfolio-3b624.appspot.com/o/Next.svg?alt=media&token=bd049721-b37d-442a-98b2-ee1b8ce88da5',
-        alt: 'Next'
+        alt: 'NextJS',
+        link: 'https://nextjs.org/docs'
     }
 ]
 

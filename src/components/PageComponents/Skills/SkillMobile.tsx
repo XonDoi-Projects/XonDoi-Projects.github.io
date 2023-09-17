@@ -3,10 +3,12 @@ import { Container } from '../../LayoutComponents'
 import Image from 'next/image'
 import { useDarkTheme, useSize } from '../../Providers'
 import { colors } from '../../Colors'
+import Link from 'next/link'
 
 export interface SkillMobileProps {
     src: string
     alt: string
+    link: string
     scrollIntoViewPointer: boolean
     parentWidth: number
 }
@@ -41,7 +43,7 @@ export const SkillMobile: FunctionComponent<SkillMobileProps> = (props) => {
             }}
         >
             {mobile.mobile ? (
-                props.alt === 'Next' && !light ? (
+                props.alt === 'NextJS' && !light ? (
                     <Container
                         sx={{
                             width: '170px',
@@ -50,38 +52,50 @@ export const SkillMobile: FunctionComponent<SkillMobileProps> = (props) => {
                             backgroundColor: colors.light.background
                         }}
                     >
+                        <Link
+                            href={props.link}
+                            target="_blank"
+                            style={{
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center'
+                            }}
+                        >
+                            <Image
+                                src={props.src}
+                                alt={props.alt}
+                                width={
+                                    mobile.mobile && mobile.size?.width
+                                        ? mobile.size?.width - 70
+                                        : props.parentWidth
+                                }
+                                height={170}
+                                style={{
+                                    position: 'relative',
+                                    objectFit: 'scale-down'
+                                }}
+                            />
+                        </Link>
+                    </Container>
+                ) : (
+                    <Link href={props.link} target="_blank">
                         <Image
                             src={props.src}
                             alt={props.alt}
                             width={
                                 mobile.mobile && mobile.size?.width
-                                    ? mobile.size?.width - 70
+                                    ? mobile.size?.width - 40
                                     : props.parentWidth
                             }
-                            height={170}
+                            height={200}
                             style={{
                                 position: 'relative',
                                 objectFit: 'scale-down'
                             }}
                         />
-                    </Container>
-                ) : (
-                    <Image
-                        src={props.src}
-                        alt={props.alt}
-                        width={
-                            mobile.mobile && mobile.size?.width
-                                ? mobile.size?.width - 40
-                                : props.parentWidth
-                        }
-                        height={200}
-                        style={{
-                            position: 'relative',
-                            objectFit: 'scale-down'
-                        }}
-                    />
+                    </Link>
                 )
-            ) : props.alt === 'Next' && !light ? (
+            ) : props.alt === 'NextJS' && !light ? (
                 <Container
                     sx={{
                         height: '170px',
@@ -90,6 +104,23 @@ export const SkillMobile: FunctionComponent<SkillMobileProps> = (props) => {
                         backgroundColor: colors.light.background
                     }}
                 >
+                    <Link
+                        href={props.link}
+                        target="_blank"
+                        style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+                    >
+                        <Image
+                            src={props.src}
+                            alt={props.alt}
+                            fill
+                            style={{
+                                objectFit: 'scale-down'
+                            }}
+                        />
+                    </Link>
+                </Container>
+            ) : (
+                <Link href={props.link} target="_blank">
                     <Image
                         src={props.src}
                         alt={props.alt}
@@ -98,16 +129,7 @@ export const SkillMobile: FunctionComponent<SkillMobileProps> = (props) => {
                             objectFit: 'scale-down'
                         }}
                     />
-                </Container>
-            ) : (
-                <Image
-                    src={props.src}
-                    alt={props.alt}
-                    fill
-                    style={{
-                        objectFit: 'scale-down'
-                    }}
-                />
+                </Link>
             )}
         </Container>
     )

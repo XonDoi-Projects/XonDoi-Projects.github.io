@@ -12,7 +12,7 @@ import { Analytics } from '@vercel/analytics/react'
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
     useEffect(() => {
-        document.title = 'Nathan M Portfolio'
+        document.title = 'Nathan Magro Portfolio'
     })
 
     return (

@@ -60,7 +60,6 @@ export const TicTacToeLoginUI: FunctionComponent<TicTacToeLoginUIProps> = ({
     const [startTime, setStartTime] = useState(false)
 
     const getUserScore = useCallback(async () => {
-        console.log(user)
         if (user) {
             try {
                 const result = await fetch('/api/scores/get-user-score', {

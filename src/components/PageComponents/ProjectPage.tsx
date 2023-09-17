@@ -9,20 +9,23 @@ import { Project } from './Projects'
 const projectList: Project[] = [
     {
         title: 'Tic-Tac-Toe',
-        description: 'My take on Tic-Tac-Toe, featuring a score leaderboard!',
+        excerpt: 'My take on Tic-Tac-Toe, featuring a score leaderboard!',
+        description: `The Front-end part is built using React, Typescript and Styled Components (CSS). Whereas, the Back-end part of this project is set up using the pages/api directory of NextJS 13, which makes use of a MongoDB connection to create, update, and get user scores. Logged in users can track their scores and update if a high score is obtained.`,
         link: '/projects/tic-tac-toe',
         tags: ['Next.js', 'React', 'Typescript', 'CSS', 'MongoDB']
     },
     {
         title: 'Dad Joke Viewer',
-        description:
+        excerpt:
             'A simple Dad Joke Viewer, in which you may also submit your own jokes for everyone else to see!',
+        description: ` The Front-end part is built using React, Typescript and Styled Components (CSS). Whereas, the Back-end part of this project is set up using the pages/api directory of NextJS 13, which makes use of a MongoDB connection to create, update, and get dad jokes. Logged in users can submit and update their own dad jokes, as well as 'like' dad jokes.`,
         link: '/projects/dad-joke-generator',
         tags: ['Next.js', 'React', 'Typescript', 'CSS', 'MongoDB']
     },
     {
         title: 'E-Commerce Template',
-        description: 'Coming soon'
+        excerpt: 'Coming soon',
+        description: ''
     }
 ]
 

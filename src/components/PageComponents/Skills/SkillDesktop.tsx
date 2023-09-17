@@ -3,10 +3,12 @@ import { Container } from '../../LayoutComponents'
 import Image from 'next/image'
 import { useDarkTheme, useSize } from '../../Providers'
 import { colors } from '../../Colors'
+import Link from 'next/link'
 
 export interface SkillDesktopProps {
     src: string
     alt: string
+    link: string
     scrollIntoViewPointer: boolean
     parentWidth: number
 }
@@ -25,7 +27,7 @@ export const SkillDesktop: FunctionComponent<SkillDesktopProps> = (props) => {
             }}
         >
             {mobile.mobile ? (
-                props.alt === 'Next' && !light ? (
+                props.alt === 'NextJS' && !light ? (
                     <Container
                         sx={{
                             width: '100%',
@@ -34,38 +36,51 @@ export const SkillDesktop: FunctionComponent<SkillDesktopProps> = (props) => {
                             backgroundColor: colors.light.background
                         }}
                     >
+                        <Link
+                            href={props.link}
+                            target="_blank"
+                            style={{
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center'
+                            }}
+                        >
+                            <Image
+                                src={props.src}
+                                alt={props.alt}
+                                width={
+                                    mobile.mobile && mobile.size?.width
+                                        ? mobile.size?.width - 70
+                                        : props.parentWidth
+                                }
+                                height={170}
+                                style={{
+                                    position: 'relative',
+                                    objectFit: 'scale-down'
+                                }}
+                            />
+                        </Link>
+                    </Container>
+                ) : (
+                    <Link href={props.link} target="_blank">
+                        {' '}
                         <Image
                             src={props.src}
                             alt={props.alt}
                             width={
                                 mobile.mobile && mobile.size?.width
-                                    ? mobile.size?.width - 70
+                                    ? mobile.size?.width - 40
                                     : props.parentWidth
                             }
-                            height={170}
+                            height={200}
                             style={{
                                 position: 'relative',
                                 objectFit: 'scale-down'
                             }}
                         />
-                    </Container>
-                ) : (
-                    <Image
-                        src={props.src}
-                        alt={props.alt}
-                        width={
-                            mobile.mobile && mobile.size?.width
-                                ? mobile.size?.width - 40
-                                : props.parentWidth
-                        }
-                        height={200}
-                        style={{
-                            position: 'relative',
-                            objectFit: 'scale-down'
-                        }}
-                    />
+                    </Link>
                 )
-            ) : props.alt === 'Next' && !light ? (
+            ) : props.alt === 'NextJS' && !light ? (
                 <Container
                     sx={{
                         height: '100%',
@@ -76,26 +91,35 @@ export const SkillDesktop: FunctionComponent<SkillDesktopProps> = (props) => {
                         alignItems: 'center'
                     }}
                 >
+                    <Link
+                        href={props.link}
+                        target="_blank"
+                        style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+                    >
+                        {' '}
+                        <Image
+                            src={props.src}
+                            alt={props.alt}
+                            width={props.parentWidth / 4 - 50}
+                            height={props.parentWidth / 4 - 50}
+                            style={{
+                                boxSizing: 'border-box',
+                                objectFit: 'scale-down'
+                            }}
+                        />
+                    </Link>
+                </Container>
+            ) : (
+                <Link href={props.link} target="_blank">
                     <Image
                         src={props.src}
                         alt={props.alt}
-                        width={props.parentWidth / 4 - 50}
-                        height={props.parentWidth / 4 - 50}
+                        fill
                         style={{
-                            boxSizing: 'border-box',
                             objectFit: 'scale-down'
                         }}
                     />
-                </Container>
-            ) : (
-                <Image
-                    src={props.src}
-                    alt={props.alt}
-                    fill
-                    style={{
-                        objectFit: 'scale-down'
-                    }}
-                />
+                </Link>
             )}
         </Container>
     )
