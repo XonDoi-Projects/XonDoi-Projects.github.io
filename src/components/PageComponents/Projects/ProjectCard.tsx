@@ -60,7 +60,11 @@ export const ProjectCard: FunctionComponent<ProjectCardProps> = (props) => {
             }}
         >
             {props.project.link ? (
-                <Link href={props.project.link} style={{ width: '100%', textDecoration: 'none' }}>
+                <Link
+                    href={props.project.link}
+                    style={{ width: '100%', textDecoration: 'none' }}
+                    target="_blank"
+                >
                     <Container
                         sx={{
                             flexDirection: 'column',
@@ -71,14 +75,14 @@ export const ProjectCard: FunctionComponent<ProjectCardProps> = (props) => {
                             overflow: 'auto'
                         }}
                         hidescrollBar
-                        onMouseEnter={(e) => {
-                            if ((e.relatedTarget as HTMLDivElement).id) {
+                        onPointerEnter={(e) => {
+                            if (e.relatedTarget as HTMLDivElement) {
                                 e.preventDefault()
                                 setHover(true)
                             }
                         }}
-                        onMouseLeave={(e) => {
-                            if ((e.relatedTarget as HTMLDivElement).id) {
+                        onPointerLeave={(e) => {
+                            if (e.relatedTarget as HTMLDivElement) {
                                 e.preventDefault()
                                 setHover(false)
                             }
