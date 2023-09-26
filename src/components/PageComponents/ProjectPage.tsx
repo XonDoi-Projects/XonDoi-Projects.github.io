@@ -23,9 +23,12 @@ const projectList: Project[] = [
         tags: ['Next.js', 'React', 'Typescript', 'CSS', 'MongoDB']
     },
     {
-        title: 'E-Commerce Template',
-        excerpt: 'Coming soon',
-        description: ''
+        title: 'Dog Finder',
+        excerpt: 'A place where you can find a dog to adopt!',
+        description:
+            'This project was built using React, Typescript and Styled Components. The data is obtained from fetch rewards api as a take home assignment. The motivation behind this project was to test my strengths and weaknesses in a setup that is very similar to e-commerce.',
+        link: 'https://fetch-take-home-inky.vercel.app/',
+        tags: ['React', 'Typescript', 'CSS']
     }
 ]
 
