@@ -8,27 +8,43 @@ import { Project } from './Projects'
 
 const projectList: Project[] = [
     {
-        title: 'Tic-Tac-Toe',
-        excerpt: 'My take on Tic-Tac-Toe, featuring a score leaderboard!',
-        description: `The Front-end part is built using React, Typescript and Styled Components (CSS). Whereas, the Back-end part of this project is set up using the pages/api directory of NextJS 13, which makes use of a MongoDB connection to create, update, and get user scores. Logged in users can track their scores and update if a high score is obtained.`,
-        link: '/projects/tic-tac-toe',
-        tags: ['Next.js', 'React', 'Typescript', 'CSS', 'MongoDB']
+        title: 'Medical Clinics Onboarding',
+        excerpt: 'A website built for one of Sector Eleven&amps Clients!',
+        description:
+            'This project is built using NextJs 13, Typescript and Styled Components (CSS). The client requested a website in which medics and clinics can register to request permission to use the system. The website is part of a bigger system including an onboarding website, clinic portal and admin portal.',
+        link: 'https://doctonica.com',
+        tags: ['Next.js', 'React', 'Typescript', 'Styled Components']
     },
     {
-        title: 'Dad Joke Viewer',
-        excerpt:
-            'A simple Dad Joke Viewer, in which you may also submit your own jokes for everyone else to see!',
-        description: ` The Front-end part is built using React, Typescript and Styled Components (CSS). Whereas, the Back-end part of this project is set up using the pages/api directory of NextJS 13, which makes use of a MongoDB connection to create, update, and get dad jokes. Logged in users can submit and update their own dad jokes, as well as 'like' dad jokes.`,
-        link: '/projects/dad-joke-generator',
-        tags: ['Next.js', 'React', 'Typescript', 'CSS', 'MongoDB']
+        title: 'Pet Supplies Shop',
+        excerpt: 'An e-commerce pet supplies shop',
+        description:
+            'For this project, Sector Eleven elected to use NextJs 14, Typescript and Styled Components (CSS). This online shop is part of a bigger project that also consists of an administrator portal. The admin can edit offers, promotions, or product details through the portal that will immediately effect the shop. The shop consists of features like filtering, showcases, and cart system among others.',
+        link: 'https://fetch-take-home-inky.vercel.app/',
+        tags: ['Next.js', 'React', 'Typescript', 'Styled Components', 'MongoDB', 'Firebase']
     },
     {
         title: 'Dog Finder',
         excerpt: 'A place where you can find a dog to adopt!',
         description:
-            'This project was built using React, Typescript and Styled Components. The data is obtained from fetch rewards api as a take home assignment. The motivation behind this project was to test my strengths and weaknesses in a setup that is very similar to e-commerce.',
+            'This project was built using React, Typescript and Styled Components (CSS). The data is obtained from fetch rewards api as a take home assignment. The motivation behind this project was to test my strengths and weaknesses in a setup that is very similar to e-commerce.',
         link: 'https://fetch-take-home-inky.vercel.app/',
-        tags: ['React', 'Typescript', 'CSS']
+        tags: ['React', 'Typescript', 'Styled Components']
+    },
+    {
+        title: 'Tic-Tac-Toe',
+        excerpt: 'My take on Tic-Tac-Toe, featuring a score leaderboard!',
+        description: `The Front-end part is built using NextJs, Typescript and Styled Components (CSS). The Back-end part of this project is set up using the pages/api directory of NextJS 13, which makes use of a MongoDB connection to create, update, and get user scores. Logged in users can track their scores and update if a high score is obtained.`,
+        link: '/projects/tic-tac-toe',
+        tags: ['Next.js', 'React', 'Typescript', 'Styled Components', 'MongoDB']
+    },
+    {
+        title: 'Dad Joke Viewer',
+        excerpt:
+            'A simple Dad Joke Viewer, in which you may also submit your own jokes for everyone else to see!',
+        description: `The Front-end part is built using NextJs, Typescript and Styled Components (CSS). On the other hand, the Back-end part of this project is set up using the pages/api directory of NextJS 13, which makes use of a MongoDB connection to create, update, and get dad jokes. Logged in users can submit and update their own dad jokes, as well as 'like' dad jokes.`,
+        link: '/projects/dad-joke-generator',
+        tags: ['Next.js', 'React', 'Typescript', 'Styled Components', 'MongoDB']
     }
 ]
 
