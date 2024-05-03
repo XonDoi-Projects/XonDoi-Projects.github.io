@@ -1,7 +1,9 @@
 import React, { createContext, FunctionComponent, ReactNode, useContext, useState } from 'react'
 
 export interface User {
-    username: string
+    uid: string
+    email: string
+    displayName: string
     password: string
     _id?: string
 }

@@ -13,6 +13,9 @@ const submitJoke = async (req: NextApiRequest, res: NextApiResponse) => {
             text,
             answer,
             submittedOn: new Date(),
+            submittedBy: userId,
+            editedOn: new Date(),
+            editedBy: userId,
             userId
         })
 

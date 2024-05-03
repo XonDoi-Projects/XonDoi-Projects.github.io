@@ -133,10 +133,10 @@ export const DadJokeUI: FunctionComponent<DadJokeUIProps> = (props) => {
                                     : colors.dark.accentForeground
                             }}
                         >
-                            {!props.jokes[props.jokeIndex].submittedBy?.username
+                            {!props.jokes[props.jokeIndex].submittedBy?.displayName
                                 ? ''
                                 : `Submitted By: ${
-                                      props.jokes[props.jokeIndex].submittedBy?.username
+                                      props.jokes[props.jokeIndex].submittedBy?.displayName
                                   }`}
                         </Typography>
                         <Typography
@@ -156,7 +156,12 @@ export const DadJokeUI: FunctionComponent<DadJokeUIProps> = (props) => {
                                   ).toFormat('MM/dd/yyyy')}`}
                         </Typography>
                     </Container>
-                    <Container>
+                    <Container
+                        sx={{
+                            width: '20px',
+                            height: '20px'
+                        }}
+                    >
                         <Button
                             sx={{
                                 width: '20px',

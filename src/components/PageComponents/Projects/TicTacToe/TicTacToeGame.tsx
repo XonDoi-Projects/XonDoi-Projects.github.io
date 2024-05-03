@@ -131,7 +131,7 @@ export const TicTacToeGame: FunctionComponent<TicTacToeGameProps> = (props) => {
                                 textOverflow: 'ellipsis'
                             }}
                         >
-                            {user?.username || 'Anonymous'}
+                            {user?.displayName || 'Anonymous'}
                         </Typography>
                     </Container>
 
@@ -153,13 +153,12 @@ export const TicTacToeGame: FunctionComponent<TicTacToeGameProps> = (props) => {
                     }}
                 >
                     {/**Get user from provider to switch between form and game*/}
-                    {!user?.username && !skipLogin ? (
+                    {!user?.displayName && !skipLogin ? (
                         <LoginForm
                             setSkipLogin={setSkipLogin}
                             title="Login to start"
-                            warning="If this is your first time, a user will be created. This is only required for
-                    leadboard tracking."
                             loginText="Start"
+                            isRegister
                         />
                     ) : (
                         <TicTacToeLoginUI
@@ -361,7 +360,9 @@ export const TicTacToeGame: FunctionComponent<TicTacToeGameProps> = (props) => {
                                                     textOverflow: 'ellipsis'
                                                 }}
                                             >
-                                                {line.name ? `${line.name.username}` : `Anonymous`}
+                                                {line.name
+                                                    ? `${line.name.displayName}`
+                                                    : `Anonymous`}
                                             </Typography>
                                         </Container>
                                         <Container sx={{ flexDirection: 'row', width: '70px' }}>

@@ -9,7 +9,7 @@ const editJoke = async (req: NextApiRequest, res: NextApiResponse) => {
         const client = await clientPromise
         const db = client.db('jokes')
         const { id } = req.query
-        let { userId, text, answer } = req.body
+        let { userId } = req.body
 
         userId = userId.trim()
 

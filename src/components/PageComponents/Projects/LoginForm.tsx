@@ -3,17 +3,18 @@ import { Typography } from '@/components/LayoutComponents/Typography'
 import { Button, TextField } from '@/components/InputComponents'
 import { colors } from '@/components/Colors'
 import { Container, FadeInOut, FixedDiv } from '@/components/LayoutComponents'
-import { useDarkTheme, useSize, useUser } from '@/components/Providers'
+import { useDarkTheme, useFirebase, useSize, useUser } from '@/components/Providers'
 import { BiHide, BiShow } from 'react-icons/bi'
 
 export interface LoginFormProps {
     setSkipLogin?: (value: boolean) => void
-    warning?: string
+    isRegister: boolean
     title: string
     loginText?: string
 }
 
 export const LoginForm: FunctionComponent<LoginFormProps> = (props) => {
+    const { register, login } = useFirebase()
     const [snackbar, setSnackbar] = useState<{ message: string; color: string }>()
     const [showSnackbar, setShowSnackbar] = useState(false)
 
@@ -22,12 +23,18 @@ export const LoginForm: FunctionComponent<LoginFormProps> = (props) => {
     const [loading, setLoading] = useState(false)
     let timeoutRef = useRef<NodeJS.Timeout>()
 
-    const [username, setUsername] = useState('')
-    const [errorUsername, setErrorUsername] = useState('')
+    const [email, setEmail] = useState('')
+    const [errorEmail, setErrorEmail] = useState('')
+    const [displayName, setDisplayName] = useState('')
+    const [errorDisplayName, setErrorDisplayName] = useState('')
     const [password, setPassword] = useState('')
     const [errorPassword, setErrorPassword] = useState('')
+    const [passwordConfirm, setPasswordConfirm] = useState('')
+    const [errorPasswordConfirm, setErrorPasswordConfirm] = useState('')
 
     const [showPass, setShowPass] = useState(false)
+    const [showPassConfirm, setShowPassConfirm] = useState(false)
+    const [showRegister, setShowRegister] = useState(false)
 
     const mobile = useSize()
     const { light } = useDarkTheme()
@@ -35,11 +42,18 @@ export const LoginForm: FunctionComponent<LoginFormProps> = (props) => {
     const checkFields = () => {
         let hasError = false
 
-        if (!username) {
+        if (!email) {
             hasError = true
-            setErrorUsername('This field is required')
+            setErrorEmail('This field is required')
         } else {
-            setErrorUsername('')
+            setErrorEmail('')
+        }
+
+        if (showRegister && !displayName) {
+            hasError = true
+            setErrorDisplayName('This field is required')
+        } else {
+            setErrorDisplayName('')
         }
 
         if (!password) {
@@ -49,55 +63,98 @@ export const LoginForm: FunctionComponent<LoginFormProps> = (props) => {
             setErrorPassword('')
         }
 
+        if (showRegister && !password) {
+            hasError = true
+            setErrorPasswordConfirm('This field is required')
+        } else {
+            setErrorPasswordConfirm('')
+        }
+
         return hasError
     }
 
-    const sendData = async () => {
-        if (!checkFields()) {
-            setLoading(true)
-            try {
+    const clearData = () => {
+        setEmail('')
+        setErrorEmail('')
+        setDisplayName('')
+        setErrorDisplayName('')
+        setPassword('')
+        setErrorPassword('')
+        setPasswordConfirm('')
+        setErrorPasswordConfirm('')
+    }
+
+    //TODO
+    const loginUser = async () => {
+        setLoading(true)
+        try {
+            if (!checkFields() && login) {
+                const loginResult = await login(email, password)
+
                 const result = await fetch(`/api/users/login`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        username,
-                        password
+                        uid: loginResult.user.uid
                     })
                 })
+
                 if (result.status === 200) {
                     const data = await result.json()
 
                     setUser(data.user)
-                    setSnackbar({
-                        message: data.message,
-                        color: colors.light.success
-                    })
-                    setShowSnackbar(true)
-                    setUsername('')
-                    setErrorUsername('')
-                    setPassword('')
-                    setErrorPassword('')
-                } else {
-                    const data = await result.json()
-
-                    setSnackbar({
-                        message: data.message,
-                        color: colors.light.error
-                    })
-                    setShowSnackbar(true)
                 }
-            } catch (e: any) {
-                console.log(e)
-                setSnackbar({
-                    message: e.message,
-                    color: colors.light.error
-                })
+
+                setSnackbar({ message: 'Login Successful', color: colors.light.success })
                 setShowSnackbar(true)
+                setShowRegister(false)
+                clearData()
             }
-            setLoading(false)
+        } catch (e: any) {
+            console.log(e)
+            setSnackbar({
+                message: e.message,
+                color: colors.light.error
+            })
+            setShowSnackbar(true)
         }
+        setLoading(false)
+    }
+
+    const registerUser = async () => {
+        setLoading(true)
+        try {
+            if (!checkFields() && register) {
+                const registerResult = await register(email, password)
+
+                await fetch(`/api/users/create`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        uid: registerResult.user.uid,
+                        email,
+                        displayName
+                    })
+                })
+
+                setSnackbar({ message: 'Registration Successful', color: colors.light.success })
+                setShowSnackbar(true)
+                setShowRegister(false)
+                clearData()
+            }
+        } catch (e: any) {
+            console.log(e)
+            setSnackbar({
+                message: e.message,
+                color: colors.light.error
+            })
+            setShowSnackbar(true)
+        }
+        setLoading(false)
     }
 
     useEffect(() => {
@@ -119,25 +176,31 @@ export const LoginForm: FunctionComponent<LoginFormProps> = (props) => {
             <Typography variant="subtitle" sx={{ margin: '0px', textTransform: 'uppercase' }}>
                 {props.title}
             </Typography>
-            {props.warning ? (
-                <Typography variant="small" sx={{ marginTop: '10px', marginBottom: '0px' }}>
-                    {props.warning}
-                </Typography>
-            ) : (
-                <></>
-            )}
 
             <TextField
-                value={username}
-                onChange={setUsername}
-                errorText={errorUsername}
-                label="Username"
+                value={email}
+                onChange={setEmail}
+                errorText={errorEmail}
+                label="Email"
                 fieldContainerSx={{ marginBottom: '28px' }}
                 sx={{
                     color: light ? colors.dark.background : colors.light.background,
                     width: '100%'
                 }}
             />
+            {showRegister && (
+                <TextField
+                    value={displayName}
+                    onChange={setDisplayName}
+                    errorText={errorDisplayName}
+                    label="Username"
+                    fieldContainerSx={{ marginBottom: '28px' }}
+                    sx={{
+                        color: light ? colors.dark.background : colors.light.background,
+                        width: '100%'
+                    }}
+                />
+            )}
             <TextField
                 type={showPass ? 'text' : 'password'}
                 value={password}
@@ -165,6 +228,35 @@ export const LoginForm: FunctionComponent<LoginFormProps> = (props) => {
                     </Button>
                 }
             />
+            {showRegister && (
+                <TextField
+                    type={showPassConfirm ? 'text' : 'password'}
+                    value={passwordConfirm}
+                    onChange={setPasswordConfirm}
+                    errorText={errorPasswordConfirm}
+                    label="Confirm Password"
+                    fieldContainerSx={{ marginBottom: '28px' }}
+                    sx={{ color: light ? colors.dark.background : colors.light.background }}
+                    suffix={
+                        <Button
+                            sx={{
+                                width: '40px',
+                                height: '40px',
+                                borderRadius: '50%',
+                                padding: '0px',
+                                backgroundColor: 'transparent'
+                            }}
+                            onClick={() => setShowPassConfirm(!showPassConfirm)}
+                        >
+                            {!showPassConfirm ? (
+                                <BiShow style={{ fontSize: '24px' }} />
+                            ) : (
+                                <BiHide style={{ fontSize: '24px' }} />
+                            )}
+                        </Button>
+                    }
+                />
+            )}
             <Container
                 sx={{
                     flex: 1,
@@ -172,11 +264,12 @@ export const LoginForm: FunctionComponent<LoginFormProps> = (props) => {
                     flexDirection: 'row',
                     width: '100%',
                     backgroundColor: 'transparent',
-                    gap: '10px'
+                    gap: '10px',
+                    flexWrap: 'wrap'
                 }}
             >
                 <Button
-                    onClick={sendData}
+                    onClick={() => (showRegister ? registerUser() : loginUser())}
                     sx={{
                         width: '100%',
                         borderRadius: '19px',
@@ -187,8 +280,42 @@ export const LoginForm: FunctionComponent<LoginFormProps> = (props) => {
                     loading={loading}
                     contentSx={{ flex: 1 }}
                 >
-                    {props.loginText || 'Login'}
+                    {showRegister ? 'Confirm' : props.loginText || 'Confirm'}
                 </Button>
+                {props.isRegister && !showRegister && (
+                    <Button
+                        onClick={() => setShowRegister(true)}
+                        sx={{
+                            width: '100%',
+                            borderRadius: '19px',
+                            color: light
+                                ? colors.light.accentForeground
+                                : colors.dark.accentForeground,
+                            backgroundColor: light ? colors.light.accent : colors.dark.accent
+                        }}
+                        swapHover
+                        contentSx={{ flex: 1 }}
+                    >
+                        Register
+                    </Button>
+                )}
+                {showRegister && (
+                    <Button
+                        onClick={() => setShowRegister(false)}
+                        sx={{
+                            width: '100%',
+                            borderRadius: '19px',
+                            color: light
+                                ? colors.light.accentForeground
+                                : colors.dark.accentForeground,
+                            backgroundColor: light ? colors.light.accent : colors.dark.accent
+                        }}
+                        swapHover
+                        contentSx={{ flex: 1 }}
+                    >
+                        Login
+                    </Button>
+                )}
                 {props.setSkipLogin ? (
                     <Button
                         onClick={() => props.setSkipLogin && props.setSkipLogin(true)}
