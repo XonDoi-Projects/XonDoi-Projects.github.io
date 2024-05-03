@@ -28,7 +28,10 @@ const editJoke = async (req: NextApiRequest, res: NextApiResponse) => {
 
         let updatedResult = await db
             .collection('jokes')
-            .updateOne({ _id: jokeId }, { $set: { text, answer } })
+            .updateOne(
+                { _id: jokeId },
+                { $set: { text, answer, editedOn: new Date(), editedBy: userId } }
+            )
 
         if (updatedResult?.acknowledged) {
             return res.status(200).json({ message: 'Joke Updated!' })

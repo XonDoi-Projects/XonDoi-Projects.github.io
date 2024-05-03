@@ -60,11 +60,7 @@ export const ProjectCard: FunctionComponent<ProjectCardProps> = (props) => {
             }}
         >
             {props.project.link ? (
-                <Link
-                    href={props.project.link}
-                    style={{ width: '100%', textDecoration: 'none' }}
-                    target="_blank"
-                >
+                <Link href={props.project.link} style={{ width: '100%', textDecoration: 'none' }}>
                     <Container
                         sx={{
                             flexDirection: 'column',
