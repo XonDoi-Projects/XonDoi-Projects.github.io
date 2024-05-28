@@ -81,7 +81,7 @@ export const SkillsShowcase: FunctionComponent<SkillsShowcaseProps> = (props) =>
             ref={skillsShowcaseRef}
             sx={{
                 flexDirection: 'column',
-                width: mobile.mobile ? '100%' : (200 / 2 + 20) * 4 + 'px',
+                width: mobile.mobile ? '100%' : (180 / 2 + 20) * 4 + 'px',
                 justifyContent: 'center',
                 alignItems: 'center',
                 gap: '20px'
@@ -100,72 +100,76 @@ export const SkillsShowcase: FunctionComponent<SkillsShowcaseProps> = (props) =>
             </Typography>
             {mobile.mobile ? (
                 <Container sx={{ width: '100%', justifyContent: 'center', alignItems: 'center' }}>
-                    <Container
-                        sx={{
-                            position: 'absolute',
-                            flexDirection: 'row',
-                            zIndex: 1,
-                            top: '50%',
-                            left: 0,
-                            transform: 'translateY(-50%)',
-                            justifyContent: 'space-between',
-                            alignItems: 'center'
-                        }}
-                    >
-                        <Button
+                    {scrollIntoView && (
+                        <Container
                             sx={{
-                                width: '40px',
-                                height: '40px',
-                                borderRadius: '50%',
-                                opacity: !scrollIntoView ? 0.5 : 1,
-                                padding: '0px',
+                                position: 'absolute',
+                                flexDirection: 'row',
                                 zIndex: 1,
-                                backgroundColor: 'transparent'
+                                top: '50%',
+                                left: 0,
+                                transform: 'translateY(-50%)',
+                                justifyContent: 'space-between',
+                                alignItems: 'center'
                             }}
-                            onClick={() =>
-                                setScrollIntoView(
-                                    scrollIntoView ? scrollIntoView - 1 : props.skills.length - 1
-                                )
-                            }
-                            disabled={!scrollIntoView}
                         >
-                            <BiChevronLeft
-                                style={{ fontSize: '40px', backgroundColor: 'transparent' }}
-                            />
-                        </Button>
-                    </Container>
-                    <Container
-                        sx={{
-                            position: 'absolute',
-                            flexDirection: 'row',
-                            zIndex: 1,
-                            top: '50%',
-                            right: 0,
-                            transform: 'translateY(-50%)',
-                            justifyContent: 'space-between',
-                            alignItems: 'center'
-                        }}
-                    >
-                        <Button
+                            <Button
+                                sx={{
+                                    width: '40px',
+                                    height: '40px',
+                                    borderRadius: '50%',
+                                    padding: '0px',
+                                    zIndex: 1,
+                                    backgroundColor: 'transparent'
+                                }}
+                                onClick={() =>
+                                    setScrollIntoView(
+                                        scrollIntoView
+                                            ? scrollIntoView - 1
+                                            : props.skills.length - 1
+                                    )
+                                }
+                                disabled={!scrollIntoView}
+                            >
+                                <BiChevronLeft
+                                    style={{ fontSize: '40px', backgroundColor: 'transparent' }}
+                                />
+                            </Button>
+                        </Container>
+                    )}
+                    {scrollIntoView !== props.skills.length - 1 && (
+                        <Container
                             sx={{
-                                width: '40px',
-                                height: '40px',
-                                borderRadius: '50%',
-                                opacity: scrollIntoView === props.skills.length - 1 ? 0.5 : 1,
-                                padding: '0px',
+                                position: 'absolute',
+                                flexDirection: 'row',
                                 zIndex: 1,
-                                backgroundColor: 'transparent'
+                                top: '50%',
+                                right: 0,
+                                transform: 'translateY(-50%)',
+                                justifyContent: 'space-between',
+                                alignItems: 'center'
                             }}
-                            onClick={() =>
-                                setScrollIntoView(scrollIntoView ? scrollIntoView + 1 : 1)
-                            }
-                            disabled={scrollIntoView === props.skills.length - 1}
                         >
-                            <BiChevronRight
-                                style={{ fontSize: '40px', backgroundColor: 'transparent' }}
-                            />
-                        </Button>
-                    </Container>
+                            <Button
+                                sx={{
+                                    width: '40px',
+                                    height: '40px',
+                                    borderRadius: '50%',
+                                    padding: '0px',
+                                    zIndex: 1,
+                                    backgroundColor: 'transparent'
+                                }}
+                                onClick={() =>
+                                    setScrollIntoView(scrollIntoView ? scrollIntoView + 1 : 1)
+                                }
+                                disabled={scrollIntoView === props.skills.length - 1}
+                            >
+                                <BiChevronRight
+                                    style={{ fontSize: '40px', backgroundColor: 'transparent' }}
+                                />
+                            </Button>
+                        </Container>
+                    )}
                     <Container
                         ref={skillsRef}
                         sx={{
@@ -207,7 +211,7 @@ export const SkillsShowcase: FunctionComponent<SkillsShowcaseProps> = (props) =>
                             flex: 1,
                             width: '100%',
                             height: '200px',
-                            gap: '30px',
+                            gap: '20px',
                             justifyContent: 'space-between',
                             alignContent: 'center'
                         }}
@@ -216,8 +220,8 @@ export const SkillsShowcase: FunctionComponent<SkillsShowcaseProps> = (props) =>
                             <Container
                                 key={index}
                                 sx={{
-                                    width: skillsShowcaseWidth / 4 - 40 + 'px',
-                                    height: skillsShowcaseWidth / 4 - 40 + 'px',
+                                    width: skillsShowcaseWidth / 4 - 30 + 'px',
+                                    height: skillsShowcaseWidth / 4 - 30 + 'px',
                                     minWidth: '50px',
                                     minHeight: '50px'
                                 }}

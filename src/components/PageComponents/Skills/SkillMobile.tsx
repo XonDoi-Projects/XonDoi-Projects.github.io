@@ -64,14 +64,10 @@ export const SkillMobile: FunctionComponent<SkillMobileProps> = (props) => {
                             <Image
                                 src={props.src}
                                 alt={props.alt}
-                                width={
-                                    mobile.mobile && mobile.size?.width
-                                        ? mobile.size?.width - 70
-                                        : props.parentWidth
-                                }
+                                width={170}
                                 height={170}
                                 style={{
-                                    position: 'relative',
+                                    boxSizing: 'border-box',
                                     objectFit: 'scale-down'
                                 }}
                             />
