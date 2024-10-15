@@ -8,6 +8,14 @@ import { Project } from './Projects'
 
 const projectList: Project[] = [
     {
+        title: 'Pokemon Dex and Planner',
+        excerpt: 'A site where you can view your favorite Pokemon and Plan your team wisely!',
+        description:
+            'This project was built using NextJS, Typescript and TailwindCSS. The data is obtained from PokeAPI. I have always been a Pokemon fan and I wanted to use my React and CSS skills to develop a site where one can view details of Pokemon. This website also provides a team planning page where details of team composition and stats are displayed so you can plan your strategy wisely.',
+        link: 'https://poke-plan.vercel.app/',
+        tags: ['Next.js', 'React', 'Typescript', 'TailwindCSS', 'MongoDB']
+    },
+    {
         title: 'Medical Clinics Onboarding',
         excerpt: 'A website built for one of Sector Eleven&amps Clients!',
         description:
