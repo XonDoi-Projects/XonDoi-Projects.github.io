@@ -28,7 +28,7 @@ const projectList: Project[] = [
         excerpt: 'An e-commerce pet supplies shop!',
         description:
             'For this project, Sector Eleven elected to use NextJs 14, Typescript and Styled Components (CSS). This online shop is part of a bigger project that also consists of an administrator portal. The admin can edit offers, promotions, or product details through the portal that will immediately effect the shop. The shop consists of features like filtering, showcases, and cart system, among others.',
-        link: 'https://fetch-take-home-inky.vercel.app/',
+        link: 'https://borgcardona.com.mt/',
         tags: ['Next.js', 'React', 'Typescript', 'Styled Components', 'MongoDB', 'Firebase']
     },
     {
